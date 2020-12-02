@@ -50,7 +50,7 @@ Use the super-secret-command in CMD to check what is wrong:
 flutter doctor
 ```
 
-## After intalling powyższe rzeczy..
+## After installing powyższe rzeczy..
 
 1. Go to root folder.
 2. Run in terminal 
