@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
-class TestRoute extends StatelessWidget {
+class BoardDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Test route"),
+        title: Text("Uniq"),
       ),
+      // TODO: Stream builder
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Test Route'),
+            Text('BoardDetailsPage'),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('Pressed');
           Navigator.pop(context);
         },
         tooltip: 'Route',

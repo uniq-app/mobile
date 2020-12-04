@@ -1,2 +1,2 @@
 const String homeRoute = '/';
-const String testRoute = '/test';
+const String boardDetailsRoute = '/details';

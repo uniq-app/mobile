@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print('Pressed');
-          Navigator.pushNamed(context, '/test');
+          Navigator.pushNamed(context, boardDetailsRoute);
         },
         tooltip: 'Route',
         child: Icon(Icons.add),

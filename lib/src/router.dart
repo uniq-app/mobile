@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uniq/src/screens/board_details_page.dart';
 import 'package:uniq/src/screens/home_page.dart';
-import 'package:uniq/src/screens/test_route.dart';
 import './shared/constants.dart';
 
 class MainRouter {
@@ -9,8 +9,8 @@ class MainRouter {
     switch (settings.name) {
       case homeRoute:
         return MaterialPageRoute(builder: (_) => HomePage(title: 'uniq'));
-      case testRoute:
-        return MaterialPageRoute(builder: (_) => TestRoute());
+      case boardDetailsRoute:
+        return MaterialPageRoute(builder: (_) => BoardDetailsPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
@@ -18,7 +18,7 @@ class MainRouter {
               child: Column(
                 children: [
                   Image.asset('assets/404.png'),
-                  Text('${settings.name} is leaking...'),
+                  Text('404! ${settings.name} is leaking...'),
                 ],
               ),
             ),
