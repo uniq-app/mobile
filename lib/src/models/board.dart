@@ -2,7 +2,7 @@ class Board {
   String _id;
   String _name;
   String _creatorId;
-  List<dynamic> _photos;
+  List<String> _photos = new List();
   bool _isPrivate;
   bool _isCreatorHidden;
   DateTime _createdAt;
@@ -12,13 +12,18 @@ class Board {
     _id = parsedJson['id'] ?? '';
     _name = parsedJson['name'] ?? '';
     _creatorId = parsedJson['creatorId'] ?? '';
-    _photos = parsedJson['photos'] ?? [];
+    if (parsedJson['photos'] != null) {
+      parsedJson['photos'].forEach((photo) => _photos.add(photo));
+    } else {
+      _photos = [];
+    }
+
     _isPrivate = parsedJson['isPrivate'] ?? false;
     _isCreatorHidden = parsedJson['isCreatorHidden'] ?? false;
-    _createdAt = parsedJson['createdAt']
+    _createdAt = (parsedJson['createdAt'] != null)
         ? DateTime.parse(parsedJson['createdAt'])
         : DateTime.now();
-    _updatedAt = parsedJson['updatedAt']
+    _updatedAt = (parsedJson['updatedAt'] != null)
         ? DateTime.parse(parsedJson['updatedAt'])
         : DateTime.now();
   }

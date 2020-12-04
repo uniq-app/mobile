@@ -1,6 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:uniq/src/models/board_result.dart';
+import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 
 class BoardBloc {
