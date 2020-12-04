@@ -6,13 +6,13 @@ class BoardResults {
   int _count;
   String _next;
   String _previous;
-  List<Board> _results;
+  List<Board> _results = new List();
 
   BoardResults.fromJson(Map<String, dynamic> parsedJson) {
     _count = parsedJson['count'] ?? 0;
     _next = parsedJson['next'] ?? "";
     _previous = parsedJson['previous'] ?? "";
-    if (parsedJson['results']) {
+    if (parsedJson['results'] != null) {
       parsedJson['results']
           .forEach((result) => _results.add(Board.fromJson(result)));
     } else {

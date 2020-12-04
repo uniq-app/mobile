@@ -20,13 +20,30 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      // TODO: Switch to proper icons and labels, "switch" screen without routing
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print('Pressed');
           Navigator.pushNamed(context, boardDetailsRoute);
         },
         tooltip: 'Route',
-        child: Icon(Icons.add),
+        child: Icon(Icons.navigate_next),
       ),
     );
   }

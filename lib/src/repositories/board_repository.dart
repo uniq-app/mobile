@@ -1,5 +1,4 @@
-import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/models/board_result.dart';
+import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
 
 class BoardRepository {
