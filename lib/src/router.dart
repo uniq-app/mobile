@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
 import 'package:uniq/src/screens/home_page.dart';
+import 'package:uniq/src/screens/photo_hero.dart';
 import './shared/constants.dart';
 
 class MainRouter {
@@ -11,6 +12,17 @@ class MainRouter {
         return MaterialPageRoute(builder: (_) => HomePage(title: 'uniq'));
       case boardDetailsRoute:
         return MaterialPageRoute(builder: (_) => BoardDetailsPage());
+      case photoDetails:
+        Map<String, dynamic> arguments =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => PhotoHero(
+                  photo: arguments['photo'],
+                  tag: arguments['tag'],
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
