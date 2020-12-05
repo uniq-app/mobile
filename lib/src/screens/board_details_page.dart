@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/board_bloc.dart';
 import 'package:uniq/src/models/board_results.dart';
+import 'package:uniq/src/screens/photo_hero.dart';
+import 'package:uniq/src/shared/constants.dart';
 
 // TODO: Pass Board on route -> with parameter
 class BoardDetailsPage extends StatelessWidget {
@@ -46,12 +48,16 @@ class BoardDetailsPage extends StatelessWidget {
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5),
         itemBuilder: (BuildContext context, int index) {
-          return Image.network(
-            photos[index],
-            fit: BoxFit.cover,
-            colorBlendMode: BlendMode.darken,
-            color: Colors.blue[200],
-          );
+          String photo = photos[index];
+          String tag = '$photos/$index';
+          Map<String, dynamic> arguments = {'photo': photo, 'tag': tag};
+          return PhotoHero(
+              photo: photo,
+              tag: tag,
+              onTap: () {
+                Navigator.pushNamed(context, photoDetails,
+                    arguments: arguments);
+              });
         });
   }
 }
