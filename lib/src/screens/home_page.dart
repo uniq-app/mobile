@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uniq/src/shared/constants.dart';
 
@@ -24,16 +25,27 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                Navigator.pushNamed(context, homeRoute);
+              },
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: IconButton(
+              icon: Icon(Icons.camera),
+              onPressed: () async {
+                // Ensure that camera is initialized
+                WidgetsFlutterBinding.ensureInitialized();
+                final cameras = await availableCameras();
+                final firstCamera = cameras.first;
+                Navigator.pushNamed(context, cameraRoute,
+                    arguments: firstCamera);
+              },
+            ),
+            label: 'Camera',
           ),
         ],
       ),

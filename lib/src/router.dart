@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
+import 'package:uniq/src/screens/camera_view.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import './shared/constants.dart';
@@ -16,13 +18,18 @@ class MainRouter {
         Map<String, dynamic> arguments =
             settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-            builder: (BuildContext context) => PhotoHero(
-                  photo: arguments['photo'],
-                  tag: arguments['tag'],
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ));
+          builder: (BuildContext context) => PhotoHero(
+            photo: arguments['photo'],
+            tag: arguments['tag'],
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        );
+      case cameraRoute:
+        CameraDescription camera = settings.arguments as CameraDescription;
+        return MaterialPageRoute(
+            builder: (_) => TakePictureScreen(camera: camera));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
