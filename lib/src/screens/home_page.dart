@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
             icon: IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
-                Navigator.pushNamed(context, homeRoute);
+                Navigator.pushReplacementNamed(context, homeRoute);
               },
             ),
             label: 'Home',
@@ -51,7 +51,6 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('Pressed');
           Navigator.pushNamed(context, boardDetailsRoute);
         },
         tooltip: 'Route',

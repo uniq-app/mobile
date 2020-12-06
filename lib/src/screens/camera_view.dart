@@ -26,6 +26,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
+    print("Camera init");
     _controller = CameraController(
       widget.camera,
       ResolutionPreset.medium,
@@ -36,6 +37,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   void dispose() {
+    print("Camera dispose");
     _controller.dispose();
     super.dispose();
   }
@@ -43,7 +45,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Take a picture')),
+      appBar: AppBar(title: Text('')),
       // Wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner
       // until the controller has finished initializing.

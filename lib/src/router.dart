@@ -8,7 +8,6 @@ import './shared/constants.dart';
 
 class MainRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    print('Router: $settings');
     switch (settings.name) {
       case homeRoute:
         return MaterialPageRoute(builder: (_) => HomePage(title: 'uniq'));
