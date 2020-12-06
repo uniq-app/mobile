@@ -7,8 +7,7 @@
         {
             "name": "mobile",
             "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
+            "type": "dart"
         }
     ]
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
 import 'package:uniq/src/screens/home_page.dart';
+import 'package:uniq/src/screens/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
+import 'package:uniq/src/screens/welcome_page.dart';
 import './shared/constants.dart';
 
 class MainRouter {
@@ -12,6 +14,10 @@ class MainRouter {
         return MaterialPageRoute(builder: (_) => HomePage(title: 'uniq'));
       case boardDetailsRoute:
         return MaterialPageRoute(builder: (_) => BoardDetailsPage());
+      case loginRoute:
+        return MaterialPageRoute(builder: (_) => LoginPage());
+      case welcomeRoute:
+        return MaterialPageRoute(builder: (_) => WelcomePage());
       case photoDetails:
         Map<String, dynamic> arguments =
             settings.arguments as Map<String, dynamic>;
