@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       onGenerateRoute: MainRouter.generateRoute,
-      initialRoute: homeRoute,
+      initialRoute: welcomeRoute,
     );
   }
 }
