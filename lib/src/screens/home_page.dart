@@ -76,13 +76,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, boardDetailsRoute);
-        },
-        tooltip: 'Route',
-        child: Icon(Icons.navigate_next),
-      ),
     );
   }
 
