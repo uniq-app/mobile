@@ -1,11 +1,42 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/board_bloc.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
+import 'package:uniq/src/shared/ad_manager.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 // TODO: Pass Board on route -> with parameter
-class BoardDetailsPage extends StatelessWidget {
+class BoardDetailsPage extends StatefulWidget {
+  @override
+  _BoardDetailsPageState createState() => _BoardDetailsPageState();
+}
+
+class _BoardDetailsPageState extends State<BoardDetailsPage> {
+  // Banner ADD
+  BannerAd _bannerAd;
+
+  void _loadBannerAd() {
+    _bannerAd
+      ..load()
+      ..show(anchorType: AnchorType.bottom);
+  }
+
+  @override
+  void initState() {
+    _bannerAd = BannerAd(
+      adUnitId: AdManager.bannerAdUnitId,
+      size: AdSize.banner,
+    );
+    _loadBannerAd();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     bloc.getBoards("123");
