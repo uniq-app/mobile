@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/board_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
-import 'package:uniq/src/screens/photo_hero.dart';
+import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
@@ -15,14 +15,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    print("Jestem boards!");
+    print("Board init");
     bloc.getBoards("123");
     super.initState();
   }
 
   @override
   void dispose() {
-    print("Umieram");
+    print("Board destroy");
     super.dispose();
   }
 
@@ -49,33 +49,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       // TODO: Switch to proper icons and labels, "switch" screen without routing
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, homeRoute);
-              },
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.camera),
-              onPressed: () async {
-                // Ensure that camera is initialized
-                WidgetsFlutterBinding.ensureInitialized();
-                final cameras = await availableCameras();
-                final firstCamera = cameras.first;
-                Navigator.pushNamed(context, cameraRoute,
-                    arguments: firstCamera);
-              },
-            ),
-            label: 'Camera',
-          ),
-        ],
-      ),
+      bottomNavigationBar: BottomNavbar(),
     );
   }
 

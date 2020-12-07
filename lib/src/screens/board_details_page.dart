@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
+import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 // TODO: Pass Board on route -> with parameter
@@ -16,13 +17,7 @@ class BoardDetailsPage extends StatelessWidget {
         title: Text(board.name),
       ),
       body: buildList(board),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        tooltip: 'Route',
-        child: Icon(Icons.navigate_before),
-      ),
+      bottomNavigationBar: BottomNavbar(),
     );
   }
 

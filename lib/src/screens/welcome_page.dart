@@ -22,7 +22,7 @@ class WelcomePage extends StatelessWidget {
         UniqButton(
           text: "LOGIN",
           push: () {
-            Navigator.pushReplacementNamed(context, loginRoute);
+            Navigator.pushNamed(context, loginRoute);
           },
         ),
         UniqButton(
@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
           color: lightColor,
           textColor: Colors.black,
           push: () {
-            Navigator.pushReplacementNamed(context, signupRoute);
+            Navigator.pushNamed(context, signupRoute);
           },
         ),
       ],
