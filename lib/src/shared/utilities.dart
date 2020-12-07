@@ -73,3 +73,32 @@ class UniqInputField extends StatelessWidget {
     );
   }
 }
+
+class UniqBoardElement extends StatelessWidget {
+  final String id;
+  final String name;
+  final VoidCallback onTap;
+  const UniqBoardElement({Key key, this.id, this.onTap, this.name})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        width: size.width * 0.8,
+        alignment: Alignment.center,
+        height: 150,
+        decoration: new BoxDecoration(
+          gradient: new LinearGradient(colors: [
+            lightColor,
+            primaryColor,
+          ]),
+        ),
+        child: Text(name),
+      ),
+    );
+  }
+}

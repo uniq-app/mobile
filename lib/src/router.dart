@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
 import 'package:uniq/src/screens/camera_view.dart';
 import 'package:uniq/src/screens/home_page.dart';
@@ -12,9 +13,11 @@ class MainRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeRoute:
-        return MaterialPageRoute(builder: (_) => HomePage(title: 'uniq'));
+        return MaterialPageRoute(builder: (_) => HomePage());
       case boardDetailsRoute:
-        return MaterialPageRoute(builder: (_) => BoardDetailsPage());
+        Board board = settings.arguments as Board;
+        return MaterialPageRoute(
+            builder: (_) => BoardDetailsPage(board: board));
       case loginRoute:
         return MaterialPageRoute(builder: (_) => LoginPage());
       case welcomeRoute:

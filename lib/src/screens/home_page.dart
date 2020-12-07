@@ -3,13 +3,14 @@ import 'package:firebase_admob/firebase_admob.dart';
 import 'package:uniq/src/shared/ad_manager.dart';
 
 import 'package:flutter/material.dart';
+import 'package:uniq/src/blocs/board_bloc.dart';
+import 'package:uniq/src/models/board.dart';
+import 'package:uniq/src/models/board_results.dart';
+import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
+import 'package:uniq/src/shared/utilities.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -21,99 +22,69 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    print("Board init");
+    bloc.getBoards("123");
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    print("Board destroy");
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Boards"),
       ),
-      body: FutureBuilder<void>(
-        future: _initAdMob(),
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          List<Widget> children = <Widget>[
-            Text(
-              "Awesome Drawing Quiz!",
-              style: TextStyle(
-                fontSize: 32,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 72),
-            ),
-          ];
-
+      body: StreamBuilder(
+        stream: bloc.boardResults,
+        builder: (context, AsyncSnapshot<BoardResults> snapshot) {
           if (snapshot.hasData) {
-            children.add(RaisedButton(
-              color: Theme.of(context).accentColor,
-              child: Text(
-                "Let's get started!".toUpperCase(),
-              ),
-              padding: EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 48,
-              ),
-              onPressed: () => Navigator.of(context).pushNamed('/game'),
-            ));
+            return buildList(snapshot);
           } else if (snapshot.hasError) {
-            children.addAll(<Widget>[
-              Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-            ]);
-          } else {
-            children.add(SizedBox(
-              child: CircularProgressIndicator(),
-              width: 48,
-              height: 48,
-            ));
+            return Text(
+              snapshot.error.toString(),
+            );
           }
-
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: children,
-            ),
+            child: CircularProgressIndicator(),
           );
         },
       ),
-      // TODO: Switch to proper icons and labels, "switch" screen without routing
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, homeRoute);
-              },
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.camera),
-              onPressed: () async {
-                // Ensure that camera is initialized
-                WidgetsFlutterBinding.ensureInitialized();
-                final cameras = await availableCameras();
-                final firstCamera = cameras.first;
-                Navigator.pushNamed(context, cameraRoute,
-                    arguments: firstCamera);
-              },
-            ),
-            label: 'Camera',
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, boardDetailsRoute);
-        },
-        tooltip: 'Route',
-        child: Icon(Icons.navigate_next),
-      ),
+      bottomNavigationBar: BottomNavbar(),
     );
+  }
+
+  Widget buildList(AsyncSnapshot<BoardResults> snapshot) {
+    List<Board> boards = snapshot.data.results;
+    return FutureBuilder<void>(
+        future: _initAdMob(),
+        builder: (context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              padding: EdgeInsets.all(10),
+              itemCount: boards.length,
+              itemBuilder: (BuildContext context, int index) {
+                String name = boards[index].name;
+                return UniqBoardElement(
+                    name: name,
+                    onTap: () {
+                      Navigator.pushNamed(context, boardDetailsRoute,
+                          arguments: boards[index]);
+                    });
+              },
+            );
+          } else {
+            return SizedBox(
+              child: CircularProgressIndicator(),
+              width: 48,
+              height: 48,
+            );
+          }
+        });
   }
 }

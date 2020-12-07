@@ -1,18 +1,24 @@
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
-import 'package:uniq/src/blocs/board_bloc.dart';
-import 'package:uniq/src/models/board_results.dart';
+import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/shared/ad_manager.dart';
+import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 // TODO: Pass Board on route -> with parameter
 class BoardDetailsPage extends StatefulWidget {
+  Board board;
+  BoardDetailsPage({Key key, this.board}) : super(key: key);
+
   @override
-  _BoardDetailsPageState createState() => _BoardDetailsPageState();
+  _BoardDetailsPageState createState() =>
+      _BoardDetailsPageState(key: key, board: board);
 }
 
 class _BoardDetailsPageState extends State<BoardDetailsPage> {
+  Board board;
+  _BoardDetailsPageState({Key key, this.board});
   // Banner ADD
   BannerAd _bannerAd;
 
@@ -39,39 +45,17 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bloc.getBoards("123");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Uniq"),
+        title: Text(board.name),
       ),
-      // TODO: Stream builder
-      body: StreamBuilder(
-        stream: bloc.boardResults,
-        builder: (context, AsyncSnapshot<BoardResults> snapshot) {
-          if (snapshot.hasData) {
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            return Text(
-              snapshot.error.toString(),
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        tooltip: 'Route',
-        child: Icon(Icons.navigate_before),
-      ),
+      body: buildList(board),
+      bottomNavigationBar: BottomNavbar(),
     );
   }
 
-  Widget buildList(AsyncSnapshot<BoardResults> snapshot) {
-    List<String> photos = snapshot.data.results[0].photos;
+  Widget buildList(Board board) {
+    List<String> photos = board.photos;
     // TODO: Na koncu dodać button ala img "dodaj pic" ;))
     return GridView.builder(
         padding: EdgeInsets.all(10),
