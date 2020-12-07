@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: size.height * 0.05),
             UniqButton(
               push: () {
-                Navigator.pushNamed(context, homeRoute);
+                Navigator.pushReplacementNamed(context, homeRoute);
               },
               text: "LOGIN",
             ),

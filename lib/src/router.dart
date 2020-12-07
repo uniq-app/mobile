@@ -12,7 +12,7 @@ class MainRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeRoute:
-        return MaterialPageRoute(builder: (_) => HomePage(title: 'uniq'));
+        return MaterialPageRoute(builder: (_) => HomePage());
       case boardDetailsRoute:
         return MaterialPageRoute(builder: (_) => BoardDetailsPage());
       case loginRoute:
