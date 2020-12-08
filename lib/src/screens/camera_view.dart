@@ -84,7 +84,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             // If the picture was taken send it to Photo Service
             // TODO:
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DisplayPictureScreen(imagePath: path),
+              ),
+            );
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
