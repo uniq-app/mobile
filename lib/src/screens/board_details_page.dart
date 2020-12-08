@@ -32,10 +32,15 @@ class BoardDetailsPage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           String photo = photos[index];
           String tag = '$photos/$index';
-          Map<String, dynamic> arguments = {'photo': photo, 'tag': tag};
+          Map<String, dynamic> arguments = {
+            'photo': photo,
+            'tag': tag,
+            'boxFit': BoxFit.contain
+          };
           return PhotoHero(
               photo: photo,
               tag: tag,
+              boxFit: BoxFit.cover,
               onTap: () {
                 Navigator.pushNamed(context, photoDetails,
                     arguments: arguments);
