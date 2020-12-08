@@ -25,7 +25,7 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
   void _loadBannerAd() {
     _bannerAd
       ..load()
-      ..show(anchorType: AnchorType.bottom);
+      ..show(anchorType: AnchorType.top);
   }
 
   @override
@@ -49,7 +49,9 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
       appBar: AppBar(
         title: Text(board.name),
       ),
-      body: buildList(board),
+      body: SafeArea(
+        child: buildList(board),
+      ),
       bottomNavigationBar: BottomNavbar(),
     );
   }
