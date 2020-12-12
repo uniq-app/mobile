@@ -7,9 +7,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Uniq',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
+        primaryColor: Colors.teal.shade300,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       onGenerateRoute: MainRouter.generateRoute,

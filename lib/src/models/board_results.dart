@@ -3,25 +3,17 @@
 import 'package:uniq/src/models/board.dart';
 
 class BoardResults {
-  int _count;
-  String _next;
-  String _previous;
+  // Add "pageable later"
   List<Board> _results = new List();
 
   BoardResults.fromJson(Map<String, dynamic> parsedJson) {
-    _count = parsedJson['count'] ?? 0;
-    _next = parsedJson['next'] ?? "";
-    _previous = parsedJson['previous'] ?? "";
-    if (parsedJson['results'] != null) {
-      parsedJson['results']
+    if (parsedJson['content'] != null) {
+      parsedJson['content']
           .forEach((result) => _results.add(Board.fromJson(result)));
     } else {
       _results = [];
     }
   }
 
-  int get count => _count;
-  String get next => _next;
-  String get previous => _previous;
   List<Board> get results => _results;
 }

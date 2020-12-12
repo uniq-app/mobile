@@ -1,4 +1,5 @@
 import 'package:uniq/src/models/board_results.dart';
+import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
 
 class BoardRepository {
@@ -6,4 +7,7 @@ class BoardRepository {
 
   Future<BoardResults> getBoards(String ownerId) =>
       _boardApiProvider.getBoards(ownerId);
+
+  Future<List<Photo>> getPhotos(String boardId) =>
+      _boardApiProvider.getPhotos(boardId);
 }
