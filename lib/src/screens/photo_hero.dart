@@ -21,11 +21,14 @@ class PhotoHero extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-                onTap: onTap,
-                child: Image.network(
-                  photo,
-                  fit: boxFit,
-                )),
+              onTap: onTap,
+              child: FadeInImage.assetNetwork(
+                fadeInDuration: Duration(milliseconds: 300),
+                placeholder: 'assets/404.png',
+                image: photo,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
       ),
