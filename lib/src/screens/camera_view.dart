@@ -29,7 +29,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     print("Camera init");
     _controller = CameraController(
       widget.camera,
-      ResolutionPreset.medium,
+      ResolutionPreset.max,
     );
 
     _initializeControllerFuture = _controller.initialize();
@@ -109,10 +109,43 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      body: SafeArea(
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              child: Image.file(
+                File(imagePath),
+                fit: BoxFit.fill,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(100, 0, 0, 100),
+              child: IconButton(
+                iconSize: 50,
+                icon: Icon(
+                  Icons.check_circle_outline_outlined,
+                  color: Colors.green,
+                ),
+                onPressed: () => {print("Pressed")},
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 100, 100),
+              child: IconButton(
+                iconSize: 50,
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+                onPressed: () => {print("Pressed")},
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

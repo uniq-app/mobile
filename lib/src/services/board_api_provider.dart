@@ -8,13 +8,14 @@ class BoardApiProvider {
   Client client = Client();
   // Local jest na http://10.0.2.2:PORT/boards
   // final String _apiUrl = 'http://192.168.43.223:8080/boards';
-  final String _apiUrl = 'http://192.168.43.223:8080/boards';
+  final String _apiUrl = 'http://192.168.0.107:8080/boards';
 
   Future<BoardResults> getBoards(String ownerId) async {
     final response = await client.get('$_apiUrl?creator=$ownerId');
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));
     } else {
+      print("Photos - Failed to load boards");
       throw Exception('Failed to load boards');
     }
   }
@@ -27,7 +28,8 @@ class BoardApiProvider {
       body.forEach((el) => photos.add(Photo.fromJson(el)));
       return photos;
     } else {
-      throw Exception('Failed to load boards');
+      print("Photos - Failed to load photos");
+      throw Exception('Failed to load photos');
     }
   }
 }
