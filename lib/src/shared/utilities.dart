@@ -91,12 +91,6 @@ class UniqBoardElement extends StatelessWidget {
         width: size.width * 0.8,
         alignment: Alignment.center,
         height: 150,
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(colors: [
-            lightColor,
-            primaryColor,
-          ]),
-        ),
         child: Text(name),
       ),
     );
