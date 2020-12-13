@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:uniq/src/blocs/board_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
+import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
 
@@ -23,8 +25,8 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
   @override
   void initState() {
     // TODO:  super.init poczatek czy koniec?
-    super.initState();
     bloc.getPhotos(this.board.id);
+    super.initState();
   }
 
   @override
@@ -37,7 +39,10 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
         stream: bloc.photos,
         builder: (context, AsyncSnapshot<List<Photo>> snapshot) {
           if (snapshot.hasData) {
-            return buildList(snapshot.data);
+            return Container(
+              margin: EdgeInsets.all(10),
+              child: StaggeredGrid(snapshot.data),
+            );
           } else if (snapshot.hasError) {
             return Text(
               snapshot.error.toString(),
@@ -51,31 +56,36 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
       bottomNavigationBar: BottomNavbar(),
     );
   }
+}
 
-  Widget buildList(List<Photo> photos) {
-    // TODO: Na koncu dodać button ala img "dodaj pic" ;))
-    return GridView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: photos.length,
-        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5),
-        itemBuilder: (BuildContext context, int index) {
-          String tag = '${photos[index].photoId}';
-          String photo =
-              "http://192.168.43.223:80/images/${photos[index].value}";
-          Map<String, dynamic> arguments = {
-            'photo': photo,
-            'tag': tag,
-            'boxFit': BoxFit.contain
-          };
-          return PhotoHero(
-              photo: photo,
-              tag: tag,
-              boxFit: BoxFit.cover,
-              onTap: () {
-                Navigator.pushNamed(context, photoDetails,
-                    arguments: arguments);
-              });
-        });
+class StaggeredGrid extends StatelessWidget {
+  final List<Photo> photos;
+
+  StaggeredGrid(this.photos);
+
+  @override
+  Widget build(BuildContext context) {
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 2,
+      itemCount: photos.length,
+      itemBuilder: (BuildContext context, int index) {
+        String tag = '${photos[index].photoId}';
+        String photo = "${PhotoApiProvider.apiUrl}/${photos[index].value}";
+        Map<String, dynamic> arguments = {
+          'photo': photo,
+          'tag': tag,
+        };
+        return PhotoHero(
+            photo: photo,
+            tag: tag,
+            isRounded: true,
+            onTap: () {
+              Navigator.pushNamed(context, photoDetails, arguments: arguments);
+            });
+      },
+      staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+      mainAxisSpacing: 8.0,
+      crossAxisSpacing: 8.0,
+    );
   }
 }

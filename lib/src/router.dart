@@ -29,7 +29,6 @@ class MainRouter {
           builder: (BuildContext context) => PhotoHero(
             photo: arguments['photo'],
             tag: arguments['tag'],
-            boxFit: arguments['boxFit'],
             onTap: () {
               Navigator.pop(context);
             },

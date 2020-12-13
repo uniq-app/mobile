@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/board_bloc.dart';
 import 'package:uniq/src/models/board.dart';
