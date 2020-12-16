@@ -1,9 +1,9 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
-import 'package:uniq/src/screens/camera_view.dart';
+import 'package:uniq/src/screens/take_picture_screen.dart';
 import 'package:uniq/src/screens/home_page.dart';
+import 'package:uniq/src/screens/image_library_page.dart';
 import 'package:uniq/src/screens/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/screens/welcome_page.dart';
@@ -35,9 +35,13 @@ class MainRouter {
           ),
         );
       case cameraRoute:
-        CameraDescription camera = settings.arguments as CameraDescription;
         return MaterialPageRoute(
-            builder: (_) => TakePictureScreen(camera: camera));
+          builder: (_) => TakePictureScreen(),
+        );
+      case imagePickerRoute:
+        return MaterialPageRoute(
+          builder: (_) => ImageLibraryPage(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
