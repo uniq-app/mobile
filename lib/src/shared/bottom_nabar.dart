@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:uniq/src/shared/constants.dart';
 
@@ -10,6 +9,7 @@ class BottomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       items: [
         BottomNavigationBarItem(
           icon: IconButton(
@@ -23,16 +23,21 @@ class BottomNavbar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: IconButton(
             icon: Icon(Icons.camera),
-            onPressed: () async {
-              // Ensure that camera is initialized
-              WidgetsFlutterBinding.ensureInitialized();
-              final cameras = await availableCameras();
-              final firstCamera = cameras.first;
-              Navigator.pushNamed(context, cameraRoute, arguments: firstCamera);
+            onPressed: () {
+              Navigator.pushNamed(context, cameraRoute);
             },
           ),
           label: 'Camera',
         ),
+        BottomNavigationBarItem(
+          icon: IconButton(
+            icon: Icon(Icons.photo_library),
+            onPressed: () {
+              Navigator.pushNamed(context, imagePickerRoute);
+            },
+          ),
+          label: 'Library',
+        )
       ],
     );
   }
