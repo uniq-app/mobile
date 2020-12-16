@@ -123,9 +123,10 @@ class UniqBoardElement extends StatelessWidget {
                             fontSize: 35,
                             fontWeight: FontWeight.w300)),
                   ),
-                  Icon(
-                    Icons.settings,
+                  IconButton(
+                    icon: Icon(Icons.settings),
                     color: Colors.white,
+                    onPressed: () {},
                   )
                 ]),
                 TableRow(children: [
