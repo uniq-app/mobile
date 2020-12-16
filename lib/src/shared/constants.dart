@@ -7,6 +7,7 @@ const String loginRoute = '/login_page';
 const String signupRoute = '/signup_page';
 const String welcomeRoute = '/';
 const String cameraRoute = '/camera';
+const String imagePickerRoute = '/image-picker';
 
 const Color primaryColor = Color(0xffebab34);
 const Color lightColor = Color(0xffffdc9c);
