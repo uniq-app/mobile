@@ -9,7 +9,7 @@ class UniqButton extends StatelessWidget {
     Key key,
     this.text,
     this.push,
-    this.color = primaryColor,
+    this.color,
     this.textColor = Colors.white,
   }) : super(key: key);
 
@@ -39,11 +39,17 @@ class UniqInputField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final bool isObscure;
   final String hintText;
+  final IconData inputIcon;
+  final Color color;
+  final double fieldRounding;
   const UniqInputField({
     Key key,
     this.onChanged,
-    this.isObscure,
+    this.isObscure = false,
     this.hintText,
+    this.inputIcon,
+    this.color,
+    this.fieldRounding = 15.0,
   }) : super(key: key);
 
   @override
@@ -54,18 +60,18 @@ class UniqInputField extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        color: lightColor,
-        borderRadius: BorderRadius.circular(29),
+        color: color,
+        borderRadius: BorderRadius.circular(fieldRounding),
       ),
       child: TextField(
         obscureText: isObscure,
         onChanged: onChanged,
-        cursorColor: primaryColor,
+        cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
           hintText: hintText,
           icon: Icon(
-            Icons.lock,
-            color: primaryColor,
+            inputIcon,
+            color: Theme.of(context).primaryColor,
           ),
           border: InputBorder.none,
         ),
@@ -87,7 +93,8 @@ class UniqBoardElement extends StatelessWidget {
       this.description,
       this.widthFraction = 0.8,
       this.heightFraction = 0.15,
-      this.imageLink})
+      this.imageLink =
+          "https://images.unsplash.com/photo-1455582916367-25f75bfc6710?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60"})
       : super(key: key);
 
   @override

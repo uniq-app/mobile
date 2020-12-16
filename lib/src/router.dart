@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
+import 'package:uniq/src/screens/create_board_page.dart';
 import 'package:uniq/src/screens/take_picture_screen.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/image_library_page.dart';
@@ -41,6 +42,10 @@ class MainRouter {
       case imagePickerRoute:
         return MaterialPageRoute(
           builder: (_) => ImageLibraryPage(),
+        );
+      case createBoardRoute:
+        return MaterialPageRoute(
+          builder: (_) => CreateBoardPage(),
         );
       default:
         return MaterialPageRoute(

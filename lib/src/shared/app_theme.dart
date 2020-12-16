@@ -12,7 +12,8 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     // Define the default brightness and colors.
     brightness: Brightness.dark,
-    primaryColor: Colors.amber[200],
+    primaryColor: Colors.amber[400],
+    primaryColorLight: Colors.amber[200],
     accentColor: Colors.deepPurple[400],
     iconTheme: IconThemeData(color: Colors.deepOrange),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(

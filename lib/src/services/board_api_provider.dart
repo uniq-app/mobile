@@ -8,7 +8,7 @@ class BoardApiProvider {
   Client client = Client();
   // Local jest na http://10.0.2.2:PORT/boards
   // final String _apiUrl = 'http://192.168.43.223:8080/boards';
-  final String _apiUrl = 'http://192.168.0.107:8080/boards';
+  final String _apiUrl = 'http://10.0.2.2:8080/boards';
 
   Future<BoardResults> getBoards(String ownerId) async {
     final response = await client.get('$_apiUrl?creator=$ownerId');
