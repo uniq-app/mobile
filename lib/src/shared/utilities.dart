@@ -76,22 +76,70 @@ class UniqInputField extends StatelessWidget {
 
 class UniqBoardElement extends StatelessWidget {
   final String id;
-  final String name;
+  final String name, description, imageLink;
+  final double widthFraction, heightFraction;
   final VoidCallback onTap;
-  const UniqBoardElement({Key key, this.id, this.onTap, this.name})
+  const UniqBoardElement(
+      {Key key,
+      this.id,
+      this.onTap,
+      this.name,
+      this.description,
+      this.widthFraction = 0.8,
+      this.heightFraction = 0.15,
+      this.imageLink})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        width: size.width * 0.8,
-        alignment: Alignment.center,
-        height: 150,
-        child: Text(name),
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: InkWell(
+        onTap: onTap,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                colorFilter: ColorFilter.mode(Colors.grey, BlendMode.multiply),
+                image: NetworkImage(imageLink),
+                fit: BoxFit.cover,
+              ),
+            ),
+            padding: EdgeInsets.all(20),
+            width: size.width * widthFraction,
+            alignment: Alignment.topCenter,
+            height: size.height * heightFraction,
+            child: Table(
+              columnWidths: {1: FractionColumnWidth(.1)},
+              children: [
+                TableRow(children: [
+                  Container(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: Text(name,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.w300)),
+                  ),
+                  Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  )
+                ]),
+                TableRow(children: [
+                  Text(description,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w200)),
+                  SizedBox()
+                ]),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
