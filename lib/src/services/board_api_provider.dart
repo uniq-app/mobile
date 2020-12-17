@@ -32,4 +32,21 @@ class BoardApiProvider {
       throw Exception('Failed to load photos');
     }
   }
+
+  Future<dynamic> postPhotos(List<String> photos, String boardId) async {
+    var photosMapped = photos.map((e) => {"value": e}).toList();
+    print(photosMapped);
+    String body = json.encode(photosMapped);
+    print(body);
+    var headers = {"Content-Type": "application/json"};
+    final response = await client.post('$_apiUrl/$boardId/photos',
+        headers: headers, body: body);
+    if (response.statusCode == 200) {
+      print('Success - post Photos');
+    } else {
+      print("Photos - Failed to load photos");
+      print(response);
+      throw Exception('Failed to load photos');
+    }
+  }
 }

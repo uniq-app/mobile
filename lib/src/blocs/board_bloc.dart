@@ -25,7 +25,9 @@ class BoardBloc {
 
   // Prevent leaks by closing stream (Dunno where should use it tho)
   dispose() {
+    print('Bloc disposed');
     _boardSubject.close();
+    _photosSubject.close();
   }
 }
 
