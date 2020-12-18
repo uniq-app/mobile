@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Uniq',
       theme: AppTheme.lightTheme,
       onGenerateRoute: MainRouter.generateRoute,
-      initialRoute: imagePickerRoute,
+      initialRoute: welcomeRoute,
     );
   }
 }

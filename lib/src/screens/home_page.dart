@@ -37,8 +37,6 @@ class _HomePageState extends State<HomePage> {
             return Text(
               snapshot.error.toString(),
             );
-          } else {
-            return placeholderList();
           }
           return Center(
             child: CircularProgressIndicator(),
@@ -55,18 +53,20 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildList(AsyncSnapshot<BoardResults> snapshot) {
     List<Board> boards = snapshot.data.results;
-    return ListView.builder(
-      padding: EdgeInsets.all(10),
-      itemCount: boards.length,
-      itemBuilder: (BuildContext context, int index) {
-        String name = boards[index].name;
-        return UniqBoardElement(
-            name: name,
-            onTap: () {
-              Navigator.pushNamed(context, boardDetailsRoute,
-                  arguments: boards[index]);
-            });
-      },
+    return SafeArea(
+      child: ListView.builder(
+        padding: EdgeInsets.all(10),
+        itemCount: boards.length,
+        itemBuilder: (BuildContext context, int index) {
+          String name = boards[index].name;
+          return UniqBoardElement(
+              name: name,
+              onTap: () {
+                Navigator.pushNamed(context, boardDetailsRoute,
+                    arguments: boards[index]);
+              });
+        },
+      ),
     );
   }
 }
@@ -83,6 +83,11 @@ Widget placeholderList() {
     "https://images.unsplash.com/photo-1569574229209-e8d6463fa1c8?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTJ8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
     "https://images.unsplash.com/photo-1480247439002-7a2d7f3be28b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTR8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
     "https://images.unsplash.com/photo-1498814117408-e396f5507073?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTZ8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
+    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
+    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
+    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
+    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
+    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
     "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60"
   ];
   return CustomScrollView(
@@ -102,13 +107,14 @@ Widget placeholderList() {
       SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
+            print(imagesArray[index]);
             return UniqBoardElement(
               name: "Nazwa $index",
               description: "Opis $index",
-              imageLink: imagesArray[index],
+              imageLink: imagesArray[0],
             );
           },
-          childCount: 10,
+          childCount: 8,
         ),
       ),
     ],
