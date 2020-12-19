@@ -84,7 +84,8 @@ class BoardList extends StatelessWidget {
                   "https://images.unsplash.com/photo-1455582916367-25f75bfc6710?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60";
               return UniqBoardElement(
                   name: boards[index].name,
-                  description: "Opis $index",
+                  description:
+                      "Opis $index Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                   imageLink: image,
                   boardLink: () {
                     Navigator.pushNamed(context, boardDetailsRoute,

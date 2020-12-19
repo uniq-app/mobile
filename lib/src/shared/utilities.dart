@@ -134,7 +134,7 @@ class _UniqBoardElement extends State<UniqBoardElement> {
             alignment: Alignment.topCenter,
             height: size.height * heightFraction,
             child: Table(
-              border: TableBorder.all(color: Colors.black),
+              //border: TableBorder.all(color: Colors.black),
               columnWidths: {1: FractionColumnWidth(.1)},
               children: [
                 TableRow(children: [
@@ -155,10 +155,10 @@ class _UniqBoardElement extends State<UniqBoardElement> {
                       print('Imhere');
                       setState(() {
                         if (isExpanded) {
-                          heightFraction = heightFraction / 1.4;
+                          heightFraction = heightFraction / 1.48;
                           isExpanded = false;
                         } else {
-                          heightFraction = heightFraction * 1.4;
+                          heightFraction = heightFraction * 1.48;
                           isExpanded = true;
                         }
                       });
@@ -167,44 +167,54 @@ class _UniqBoardElement extends State<UniqBoardElement> {
                   )
                 ]),
                 TableRow(children: [
-                  Text(widget.description,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w200)),
-                  SizedBox()
-                ]),
-                TableRow(children: [
-                  SizedBox(
-                    height: 15,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(7),
+                    child: Container(
+                      color: Color(0x77181818),
+                      height: size.width * 0.11,
+                      child: Text(widget.description,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w200)),
+                    ),
                   ),
                   SizedBox()
                 ]),
                 TableRow(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      UniqButton(
-                        color: Theme.of(context).primaryColor,
-                        text: "Edit",
-                        textColor: Colors.white,
-                        screenWidth: 0.25,
-                        screenHeight: 0.05,
-                        padding: 10,
-                        margin: 2,
-                        push: widget.editLink,
-                      ),
-                      UniqButton(
-                        color: Color(0xccff1122),
-                        text: "Delete",
-                        textColor: Colors.white,
-                        screenWidth: 0.25,
-                        screenHeight: 0.05,
-                        padding: 10,
-                        margin: 2,
-                        push: widget.deleteLink,
-                      ),
-                    ],
+                  SizedBox(
+                    height: size.height * 0.015,
+                  ),
+                  SizedBox()
+                ]),
+                TableRow(children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: size.width * 0.1),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        UniqButton(
+                          color: Theme.of(context).primaryColor,
+                          text: "Edit",
+                          textColor: Colors.white,
+                          screenWidth: 0.25,
+                          screenHeight: 0.05,
+                          padding: 10,
+                          margin: 2,
+                          push: widget.editLink,
+                        ),
+                        UniqButton(
+                          color: Color(0xccff1122),
+                          text: "Delete",
+                          textColor: Colors.white,
+                          screenWidth: 0.25,
+                          screenHeight: 0.05,
+                          padding: 10,
+                          margin: 2,
+                          push: widget.deleteLink,
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(),
                 ]),
