@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 const String homeRoute = '/home_page';
 const String boardDetailsRoute = '/details';
 const String photoDetails = '/photo-details';
@@ -8,6 +6,4 @@ const String signupRoute = '/signup_page';
 const String welcomeRoute = '/';
 const String cameraRoute = '/camera';
 const String imagePickerRoute = '/image-picker';
-
-const Color primaryColor = Color(0xffebab34);
-const Color lightColor = Color(0xffffdc9c);
+const String createBoardRoute = '/create_board';

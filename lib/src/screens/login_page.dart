@@ -25,15 +25,20 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             UniqInputField(
+              color: Theme.of(context).accentColor,
+              inputIcon: Icons.email,
               isObscure: false,
               hintText: "Email",
             ),
             UniqInputField(
+              color: Theme.of(context).accentColor,
               isObscure: true,
+              inputIcon: Icons.lock,
               hintText: "Password",
             ),
             SizedBox(height: size.height * 0.05),
             UniqButton(
+              color: Theme.of(context).buttonColor,
               push: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     homeRoute, (Route<dynamic> route) => false);

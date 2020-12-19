@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
+import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -82,54 +84,60 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 }
 
-Widget placeholderList() {
-  var imagesArray = [
-    "https://images.unsplash.com/photo-1455582916367-25f75bfc6710?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1526241671692-e7d3195c9531?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1488875482628-eee706cbfad5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1499018658500-b21c72d7172b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1590101490234-780fb118bd84?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHw%3D&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1485841938031-1bf81239b815?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Nnx8fGVufDB8fHw%3D&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTF8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1569574229209-e8d6463fa1c8?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTJ8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1480247439002-7a2d7f3be28b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTR8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1498814117408-e396f5507073?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTZ8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60",
-    "https://images.unsplash.com/photo-1563866769937-28619344db65?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8&auto=format&fit=crop&w=900&q=60"
-  ];
-  return CustomScrollView(
-    slivers: <Widget>[
-      SliverAppBar(
-          pinned: false,
-          floating: true,
-          expandedHeight: 120.0,
-          flexibleSpace: FlexibleSpaceBar(
-            titlePadding: EdgeInsetsDirectional.only(start: 15, bottom: 15),
-            title: Text('Your boards'),
-            background: Image.asset(
-              'assets/hello.jpg',
-              fit: BoxFit.cover,
-            ),
-          )),
-      SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
-            print(imagesArray[index]);
-            return UniqBoardElement(
-              name: "Nazwa $index",
-              description: "Opis $index",
-              imageLink: imagesArray[0],
-            );
-          },
-          childCount: 8,
+class BoardList extends StatelessWidget {
+  final List<Board> boards;
+  BoardList(this.boards);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+            pinned: false,
+            floating: true,
+            expandedHeight: 120.0,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsetsDirectional.only(start: 15, bottom: 15),
+              title: Text('Your boards'),
+              background: Image.asset(
+                'assets/hello.jpg',
+                fit: BoxFit.cover,
+              ),
+            )),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              String image =
+                  "https://images.unsplash.com/photo-1455582916367-25f75bfc6710?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60";
+              return UniqBoardElement(
+                  name: boards[index].name,
+                  description:
+                      "Opis $index Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                  imageLink: image,
+                  boardLink: () {
+                    Navigator.pushNamed(context, boardDetailsRoute,
+                        arguments: boards[index]);
+                  },
+                  editLink: () {
+                    Navigator.pushNamed(context, boardDetailsRoute,
+                        arguments: boards[index]);
+                  },
+                  deleteLink: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => deleteAlert(board: boards[index]),
+                    );
+                    //Navigator.pushNamed(context, boardDetailsRoute,
+                    //arguments: boards[index]);
+                  });
+            },
+            childCount: boards.length,
+          ),
         ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }
