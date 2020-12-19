@@ -13,18 +13,22 @@ class AppTheme {
     // Define the default brightness and colors.
 
     brightness: Brightness.dark,
-    primaryColor: Colors.amber[200],
-    accentColor: Colors.deepPurple[400],
+    primaryColor: Colors.deepPurple[300],
+    primaryColorLight: Colors.deepPurple[400],
+    accentColor: Colors.grey[700],
     iconTheme: IconThemeData(color: Colors.deepOrange),
+    buttonColor: Colors.grey[900],
+
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Colors.deepPurple[700],
+      backgroundColor: Colors.deepPurple[500],
+      selectedItemColor: Colors.amber[300],
     ),
     bottomAppBarTheme: BottomAppBarTheme(color: Colors.black, elevation: 0),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.amber[200],
     ),
     // Define the default font family.
-    fontFamily: 'Georgia',
+    fontFamily: 'Lato',
 
     // Define the default TextTheme. Use this to specify the default
     // text styling for headlines, titles, bodies of text, and more.

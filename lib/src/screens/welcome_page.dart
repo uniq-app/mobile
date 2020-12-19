@@ -21,14 +21,15 @@ class WelcomePage extends StatelessWidget {
         SizedBox(height: size.height * 0.05),
         UniqButton(
           text: "LOGIN",
+          color: Theme.of(context).primaryColor,
           push: () {
             Navigator.pushNamed(context, loginRoute);
           },
         ),
         UniqButton(
           text: "SIGN UP",
-          color: lightColor,
-          textColor: Colors.black,
+          color: Theme.of(context).accentColor,
+          textColor: Colors.white,
           push: () {
             Navigator.pushNamed(context, signupRoute);
           },
