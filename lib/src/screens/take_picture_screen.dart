@@ -21,7 +21,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
       } else {
-        print('No image selected.');
+        print('No image.');
       }
     });
   }
@@ -30,14 +30,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Picker Example'),
+        title: Text('Take a photo.'),
       ),
       body: Center(
-        child: _image == null ? Text('No image selected.') : Image.file(_image),
+        child: _image == null ? Text('No image.') : Image.file(_image),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: getImage,
-        tooltip: 'Pick Image',
+        tooltip: 'Take Image',
         child: Icon(Icons.add_a_photo),
       ),
     );

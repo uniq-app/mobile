@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:uniq/src/blocs/board_bloc.dart';
-import 'package:uniq/src/models/board_results.dart';
-import 'package:uniq/src/notifiers/dialog_state.dart';
+import 'package:uniq/src/blocs/board/board_bloc.dart';
+import 'package:uniq/src/blocs/board/board_events.dart';
+import 'package:uniq/src/blocs/board/board_states.dart';
+import 'package:uniq/src/models/board.dart';
+import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
+import 'package:uniq/src/shared/custom_error.dart';
+import 'package:uniq/src/shared/loading.dart';
 
 class ImageLibraryPage extends StatefulWidget {
   @override
@@ -15,10 +19,17 @@ class ImageLibraryPage extends StatefulWidget {
 class _ImageLibraryPageState extends State<ImageLibraryPage> {
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
+  PhotoRepository photoRepo = PhotoApiProvider();
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -81,9 +92,6 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
       error = e.toString();
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
@@ -92,73 +100,78 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     });
   }
 
+  _loadBoards() async {
+    context.read<BoardBloc>().add(FetchBoards());
+  }
+
   showSelectBoardDialog(BuildContext context) => showDialog(
       context: context,
       builder: (context) {
-        bloc.getBoards("123");
-        return StreamBuilder(
-          stream: bloc.boardResults,
-          builder: (context, AsyncSnapshot<BoardResults> snapshot) {
-            if (snapshot.hasData) {
-              PhotoApiProvider apiProvider = PhotoApiProvider();
-              return ChangeNotifierProvider<DialogState>(
-                create: (context) =>
-                    DialogState.fromStream(snapshot.data.results),
-                child: Consumer<DialogState>(
-                  builder: (context, _dialogState, _) => AlertDialog(
-                    title: Text('Select boards'),
-                    content: SingleChildScrollView(
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ..._dialogState.boards
-                                .map(
-                                  (e) => CheckboxListTile(
-                                    title: Text(e.name),
-                                    onChanged: (value) {
-                                      _dialogState.toggleChecked(e);
-                                    },
-                                    value: _dialogState.isChecked(e),
-                                  ),
-                                )
-                                .toList(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    actions: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FlatButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text('Go back'),
-                          ),
-                          FlatButton(
-                            onPressed: () => {
-                              // Send to backend
-                              apiProvider.postAll(images, _dialogState),
-                              Navigator.of(context).pop()
-                            },
-                            child: Text('Add'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+        return BlocBuilder<BoardBloc, BoardState>(
+          builder: (BuildContext context, BoardState state) {
+            print("Rebuilded Dialog");
+            if (state is BoardsError) {
+              final error = state.error;
+              return CustomError(
+                message: '${error.message}.\nTap to retry.',
+                onTap: _loadBoards,
               );
-            } else if (snapshot.hasError) {
-              return Text(
-                snapshot.error.toString(),
-              );
+            } else if (state is BoardsLoaded) {
+              List<Board> boards = state.boardResults.results;
+              List<Board> checked = state.checked;
+              return buildDialog(boards, checked);
             }
             return Center(
-              child: CircularProgressIndicator(),
+              child: Loading(),
             );
           },
         );
       });
+
+  Widget buildDialog(List<Board> boards, List<Board> checked) {
+    return AlertDialog(
+      title: Text('Select boards'),
+      content: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ...boards
+                  .map(
+                    (e) => CheckboxListTile(
+                      title: Text(e.name),
+                      onChanged: (value) {
+                        context.read<BoardBloc>().add(SelectBoard(board: e));
+                      },
+                      value: checked.contains(e),
+                    ),
+                  )
+                  .toList(),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlatButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Go back'),
+            ),
+            FlatButton(
+              onPressed: () => {
+                // Send to backend
+                photoRepo.postAll(images, checked),
+                // TODO: Wait for info Bloc -> loader -> sending?
+                Navigator.of(context).pop()
+              },
+              child: Text('Add'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }

@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uniq/src/blocs/board_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/board/board_bloc.dart';
+import 'package:uniq/src/blocs/board/board_events.dart';
+import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
+import 'package:uniq/src/shared/custom_error.dart';
+import 'package:uniq/src/shared/loading.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,9 +21,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    print("Board init");
-    bloc.getBoards("grachu");
     super.initState();
+    _loadBoards();
+  }
+
+  _loadBoards() async {
+    context.read<BoardBloc>().add(FetchBoards());
   }
 
   @override
@@ -30,29 +38,50 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
-        stream: bloc.boardResults,
-        builder: (context, AsyncSnapshot<BoardResults> snapshot) {
-          if (snapshot.hasData) {
-            return BoardList(snapshot.data.results);
-          } else if (snapshot.hasError) {
-            return Text(
-              snapshot.error.toString(),
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, createBoardRoute);
-          },
-          child: Icon(Icons.add)),
+      body: _body(),
+      //  floatingActionButton:
+      //      FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
       // TODO: Switch to proper icons and labels, "switch" screen without routing
       bottomNavigationBar: BottomNavbar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  Widget _body() {
+    return BlocBuilder<BoardBloc, BoardState>(
+      builder: (BuildContext context, BoardState state) {
+        if (state is BoardsError) {
+          final error = state.error;
+          return CustomError(
+            message: '${error.message}.\nTap to retry.',
+            onTap: _loadBoards,
+          );
+        } else if (state is BoardsLoaded) {
+          return buildList(state.boardResults);
+        }
+        return Center(
+          child: Loading(),
+        );
+      },
+    );
+  }
+
+  Widget buildList(BoardResults boardResults) {
+    List<Board> boards = boardResults.results;
+    return SafeArea(
+      child: ListView.builder(
+        padding: EdgeInsets.all(10),
+        itemCount: boards.length,
+        itemBuilder: (BuildContext context, int index) {
+          String name = boards[index].name;
+          return UniqBoardElement(
+              name: name,
+              onTap: () {
+                Navigator.pushNamed(context, boardDetailsRoute,
+                    arguments: boards[index]);
+              });
+        },
+      ),
     );
   }
 

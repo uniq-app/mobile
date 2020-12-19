@@ -1,4 +1,6 @@
-class Board {
+import 'package:equatable/equatable.dart';
+
+class Board extends Equatable {
   String _id;
   String _name;
   String _creatorId;
@@ -40,4 +42,15 @@ class Board {
   bool get isCreatorHidden => _isCreatorHidden;
   DateTime get createdAt => _createdAt;
   DateTime get updatedAt => _updatedAt;
+
+  @override
+  List<Object> get props => [
+        _id,
+        _name,
+        _creatorId,
+        _isPrivate,
+        _isCreatorHidden,
+        _createdAt,
+        _updatedAt
+      ];
 }
