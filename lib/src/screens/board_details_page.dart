@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:uniq/src/blocs/board_bloc.dart';
+import 'package:uniq/src/blocs/photo/photo_bloc.dart';
+import 'package:uniq/src/blocs/photo/photo_events.dart';
+import 'package:uniq/src/blocs/photo/photo_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
+import 'package:uniq/src/shared/custom_error.dart';
+import 'package:uniq/src/shared/loading.dart';
 
 class BoardDetailsPage extends StatefulWidget {
   final Board board;
@@ -24,9 +29,8 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
 
   @override
   void initState() {
-    // TODO:  super.init poczatek czy koniec?
-    bloc.getPhotos(this.board.id);
     super.initState();
+    _loadPhotos();
   }
 
   @override
@@ -35,25 +39,31 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
       appBar: AppBar(
         title: Text(widget.board.name),
       ),
-      body: StreamBuilder(
-        stream: bloc.photos,
-        builder: (context, AsyncSnapshot<List<Photo>> snapshot) {
-          if (snapshot.hasData) {
-            return Container(
-              margin: EdgeInsets.all(10),
-              child: StaggeredGrid(snapshot.data),
-            );
-          } else if (snapshot.hasError) {
-            return Text(
-              snapshot.error.toString(),
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+      body: _body(),
       bottomNavigationBar: BottomNavbar(),
+    );
+  }
+
+  _loadPhotos() async {
+    context.read<PhotoBloc>().add(FetchBoardPhotos(boardId: board.id));
+  }
+
+  Widget _body() {
+    return BlocBuilder<PhotoBloc, PhotoState>(
+      builder: (BuildContext context, PhotoState state) {
+        if (state is PhotosError) {
+          final error = state.error;
+          return CustomError(
+            message: '${error.message}.\nTap to retry.',
+            onTap: _loadPhotos,
+          );
+        } else if (state is PhotosLoaded) {
+          return StaggeredGrid(state.photos);
+        }
+        return Center(
+          child: Loading(),
+        );
+      },
     );
   }
 }

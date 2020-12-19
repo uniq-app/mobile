@@ -3,9 +3,10 @@ import 'package:rxdart/subjects.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
+import 'package:uniq/src/services/board_api_provider.dart';
 
 class BoardBloc {
-  final BoardRepository boardRepository = BoardRepository();
+  final BoardRepository boardRepository = BoardApiProvider();
   // Stream for boards results
   final _boardSubject = PublishSubject<BoardResults>();
   final _photosSubject = PublishSubject<List<Photo>>();
@@ -19,7 +20,7 @@ class BoardBloc {
   }
 
   getPhotos(String boardId) async {
-    List<Photo> photosResults = await boardRepository.getPhotos(boardId);
+    List<Photo> photosResults = await boardRepository.getBoardPhotos(boardId);
     _photosSubject.sink.add(photosResults);
   }
 

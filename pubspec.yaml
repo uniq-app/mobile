@@ -28,6 +28,8 @@ dependencies:
   flutter_staggered_grid_view:
   image_picker: ^0.6.7+15
   multi_image_picker: ^4.7.14
+  flutter_bloc: ^6.1.1
+  equatable: ^1.2.5
   provider: ^4.3.2+3
   path_provider:
   # The following adds the Cupertino Icons font to your application.

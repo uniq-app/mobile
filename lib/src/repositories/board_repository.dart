@@ -1,13 +1,13 @@
+import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
-import 'package:uniq/src/services/board_api_provider.dart';
 
-class BoardRepository {
-  final BoardApiProvider _boardApiProvider = BoardApiProvider();
+abstract class BoardRepository {
+  Future<BoardResults> getBoards(String ownerId);
 
-  Future<BoardResults> getBoards(String ownerId) =>
-      _boardApiProvider.getBoards(ownerId);
+  Future<List<Photo>> getBoardPhotos(String boardId);
 
-  Future<List<Photo>> getPhotos(String boardId) =>
-      _boardApiProvider.getPhotos(boardId);
+  Future<dynamic> postPhotos(List<String> photos, String boardId);
+
+  Board selectBoard(Board board);
 }

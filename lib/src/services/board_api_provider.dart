@@ -1,16 +1,19 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
+import 'package:uniq/src/repositories/board_repository.dart';
 
-class BoardApiProvider {
+class BoardApiProvider implements BoardRepository {
   Client client = Client();
   // Local jest na http://10.0.2.2:PORT/boards
   // final String _apiUrl = 'http://192.168.43.223:8080/boards';
   final String _apiUrl = 'http://192.168.0.107:8080/boards';
 
   Future<BoardResults> getBoards(String ownerId) async {
+    print("Calling get boards");
     final response = await client.get('$_apiUrl?creator=$ownerId');
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));
@@ -20,7 +23,7 @@ class BoardApiProvider {
     }
   }
 
-  Future<List<Photo>> getPhotos(String boardId) async {
+  Future<List<Photo>> getBoardPhotos(String boardId) async {
     final response = await client.get('$_apiUrl/$boardId/photos');
     if (response.statusCode == 200) {
       List<Photo> photos = new List();
@@ -48,5 +51,9 @@ class BoardApiProvider {
       print(response);
       throw Exception('Failed to load photos');
     }
+  }
+
+  Board selectBoard(Board board) {
+    return board;
   }
 }

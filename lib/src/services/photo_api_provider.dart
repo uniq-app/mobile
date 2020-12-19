@@ -6,12 +6,13 @@ import 'package:http/http.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/notifiers/dialog_state.dart';
+import 'package:uniq/src/repositories/board_repository.dart';
+import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
 
-class PhotoApiProvider {
+class PhotoApiProvider implements PhotoRepository {
   Client client = Client();
-  BoardApiProvider boardApiProvider = BoardApiProvider();
+  BoardRepository boardApiProvider = BoardApiProvider();
   PhotoApiProvider();
 
   // Local jest na http://10.0.2.2:80/images
@@ -20,14 +21,14 @@ class PhotoApiProvider {
 
   static String get apiUrl => _apiUrl;
 
-  void postAll(List<Asset> assets, DialogState dialogState) async {
+  void postAll(List<Asset> assets, List<Board> checked) async {
     List<String> values = new List();
     for (Asset asset in assets) {
       // Collect them here
       values.add(await postImage(asset));
     }
     // Post to selected boards
-    for (Board board in dialogState.checked) {
+    for (Board board in checked) {
       boardApiProvider.postPhotos(values, board.id);
     }
   }
