@@ -86,9 +86,21 @@ class BoardList extends StatelessWidget {
                   name: boards[index].name,
                   description: "Opis $index",
                   imageLink: image,
-                  onTap: () {
+                  boardLink: () {
                     Navigator.pushNamed(context, boardDetailsRoute,
                         arguments: boards[index]);
+                  },
+                  editLink: () {
+                    Navigator.pushNamed(context, boardDetailsRoute,
+                        arguments: boards[index]);
+                  },
+                  deleteLink: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => deleteAlert(board: boards[index]),
+                    );
+                    //Navigator.pushNamed(context, boardDetailsRoute,
+                    //arguments: boards[index]);
                   });
             },
             childCount: boards.length,
