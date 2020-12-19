@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:uniq/src/blocs/board_bloc.dart';
+import 'package:uniq/src/models/board_results.dart';
+import 'package:uniq/src/notifiers/dialog_state.dart';
+import 'package:uniq/src/services/photo_api_provider.dart';
 
 class ImageLibraryPage extends StatefulWidget {
   @override
@@ -15,6 +19,31 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: new AppBar(
+        title: const Text('Pick images'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Center(child: Text('Error: $_error')),
+          Expanded(
+            child: buildGridView(),
+          ),
+          RaisedButton(
+            child: Text("Pick images"),
+            onPressed: loadAssets,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => showSelectBoardDialog(context),
+        child: Icon(Icons.navigate_next),
+      ),
+    );
   }
 
   Widget buildGridView() {
@@ -42,9 +71,8 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
-          allViewTitle: "All Photos",
+          actionBarTitle: "Library",
+          allViewTitle: "All photos",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
         ),
@@ -64,26 +92,73 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Column(
-          children: <Widget>[
-            Center(child: Text('Error: $_error')),
-            RaisedButton(
-              child: Text("Pick images"),
-              onPressed: loadAssets,
-            ),
-            Expanded(
-              child: buildGridView(),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  showSelectBoardDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) {
+        bloc.getBoards("123");
+        return StreamBuilder(
+          stream: bloc.boardResults,
+          builder: (context, AsyncSnapshot<BoardResults> snapshot) {
+            if (snapshot.hasData) {
+              PhotoApiProvider apiProvider = PhotoApiProvider();
+              return ChangeNotifierProvider<DialogState>(
+                create: (context) =>
+                    DialogState.fromStream(snapshot.data.results),
+                child: Consumer<DialogState>(
+                  builder: (context, _dialogState, _) => AlertDialog(
+                    title: Text('Select boards'),
+                    content: SingleChildScrollView(
+                      child: Container(
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ..._dialogState.boards
+                                .map(
+                                  (e) => CheckboxListTile(
+                                    title: Text(e.name),
+                                    onChanged: (value) {
+                                      _dialogState.toggleChecked(e);
+                                    },
+                                    value: _dialogState.isChecked(e),
+                                  ),
+                                )
+                                .toList(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    actions: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FlatButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text('Go back'),
+                          ),
+                          FlatButton(
+                            onPressed: () => {
+                              // Send to backend
+                              apiProvider.postAll(images, _dialogState),
+                              Navigator.of(context).pop()
+                            },
+                            child: Text('Add'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text(
+                snapshot.error.toString(),
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
+      });
 }

@@ -112,6 +112,8 @@ class _UniqBoardElement extends State<UniqBoardElement> {
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
+    var imageLink =
+        "https://images.unsplash.com/photo-1455582916367-25f75bfc6710?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60";
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.all(10),
@@ -167,6 +169,7 @@ class _UniqBoardElement extends State<UniqBoardElement> {
                   )
                 ]),
                 TableRow(children: [
+
                   ClipRRect(
                     borderRadius: BorderRadius.circular(7),
                     child: Container(
