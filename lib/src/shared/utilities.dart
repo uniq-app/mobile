@@ -169,13 +169,12 @@ class _UniqBoardElement extends State<UniqBoardElement> {
                   )
                 ]),
                 TableRow(children: [
-
                   ClipRRect(
                     borderRadius: BorderRadius.circular(7),
                     child: Container(
                       color: Color(0x77181818),
                       height: size.width * 0.11,
-                      child: Text(widget.description,
+                      child: Text(widget.description ?? '',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 17,

@@ -9,11 +9,10 @@ import 'package:uniq/src/repositories/board_repository.dart';
 class BoardApiProvider implements BoardRepository {
   Client client = Client();
   // Local jest na http://10.0.2.2:PORT/boards
-  // final String _apiUrl = 'http://192.168.43.223:8080/boards';
-  final String _apiUrl = 'http://10.0.2.2:8080/boards';
+  final String _apiUrl = 'http://192.168.0.107:8080/boards';
+  // final String _apiUrl = 'http://10.0.2.2:8080/boards';
 
   Future<BoardResults> getBoards(String ownerId) async {
-    print("Calling get boards");
     final response = await client.get('$_apiUrl?creator=$ownerId');
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));

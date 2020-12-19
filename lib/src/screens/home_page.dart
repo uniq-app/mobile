@@ -5,7 +5,6 @@ import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -31,7 +30,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    print("Board destroy");
     super.dispose();
   }
 
@@ -57,6 +55,7 @@ class _HomePageState extends State<HomePage> {
             onTap: _loadBoards,
           );
         } else if (state is BoardsLoaded) {
+          print(state.boardResults);
           return buildList(state.boardResults);
         }
         return Center(
@@ -76,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           String name = boards[index].name;
           return UniqBoardElement(
               name: name,
-              onTap: () {
+              boardLink: () {
                 Navigator.pushNamed(context, boardDetailsRoute,
                     arguments: boards[index]);
               });
@@ -84,7 +83,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }
 
 class BoardList extends StatelessWidget {

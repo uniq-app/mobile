@@ -1,11 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uniq/src/blocs/board_bloc.dart';
-import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/models/photo.dart';
-import 'package:uniq/src/models/board_results.dart';
-import 'package:uniq/src/shared/bottom_nabar.dart';
-import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
 class CreateBoardPage extends StatelessWidget {

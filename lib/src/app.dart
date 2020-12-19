@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         title: 'Uniq',
         theme: AppTheme.lightTheme,
         onGenerateRoute: MainRouter.generateRoute,
-        initialRoute: homeRoute,
+        initialRoute: welcomeRoute,
       ),
     );
   }
