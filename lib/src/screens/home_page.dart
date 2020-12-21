@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
       body: _body(),
       //  floatingActionButton:
       //      FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
-      // TODO: Switch to proper icons and labels, "switch" screen without routing
       bottomNavigationBar: BottomNavbar(),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -55,7 +54,6 @@ class _HomePageState extends State<HomePage> {
             onTap: _loadBoards,
           );
         } else if (state is BoardsLoaded) {
-          print(state.boardResults);
           return buildList(state.boardResults);
         }
         return Center(
@@ -126,7 +124,7 @@ class BoardList extends StatelessWidget {
                   deleteLink: () {
                     showDialog(
                       context: context,
-                      builder: (_) => deleteAlert(board: boards[index]),
+                      builder: (_) => DeleteAlert(board: boards[index]),
                     );
                     //Navigator.pushNamed(context, boardDetailsRoute,
                     //arguments: boards[index]);

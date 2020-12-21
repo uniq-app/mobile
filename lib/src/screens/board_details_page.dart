@@ -58,7 +58,10 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
             onTap: _loadPhotos,
           );
         } else if (state is PhotosLoaded) {
-          return StaggeredGrid(state.photos);
+          return Padding(
+            padding: EdgeInsets.all(4),
+            child: StaggeredGrid(state.photos),
+          );
         }
         return Center(
           child: Loading(),

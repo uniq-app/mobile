@@ -229,9 +229,9 @@ class _UniqBoardElement extends State<UniqBoardElement> {
   }
 }
 
-class deleteAlert extends StatelessWidget {
+class DeleteAlert extends StatelessWidget {
   final Board board;
-  const deleteAlert({Key key, this.board}) : super(key: key);
+  const DeleteAlert({Key key, this.board}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
