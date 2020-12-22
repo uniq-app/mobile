@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.0-nullsafety.1"
+  bloc:
+    dependency: transitive
+    description:
+      name: bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -15,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.1"
-  camera:
-    dependency: "direct main"
-    description:
-      name: camera
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.8+17"
   characters:
     dependency: transitive
     description:
@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  equatable:
+    dependency: "direct main"
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.5"
   fake_async:
     dependency: transitive
     description:
@@ -118,6 +125,27 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bloc:
+    dependency: "direct main"
+    description:
+      name: flutter_bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.1.1"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.11"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -142,6 +170,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
+  image_picker:
+    dependency: "direct main"
+    description:
+      name: image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.7+15"
+  image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: image_picker_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   intl:
     dependency: transitive
     description:
@@ -149,6 +191,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+<<<<<<< HEAD
   js:
     dependency: transitive
     description:
@@ -156,6 +199,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2"
+=======
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.4"
+>>>>>>> 23a789338886487c2c776e7152fd277039133ad1
   matcher:
     dependency: transitive
     description:
@@ -170,8 +222,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0-nullsafety.3"
-  path:
+  multi_image_picker:
     dependency: "direct main"
+    description:
+      name: multi_image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.7.14"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
+  path:
+    dependency: transitive
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -240,6 +306,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.13"
+<<<<<<< HEAD
   quiver:
     dependency: transitive
     description:
@@ -249,11 +316,15 @@ packages:
     version: "2.1.5"
   rxdart:
     dependency: "direct main"
+=======
+  provider:
+    dependency: transitive
+>>>>>>> 23a789338886487c2c776e7152fd277039133ad1
     description:
-      name: rxdart
+      name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.1"
+    version: "4.3.2+3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -331,4 +402,4 @@ packages:
     version: "0.1.2"
 sdks:
   dart: ">=2.10.0-110 <2.11.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.17.0 <2.0.0"
