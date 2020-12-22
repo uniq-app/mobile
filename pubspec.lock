@@ -145,7 +145,7 @@ packages:
       name: flutter_staggered_grid_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.2"
+    version: "0.3.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -176,7 +176,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.7+15"
+    version: "0.6.7+17"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -191,7 +191,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
-<<<<<<< HEAD
   js:
     dependency: transitive
     description:
@@ -199,7 +198,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2"
-=======
   logger:
     dependency: "direct main"
     description:
@@ -207,7 +205,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.4"
->>>>>>> 23a789338886487c2c776e7152fd277039133ad1
   matcher:
     dependency: transitive
     description:
@@ -237,7 +234,7 @@ packages:
     source: hosted
     version: "0.0.4"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -306,7 +303,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.13"
-<<<<<<< HEAD
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.3.2+3"
   quiver:
     dependency: transitive
     description:
@@ -314,17 +317,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
-  rxdart:
-    dependency: "direct main"
-=======
-  provider:
-    dependency: transitive
->>>>>>> 23a789338886487c2c776e7152fd277039133ad1
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.3.2+3"
   sky_engine:
     dependency: transitive
     description: flutter

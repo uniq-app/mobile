@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
@@ -8,6 +9,7 @@ import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
+import 'package:uniq/src/shared/ad_manager.dart';
 import 'package:uniq/src/shared/custom_error.dart';
 import 'package:uniq/src/shared/loading.dart';
 
@@ -21,14 +23,49 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   String _error = 'No Error Dectected';
   PhotoRepository photoRepo = PhotoApiProvider();
 
+  // Adds
+  InterstitialAd _interstitialAd;
+  bool _isInterstitialAdReady;
+
+  void _loadInterstitialAd() {
+    _interstitialAd
+      ..load()
+      ..show();
+  }
+
+  void _onInterstitialAdEvent(MobileAdEvent event) {
+    switch (event) {
+      case MobileAdEvent.loaded:
+        _isInterstitialAdReady = true;
+        break;
+      case MobileAdEvent.failedToLoad:
+        _isInterstitialAdReady = false;
+        print('Failed to load an interstitial ad');
+        break;
+      case MobileAdEvent.closed:
+        print('Closes');
+        break;
+      default:
+      // do nothing
+    }
+  }
+
   @override
   void initState() {
+    _isInterstitialAdReady = true;
+    _interstitialAd = InterstitialAd(
+      adUnitId: AdManager.interstitialAdUnitId,
+      listener: _onInterstitialAdEvent,
+    );
+    _loadInterstitialAd();
+
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    _interstitialAd?.dispose();
     super.dispose();
   }
 

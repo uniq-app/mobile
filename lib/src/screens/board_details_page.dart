@@ -44,7 +44,7 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
 
     _bannerAd = BannerAd(
       adUnitId: AdManager.bannerAdUnitId,
-      size: AdSize.banner,
+      size: AdSize.smartBanner,
     );
     _loadBannerAd();
   }

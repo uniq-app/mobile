@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-import 'package:camera/camera.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:uniq/src/shared/ad_manager.dart';
 
-=======
 import 'package:flutter/cupertino.dart';
->>>>>>> 23a789338886487c2c776e7152fd277039133ad1
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
@@ -66,7 +62,12 @@ class _HomePageState extends State<HomePage> {
             onTap: _loadBoards,
           );
         } else if (state is BoardsLoaded) {
-          return buildList(state.boardResults);
+          return FutureBuilder(
+            future: _initAdMob(),
+            builder: (context, snapshot) {
+              return BoardList(state.boardResults.results);
+            },
+          );
         }
         return Center(
           child: Loading(),
@@ -91,7 +92,6 @@ class _HomePageState extends State<HomePage> {
               });
         },
       ),
-      bottomNavigationBar: BottomNavbar(),
     );
   }
 }
@@ -102,7 +102,6 @@ class BoardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //future: _initAdMob(),
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
