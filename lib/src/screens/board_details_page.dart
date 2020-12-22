@@ -24,7 +24,6 @@ class BoardDetailsPage extends StatefulWidget {
 
 class _BoardDetailsPageState extends State<BoardDetailsPage> {
   Board board;
-
   _BoardDetailsPageState(this.board);
 
   @override
@@ -48,6 +47,16 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
     context.read<PhotoBloc>().add(FetchBoardPhotos(boardId: board.id));
   }
 
+  Future<List<Image>> _precacheImages(List<Photo> photos) async {
+    String src = "${PhotoApiProvider.apiUrl}";
+    List<Image> images =
+        photos.map((e) => Image.network("$src/${e.value}")).toList();
+    var futures =
+        images.map((element) => precacheImage(element.image, context));
+    await Future.wait(futures);
+    return images;
+  }
+
   Widget _body() {
     return BlocBuilder<PhotoBloc, PhotoState>(
       builder: (BuildContext context, PhotoState state) {
@@ -58,7 +67,21 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
             onTap: _loadPhotos,
           );
         } else if (state is PhotosLoaded) {
-          return StaggeredGrid(state.photos);
+          // Future Builder
+          return FutureBuilder(
+            future: _precacheImages(state.photos),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: EdgeInsets.all(4),
+                  child: StaggeredGrid(state.photos),
+                );
+              } else if (snapshot.hasError) {
+                return CustomError(message: "Couldnt preload images");
+              }
+              return Loading();
+            },
+          );
         }
         return Center(
           child: Loading(),

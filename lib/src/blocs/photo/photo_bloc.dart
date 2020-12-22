@@ -19,7 +19,6 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         yield PhotosLoading();
         photos = await boardRepository.getBoardPhotos(event.boardId);
         yield PhotosLoaded(photos: photos);
-        print("Afet yield $photos");
       } on SocketException {
         yield PhotosError(error: NoInternetException('No internet'));
       } on HttpException {
