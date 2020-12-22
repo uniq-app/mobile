@@ -52,14 +52,13 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
 
   @override
   void initState() {
+    super.initState();
     _isInterstitialAdReady = true;
     _interstitialAd = InterstitialAd(
       adUnitId: AdManager.interstitialAdUnitId,
       listener: _onInterstitialAdEvent,
     );
     _loadInterstitialAd();
-
-    super.initState();
   }
 
   @override
