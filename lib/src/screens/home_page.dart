@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             onTap: _loadBoards,
           );
         } else if (state is BoardsLoaded) {
-          return buildList(state.boardResults);
+          return BoardList(state.boardResults.results);
         }
         return Center(
           child: Loading(),
