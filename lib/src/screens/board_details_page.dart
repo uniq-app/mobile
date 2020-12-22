@@ -6,6 +6,7 @@ import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/photo.dart';
+import 'package:uniq/src/screens/moveable_stack.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/bottom_nabar.dart';
@@ -74,7 +75,11 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
               if (snapshot.hasData) {
                 return Padding(
                   padding: EdgeInsets.all(4),
-                  child: StaggeredGrid(state.photos),
+                  // Todo: pass precached images
+                  //child: StaggeredGrid(state.photos),
+                  child: MoveableStack(
+                    photos: snapshot.data,
+                  ),
                 );
               } else if (snapshot.hasError) {
                 return CustomError(message: "Couldnt preload images");

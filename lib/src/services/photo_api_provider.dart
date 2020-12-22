@@ -17,7 +17,7 @@ class PhotoApiProvider implements PhotoRepository {
 
   // Local jest na http://10.0.2.2:80/images
   // final String _apiUrl = 'http://192.168.43.223:80/images';
-  static final String _apiUrl = 'http://192.168.0.107:80/images';
+  static final String _apiUrl = 'http://192.168.0.107:80/images/thumbnail';
 
   static String get apiUrl => _apiUrl;
 
