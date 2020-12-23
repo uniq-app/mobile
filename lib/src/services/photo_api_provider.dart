@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
@@ -63,5 +64,34 @@ class PhotoApiProvider implements PhotoRepository {
       print("Photos - failed to post photos");
       throw Exception('Failed to load photos');
     }
+  }
+
+  Future<String> postImageFromFile(File file) async {
+    var request = new MultipartRequest("POST", Uri.parse(_apiUrl));
+    request.files.add(MultipartFile.fromBytes('file', file.readAsBytesSync(),
+        filename: file.path.split("/").last));
+
+    var responseStream = await request.send();
+    var response = await Response.fromStream(responseStream);
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body)['id'];
+    } else {
+      print("Photos - failed to post photos");
+      throw Exception('Failed to load photos');
+    }
+  }
+
+  Future postSingleImageToBoards(File image, List<Board> checked) async {
+    var value = await postImageFromFile(image);
+    List<Future> futures = List();
+    // Post to selected boards
+    for (Board board in checked) {
+      futures.add(boardApiProvider.postPhotos([value], board.id));
+    }
+    await Future.wait(futures);
+    // Todo: xd
+    await Future.delayed(Duration(seconds: 1));
+    return true;
   }
 }
