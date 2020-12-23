@@ -74,7 +74,6 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
-
     try {
       resultList = await MultiImagePicker.pickImages(
         maxImages: 300,
@@ -85,7 +84,10 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
           actionBarTitle: "Library",
           allViewTitle: "All photos",
           useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
+          selectCircleStrokeColor: "#FFFFFF",
+          actionBarColor: Theme.of(context).primaryColor.toHexTriplet(),
+          //lightStatusBar: true,
+          statusBarColor: Theme.of(context).primaryColor.toHexTriplet(),
         ),
       );
     } on Exception catch (e) {
@@ -174,4 +176,10 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
       ],
     );
   }
+}
+
+// Todo: move extension somewhere else?
+extension ColorX on Color {
+  String toHexTriplet() =>
+      '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
 }
