@@ -109,7 +109,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   onFabPressed() async {
     if (images.length > 0) {
       bool result = await showSelectBoardDialog(context);
-      await Future.delayed(Duration(milliseconds: 350));
+      await Future.delayed(Duration(seconds: 2));
       if (result == true) _closePostDialog();
     } else {
       //Todo: show toast that u need to pick some items first

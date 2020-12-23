@@ -37,9 +37,7 @@ class BoardApiProvider implements BoardRepository {
 
   Future<dynamic> postPhotos(List<String> photos, String boardId) async {
     var photosMapped = photos.map((e) => {"value": e}).toList();
-    print(photosMapped);
     String body = json.encode(photosMapped);
-    print(body);
     var headers = {"Content-Type": "application/json"};
     final response = await client.post('$_apiUrl/$boardId/photos',
         headers: headers, body: body);

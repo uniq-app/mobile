@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -25,6 +27,12 @@ class PostAllPhotos extends PhotoEvent {
 
   @override
   List<Object> get props => [images, checked];
+}
+
+class PostSingleImage extends PhotoEvent {
+  final File image;
+  final List<Board> checked;
+  PostSingleImage({this.image, this.checked});
 }
 
 class ClosePostDialog extends PhotoEvent {}

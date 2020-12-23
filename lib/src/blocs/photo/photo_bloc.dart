@@ -56,5 +56,23 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
     if (event is ClosePostDialog) {
       yield PhotoInitial();
     }
+    // Todo: make exceptions handler
+    if (event is PostSingleImage) {
+      try {
+        yield PhotosLoading();
+        await photoRepository.postSingleImageToBoards(
+            event.image, event.checked);
+        yield PhotosPostedSuccess();
+      } on SocketException {
+        yield PhotosError(error: NoInternetException('No internet'));
+      } on HttpException {
+        yield PhotosError(error: NoServiceFoundException('No service found'));
+      } on FormatException {
+        yield PhotosError(
+            error: InvalidFormatException('Invalid resposne format'));
+      } catch (e) {
+        yield PhotosError(error: NoInternetException('Unknown error'));
+      }
+    }
   }
 }
