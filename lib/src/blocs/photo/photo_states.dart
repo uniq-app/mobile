@@ -27,3 +27,5 @@ class PhotosError extends PhotoState {
   @override
   List<Object> get props => [error];
 }
+
+class PhotosPostedSuccess extends PhotoState {}

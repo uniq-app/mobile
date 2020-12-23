@@ -49,7 +49,7 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
   }
 
   Future<List<Image>> _precacheImages(List<Photo> photos) async {
-    String src = "${PhotoApiProvider.apiUrl}";
+    String src = "${PhotoApiProvider.apiUrl}/thumbnail";
     List<Image> images =
         photos.map((e) => Image.network("$src/${e.value}")).toList();
     var futures =
