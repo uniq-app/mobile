@@ -17,20 +17,25 @@ class PhotoApiProvider implements PhotoRepository {
 
   // Local jest na http://10.0.2.2:80/images
   // final String _apiUrl = 'http://192.168.43.223:80/images';
-  static final String _apiUrl = 'http://192.168.0.107:80/images/thumbnail';
+  static final String _apiUrl = 'http://192.168.0.107:80/images';
 
   static String get apiUrl => _apiUrl;
 
-  void postAll(List<Asset> assets, List<Board> checked) async {
+  Future postAll(List<Asset> assets, List<Board> checked) async {
     List<String> values = new List();
     for (Asset asset in assets) {
       // Collect them here
       values.add(await postImage(asset));
     }
+    List<Future> futures = List();
     // Post to selected boards
     for (Board board in checked) {
-      boardApiProvider.postPhotos(values, board.id);
+      futures.add(boardApiProvider.postPhotos(values, board.id));
     }
+    await Future.wait(futures);
+    // Todo: xd
+    await Future.delayed(Duration(seconds: 1));
+    return true;
   }
 
   Future<File> getFileFromAsset(Asset asset) async {

@@ -4,13 +4,16 @@ import 'package:uniq/src/blocs/photo/photo_states.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
+import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/exceptions.dart';
 
 class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
   final BoardRepository boardRepository;
+  final PhotoRepository photoRepository;
   List<Photo> photos;
 
-  PhotoBloc({this.boardRepository}) : super(PhotoInitial());
+  PhotoBloc({this.boardRepository, this.photoRepository})
+      : super(PhotoInitial());
 
   @override
   Stream<PhotoState> mapEventToState(PhotoEvent event) async* {
@@ -29,6 +32,29 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
       } catch (e) {
         yield PhotosError(error: NoInternetException('Unknown error'));
       }
+    }
+    if (event is PostAllPhotos) {
+      try {
+        yield PhotosLoading();
+        var isSuccess =
+            await photoRepository.postAll(event.images, event.checked);
+        print("IsSuccess: $isSuccess");
+        // Todo: reload photos?
+        // Todo: return new custom state?
+        yield PhotosPostedSuccess();
+      } on SocketException {
+        yield PhotosError(error: NoInternetException('No internet'));
+      } on HttpException {
+        yield PhotosError(error: NoServiceFoundException('No service found'));
+      } on FormatException {
+        yield PhotosError(
+            error: InvalidFormatException('Invalid resposne format'));
+      } catch (e) {
+        yield PhotosError(error: NoInternetException('Unknown error'));
+      }
+    }
+    if (event is ClosePostDialog) {
+      yield PhotoInitial();
     }
   }
 }
