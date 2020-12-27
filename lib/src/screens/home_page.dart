@@ -6,6 +6,7 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
+import 'package:uniq/src/screens/edit_board_page.dart';
 import 'package:uniq/src/shared/bottom_nabar.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/custom_error.dart';
@@ -118,8 +119,12 @@ class BoardList extends StatelessWidget {
                         arguments: boards[index]);
                   },
                   editLink: () {
-                    Navigator.pushNamed(context, boardDetailsRoute,
-                        arguments: boards[index]);
+                    showDialog(
+                      context: context,
+                      builder: (_) => EditBoardPage(
+                        board: boards[index],
+                      ),
+                    );
                   },
                   deleteLink: () {
                     showDialog(

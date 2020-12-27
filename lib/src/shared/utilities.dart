@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/models/board.dart';
-import 'constants.dart';
 
 class UniqButton extends StatelessWidget {
   final String text;
@@ -46,7 +45,7 @@ class UniqButton extends StatelessWidget {
 class UniqInputField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final bool isObscure;
-  final String hintText;
+  final String hintText, initialValue;
   final IconData inputIcon;
   final Color color;
   final double fieldRounding;
@@ -58,23 +57,25 @@ class UniqInputField extends StatelessWidget {
     this.inputIcon,
     this.color,
     this.fieldRounding = 15.0,
+    this.initialValue,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: EdgeInsets.symmetric(vertical: 5),
+      //padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(fieldRounding),
       ),
-      child: TextField(
+      child: TextFormField(
         obscureText: isObscure,
         onChanged: onChanged,
         cursorColor: Theme.of(context).primaryColor,
+        initialValue: initialValue,
         decoration: InputDecoration(
           hintText: hintText,
           icon: Icon(
