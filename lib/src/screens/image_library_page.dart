@@ -6,6 +6,7 @@ import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
+import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/services/select_board_dialog_service.dart';
@@ -107,28 +108,22 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
 
   onFabPressed() async {
     if (images.length > 0) {
-      bool result = await dialogService.showCustomDialog();
-      await Future.delayed(Duration(seconds: 2));
-      if (result == true) _closePostDialog();
+      dialogService.showCustomDialog();
     } else {
-      //Todo: show toast that u need to pick some items first
       print(images.length);
     }
   }
 
   _postAllPhotos() async {
     // Read checked cubit then pass to function
-    var res = await context.read<BoardBloc>().checked;
-    print("res $res");
-    context.read<PhotoBloc>().add(PostAllPhotos(images: images, checked: res));
+    var selectedBoard = await context.read<SelectBoardCubit>().state;
+    context
+        .read<PhotoBloc>()
+        .add(PostAllPhotos(images: images, checked: [selectedBoard]));
   }
 
   _loadBoards() async {
     context.read<BoardBloc>().add(FetchBoards());
-  }
-
-  _closePostDialog() async {
-    context.read<PhotoBloc>().add(ClosePostDialog());
   }
 }
 
