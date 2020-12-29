@@ -6,6 +6,7 @@ import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 
+// TODO: Add override annotations
 class BoardApiProvider implements BoardRepository {
   Client client = Client();
   // Local jest na http://10.0.2.2:PORT/boards
