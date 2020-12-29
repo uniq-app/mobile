@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
 import 'package:uniq/src/screens/create_board_page.dart';
+import 'package:uniq/src/screens/edit_board_page.dart';
 import 'package:uniq/src/screens/take_picture_screen.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/image_library_page.dart';
 import 'package:uniq/src/screens/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
+import 'package:uniq/src/screens/user_settings_page.dart';
 import 'package:uniq/src/screens/welcome_page.dart';
 import './shared/constants.dart';
 
@@ -44,6 +46,18 @@ class MainRouter {
           builder: (_) => ImageLibraryPage(),
         );
       case createBoardRoute:
+        return MaterialPageRoute(
+          builder: (_) => CreateBoardPage(),
+        );
+      case userSettingsRoute:
+        return MaterialPageRoute(
+          builder: (_) => UserSettingsPage(),
+        );
+      case editBoardPage:
+        return MaterialPageRoute(
+          builder: (_) => EditBoardPage(),
+        );
+      case createBoardPage:
         return MaterialPageRoute(
           builder: (_) => CreateBoardPage(),
         );

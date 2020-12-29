@@ -7,3 +7,6 @@ const String welcomeRoute = '/';
 const String cameraRoute = '/camera';
 const String imagePickerRoute = '/image-picker';
 const String createBoardRoute = '/create_board';
+const String userSettingsRoute = '/user_settings';
+const String editBoardPage = '/edit_board_page';
+const String createBoardPage = '/create_board_page';
