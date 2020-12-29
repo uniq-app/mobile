@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
-import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
@@ -47,7 +46,12 @@ class SelectBoardDialogService {
     return AlertDialog(
       title: Text('Select boards'),
       content: SingleChildScrollView(
-        child: BlocBuilder<PhotoBloc, PhotoState>(
+        child: BlocConsumer<PhotoBloc, PhotoState>(
+          listener: (context, state) {
+            if (state is PhotosPostedSuccess) {
+              Navigator.pop(context, true);
+            }
+          },
           builder: (BuildContext context, PhotoState state) {
             print("Rebuilded dialog (photo) current state: $state");
             if (state is PhotosError) {
@@ -59,8 +63,6 @@ class SelectBoardDialogService {
               return (boards != null)
                   ? _dialogContainer(boards, context)
                   : CustomError(message: error);
-            } else if (state is PhotosPostedSuccess) {
-              Navigator.pop(context, true);
             }
             return Loading();
           },

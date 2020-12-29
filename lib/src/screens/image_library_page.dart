@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:async';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
+import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
+import 'package:uniq/src/services/image_service.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/services/select_board_dialog_service.dart';
+import 'package:uniq/src/shared/clickable_add_something.dart';
 
 class ImageLibraryPage extends StatefulWidget {
   @override
@@ -17,16 +19,19 @@ class ImageLibraryPage extends StatefulWidget {
 }
 
 class _ImageLibraryPageState extends State<ImageLibraryPage> {
-  List<Asset> images = List<Asset>();
+  //List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
   PhotoRepository photoRepo = PhotoApiProvider();
   SelectBoardDialogService dialogService;
+  ImageService imageService;
 
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<PickedImagesCubit>(context).storePickedImages([]);
     dialogService = new SelectBoardDialogService(
         context: context, onSubmit: _postAllPhotos);
+    imageService = new ImageService(context, mounted);
   }
 
   @override
@@ -54,59 +59,43 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
         Center(child: Text('Error: $_error')),
         Expanded(
           child: buildGridView(),
-        ),
-        RaisedButton(
-          child: Text("Pick images"),
-          onPressed: loadAssets,
-        ),
+        )
       ],
     );
   }
 
   Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        return AssetThumb(
-          asset: asset,
-          width: 300,
-          height: 300,
+    return BlocBuilder<PickedImagesCubit, List<Asset>>(
+      builder: (BuildContext context, List<Asset> state) {
+        List<Asset> images = state;
+        print("Rebuilding grid view with: $state");
+        return Padding(
+          padding: EdgeInsets.all(4),
+          child: GridView.count(
+            crossAxisCount: 3,
+            crossAxisSpacing: 4.0,
+            children: [
+              ClickableAddSomething(imageService.loadAssets),
+              ...List.generate(
+                images.length,
+                (index) {
+                  Asset asset = images[index];
+                  return AssetThumb(
+                    asset: asset,
+                    width: 300,
+                    height: 300,
+                  );
+                },
+              ),
+            ],
+          ),
         );
-      }),
+      },
     );
   }
 
-  Future<void> loadAssets() async {
-    String error = 'No Error Dectected';
-    try {
-      images = await MultiImagePicker.pickImages(
-        maxImages: 300,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarTitle: "Library",
-          allViewTitle: "All photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#FFFFFF",
-          actionBarColor: Theme.of(context).primaryColor.toHexTriplet(),
-          //lightStatusBar: true,
-          statusBarColor: Theme.of(context).primaryColor.toHexTriplet(),
-        ),
-      );
-    } on Exception catch (e) {
-      error = e.toString();
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      _error = error;
-    });
-  }
-
   onFabPressed() async {
+    List<Asset> images = imageService.images;
     if (images.length > 0) {
       dialogService.showCustomDialog();
     } else {
@@ -115,6 +104,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   }
 
   _postAllPhotos() async {
+    List<Asset> images = imageService.images;
     // Read checked cubit then pass to function
     var selectedBoard = await context.read<SelectBoardCubit>().state;
     context
@@ -125,10 +115,4 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   _loadBoards() async {
     context.read<BoardBloc>().add(FetchBoards());
   }
-}
-
-// Todo: move extension somewhere else?
-extension ColorX on Color {
-  String toHexTriplet() =>
-      '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
 }

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:uniq/src/services/image_service.dart';
 import 'package:uniq/src/shared/constants.dart';
 
-class BottomNavbar extends StatelessWidget {
+class BottomNavbar extends StatefulWidget {
   const BottomNavbar({
     Key key,
   }) : super(key: key);
 
+  @override
+  _BottomNavbarState createState() => _BottomNavbarState();
+}
+
+class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
