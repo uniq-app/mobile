@@ -17,8 +17,8 @@ class BoardApiProvider implements BoardRepository {
   );
   final storage = new FlutterSecureStorage();
 
-  //final String _apiUrl = 'http://192.168.43.223:8080/boards';
-  final String _apiUrl = 'http://10.0.2.2:8080/boards';
+  final String _apiUrl = 'http://192.168.43.223:8080/boards';
+  //final String _apiUrl = 'http://10.0.2.2:8080/boards';
 
   Future<BoardResults> getBoards(String ownerId) async {
     final response = await client.get('$_apiUrl?creator=$ownerId');
