@@ -13,12 +13,22 @@ import 'package:uniq/src/shared/app_theme.dart';
 import './shared/constants.dart';
 import './router.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _fcm = FirebaseMessaging();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _configureFirebase();
+  }
+
+  _configureFirebase() async {
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -32,6 +42,10 @@ class MyApp extends StatelessWidget {
     );
     Future<String> fcmToken = _fcm.getToken();
     fcmToken.then((value) => print("FCM token: $value"));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<BoardBloc>(
@@ -57,7 +71,7 @@ class MyApp extends StatelessWidget {
         title: 'Uniq',
         theme: AppTheme.lightTheme,
         onGenerateRoute: MainRouter.generateRoute,
-        initialRoute: welcomeRoute,
+        initialRoute: credentialsCheckRoute,
       ),
     );
   }

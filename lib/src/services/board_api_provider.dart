@@ -1,24 +1,27 @@
 import 'dart:convert';
-
 import 'package:http/http.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // TODO: Add override annotations
 class BoardApiProvider implements BoardRepository {
   Client client = Client();
-  // Local jest na http://10.0.2.2:PORT/boards
-  final String _apiUrl = 'http://192.168.0.107:8080/boards';
+  final storage = new FlutterSecureStorage();
+
+  final String _apiUrl = 'http://192.168.43.223:8080/boards';
   // final String _apiUrl = 'http://10.0.2.2:8080/boards';
 
   Future<BoardResults> getBoards(String ownerId) async {
+    String value = await storage.read(key: "token");
+    print("In board api: $value");
     final response = await client.get('$_apiUrl?creator=$ownerId');
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));
     } else {
-      print("Photos - Failed to load boards");
+      print("Boards - Failed to load boards");
       throw Exception('Failed to load boards');
     }
   }
@@ -31,7 +34,7 @@ class BoardApiProvider implements BoardRepository {
       body.forEach((el) => photos.add(Photo.fromJson(el)));
       return photos;
     } else {
-      print("Photos - Failed to load photos");
+      print("Boards - Failed to load photos");
       throw Exception('Failed to load photos');
     }
   }
