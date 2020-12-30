@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uniq/src/services/image_service.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 class BottomNavbar extends StatefulWidget {
@@ -43,6 +42,15 @@ class _BottomNavbarState extends State<BottomNavbar> {
             },
           ),
           label: 'Library',
+        ),
+        BottomNavigationBarItem(
+          icon: IconButton(
+            icon: Icon(Icons.supervised_user_circle),
+            onPressed: () {
+              Navigator.pushNamed(context, profileRoute);
+            },
+          ),
+          label: 'Profile',
         )
       ],
     );

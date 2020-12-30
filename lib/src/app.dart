@@ -1,22 +1,34 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
+import 'package:uniq/src/services/auth_api_provider.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/app_theme.dart';
 import './shared/constants.dart';
 import './router.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _fcm = FirebaseMessaging();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _configureFirebase();
+  }
+
+  _configureFirebase() async {
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
@@ -30,6 +42,10 @@ class MyApp extends StatelessWidget {
     );
     Future<String> fcmToken = _fcm.getToken();
     fcmToken.then((value) => print("FCM token: $value"));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<BoardBloc>(
@@ -46,13 +62,16 @@ class MyApp extends StatelessWidget {
         BlocProvider<PickedImagesCubit>(
           create: (context) => PickedImagesCubit(),
         ),
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(authRepository: AuthApiProvider()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Uniq',
         theme: AppTheme.lightTheme,
         onGenerateRoute: MainRouter.generateRoute,
-        initialRoute: homeRoute,
+        initialRoute: credentialsCheckRoute,
       ),
     );
   }

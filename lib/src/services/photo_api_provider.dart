@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
@@ -10,15 +11,20 @@ import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
+import 'package:uniq/src/services/http_interceptor.dart';
 
 class PhotoApiProvider implements PhotoRepository {
-  Client client = Client();
+  Client client = HttpClientWithInterceptor.build(
+    interceptors: [
+      LoggingInterceptor(),
+    ],
+  );
   BoardRepository boardApiProvider = BoardApiProvider();
   PhotoApiProvider();
 
   // Local jest na http://10.0.2.2:80/images
   // final String _apiUrl = 'http://192.168.43.223:80/images';
-  static final String _apiUrl = 'http://192.168.0.107:80/images';
+  static final String _apiUrl = 'http://192.168.43.223:80/images';
 
   static String get apiUrl => _apiUrl;
 
