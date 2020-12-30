@@ -10,7 +10,7 @@ class Board extends Equatable {
   DateTime _updatedAt;
 
   Board.fromJson(Map<String, dynamic> parsedJson) {
-    _id = parsedJson['board_id'] ?? '';
+    _id = parsedJson['boardId'] ?? '';
     _name = parsedJson['name'] ?? '';
     _creatorId = parsedJson['creatorId'] ?? '';
     _isPrivate = parsedJson['isPrivate'] ?? false;
