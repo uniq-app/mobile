@@ -54,8 +54,11 @@ class MainRouter {
           builder: (_) => UserSettingsPage(),
         );
       case editBoardPage:
+        Board board = settings.arguments as Board;
         return MaterialPageRoute(
-          builder: (_) => EditBoardPage(),
+          builder: (_) => EditBoardPage(
+            board: board,
+          ),
         );
       case createBoardPage:
         return MaterialPageRoute(

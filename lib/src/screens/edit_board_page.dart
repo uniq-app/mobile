@@ -15,6 +15,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
   bool isPrivate = true;
   @override
   Widget build(BuildContext context) {
+    print(widget.board.name);
     final TextEditingController nameController = new TextEditingController();
     final TextEditingController descriptionController =
         new TextEditingController();
