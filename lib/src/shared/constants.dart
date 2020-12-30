@@ -8,3 +8,4 @@ const String cameraRoute = '/camera';
 const String imagePickerRoute = '/image-picker';
 const String createBoardRoute = '/create_board';
 const String credentialsCheckRoute = '/check-cred';
+const String profileRoute = '/profile';

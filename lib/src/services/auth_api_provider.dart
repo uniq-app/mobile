@@ -45,12 +45,13 @@ class AuthApiProvider implements AuthRepository {
   }
 
   @override
-  Future register(String ownerId) async {
+  Future register(String username, String password) async {
     final response = await client.get('$_apiUrl/register');
   }
 
   @override
-  Future logout(String ownerId) async {
-    final response = await client.get('$_apiUrl/logout');
+  Future logout() async {
+    // todo: Need to call board service?? final response = await client.get('$_apiUrl/logout');
+    return await deleteToken();
   }
 }

@@ -36,5 +36,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         yield LoginError(error: NoInternetException('Unknown error: $e'));
       }
     }
+    if (event is Logout) {
+      yield LogoutLoading();
+      await authRepository.logout();
+      yield LogoutSuccess();
+    }
   }
 }

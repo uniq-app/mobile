@@ -9,7 +9,7 @@ import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/screens/moveable_stack.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
-import 'package:uniq/src/shared/bottom_nabar.dart';
+import 'package:uniq/src/shared/bottom_navbar.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/custom_error.dart';
 import 'package:uniq/src/shared/loading.dart';
