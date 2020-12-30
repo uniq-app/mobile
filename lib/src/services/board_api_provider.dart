@@ -1,22 +1,26 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:uniq/src/services/http_interceptor.dart';
 
 // TODO: Add override annotations
 class BoardApiProvider implements BoardRepository {
-  Client client = Client();
+  Client client = HttpClientWithInterceptor.build(
+    interceptors: [
+      LoggingInterceptor(),
+    ],
+  );
   final storage = new FlutterSecureStorage();
 
   final String _apiUrl = 'http://192.168.43.223:8080/boards';
   // final String _apiUrl = 'http://10.0.2.2:8080/boards';
 
   Future<BoardResults> getBoards(String ownerId) async {
-    String value = await storage.read(key: "token");
-    print("In board api: $value");
     final response = await client.get('$_apiUrl?creator=$ownerId');
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));

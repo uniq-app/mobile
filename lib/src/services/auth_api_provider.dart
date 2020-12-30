@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/repositories/auth_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -10,16 +9,6 @@ class AuthApiProvider implements AuthRepository {
 
   final String _apiUrl = 'http://192.168.43.223:8080/auth';
   // final String _apiUrl = 'http://10.0.2.2:8080/auth';
-
-  Future<BoardResults> getBoards(String ownerId) async {
-    final response = await client.get('$_apiUrl?creator=$ownerId');
-    if (response.statusCode == 200) {
-      return BoardResults.fromJson(json.decode(response.body));
-    } else {
-      print("Photos - Failed to load boards");
-      throw Exception('Failed to load boards');
-    }
-  }
 
   Future storeToken(String token) async {
     await storage.write(key: "token", value: token);
