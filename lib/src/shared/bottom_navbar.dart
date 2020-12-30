@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/shared/constants.dart';
 
-class BottomNavbar extends StatelessWidget {
+class BottomNavbar extends StatefulWidget {
   const BottomNavbar({
     Key key,
   }) : super(key: key);
 
+  @override
+  _BottomNavbarState createState() => _BottomNavbarState();
+}
+
+class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -37,6 +42,15 @@ class BottomNavbar extends StatelessWidget {
             },
           ),
           label: 'Library',
+        ),
+        BottomNavigationBarItem(
+          icon: IconButton(
+            icon: Icon(Icons.supervised_user_circle),
+            onPressed: () {
+              Navigator.pushNamed(context, profileRoute);
+            },
+          ),
+          label: 'Profile',
         )
       ],
     );

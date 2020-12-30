@@ -10,3 +10,5 @@ const String createBoardRoute = '/create_board';
 const String userSettingsRoute = '/user_settings';
 const String editBoardPage = '/edit_board_page';
 const String createBoardPage = '/create_board_page';
+const String credentialsCheckRoute = '/check-cred';
+const String profileRoute = '/profile';

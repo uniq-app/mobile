@@ -3,6 +3,8 @@ import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
 import 'package:uniq/src/screens/create_board_page.dart';
 import 'package:uniq/src/screens/edit_board_page.dart';
+import 'package:uniq/src/screens/credentials_check_page.dart';
+import 'package:uniq/src/screens/profile_page.dart';
 import 'package:uniq/src/screens/take_picture_screen.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/image_library_page.dart';
@@ -63,6 +65,14 @@ class MainRouter {
       case createBoardPage:
         return MaterialPageRoute(
           builder: (_) => CreateBoardPage(),
+        );
+      case credentialsCheckRoute:
+        return MaterialPageRoute(
+          builder: (_) => CredentialsCheckPage(),
+        );
+      case profileRoute:
+        return MaterialPageRoute(
+          builder: (_) => ProfilePage(),
         );
       default:
         return MaterialPageRoute(

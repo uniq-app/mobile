@@ -42,6 +42,8 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         // Todo: reload photos?
         // Todo: return new custom state?
         yield PhotosPostedSuccess();
+        await Future.delayed(Duration(milliseconds: 300));
+        yield PhotoInitial();
       } on SocketException {
         yield PhotosError(error: NoInternetException('No internet'));
       } on HttpException {
@@ -53,10 +55,6 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         yield PhotosError(error: NoInternetException('Unknown error'));
       }
     }
-    if (event is ClosePostDialog) {
-      yield PhotoInitial();
-    }
-    // Todo: make exceptions handler
     if (event is PostSingleImage) {
       try {
         yield PhotosLoading();

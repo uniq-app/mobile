@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "6073182060",
+    "project_id": "put-uniq-app",
+    "storage_bucket": "put-uniq-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6073182060:android:4448d21887f1c46624b549",
+        "android_client_info": {
+          "package_name": "pl.uniq.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6073182060-k99pce21scbtce0pc65484584eru27cu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX_oX0ZCzMCaHnetbKQlrU4_181jcBi6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6073182060-k99pce21scbtce0pc65484584eru27cu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

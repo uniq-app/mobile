@@ -6,15 +6,13 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
-import 'package:uniq/src/screens/edit_board_page.dart';
 import 'package:uniq/src/shared/add_board_button.dart';
 import 'package:uniq/src/shared/board_list_element.dart';
-import 'package:uniq/src/shared/bottom_nabar.dart';
+import 'package:uniq/src/shared/bottom_navbar.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/custom_error.dart';
 import 'package:uniq/src/shared/loading.dart';
 import 'package:uniq/src/shared/user_icon_button.dart';
-import 'package:uniq/src/shared/utilities.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    print("In home page init");
     _loadBoards();
   }
 

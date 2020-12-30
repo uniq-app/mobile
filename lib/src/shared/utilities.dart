@@ -49,16 +49,18 @@ class UniqInputField extends StatelessWidget {
   final IconData inputIcon;
   final Color color;
   final double fieldRounding;
-  const UniqInputField({
-    Key key,
-    this.onChanged,
-    this.isObscure = false,
-    this.hintText,
-    this.inputIcon,
-    this.color,
-    this.fieldRounding = 15.0,
-    this.initialValue,
-  }) : super(key: key);
+  final TextEditingController controller;
+  const UniqInputField(
+      {Key key,
+      this.onChanged,
+      this.isObscure = false,
+      this.hintText,
+      this.inputIcon,
+      this.color,
+      this.fieldRounding = 15.0,
+      this.controller,
+      this.initialValue})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +76,7 @@ class UniqInputField extends StatelessWidget {
       child: TextFormField(
         obscureText: isObscure,
         onChanged: onChanged,
+        controller: controller,
         cursorColor: Theme.of(context).primaryColor,
         initialValue: initialValue,
         decoration: InputDecoration(
