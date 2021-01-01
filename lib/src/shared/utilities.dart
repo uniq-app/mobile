@@ -42,56 +42,6 @@ class UniqButton extends StatelessWidget {
   }
 }
 
-class UniqInputField extends StatelessWidget {
-  final ValueChanged<String> onChanged;
-  final bool isObscure;
-  final String hintText, initialValue;
-  final IconData inputIcon;
-  final Color color;
-  final double fieldRounding;
-  final TextEditingController controller;
-  const UniqInputField(
-      {Key key,
-      this.onChanged,
-      this.isObscure = false,
-      this.hintText,
-      this.inputIcon,
-      this.color,
-      this.fieldRounding = 15.0,
-      this.controller,
-      this.initialValue})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      //padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      width: size.width * 0.8,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(fieldRounding),
-      ),
-      child: TextFormField(
-        obscureText: isObscure,
-        onChanged: onChanged,
-        controller: controller,
-        cursorColor: Theme.of(context).primaryColor,
-        initialValue: initialValue,
-        decoration: InputDecoration(
-          hintText: hintText,
-          icon: Icon(
-            inputIcon,
-            color: Theme.of(context).primaryColor,
-          ),
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-}
-
 class DeleteAlert extends StatelessWidget {
   final Board board;
   const DeleteAlert({Key key, this.board}) : super(key: key);
