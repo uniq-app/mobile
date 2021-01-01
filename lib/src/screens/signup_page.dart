@@ -63,7 +63,7 @@ class _SignupPage extends State<SignupPage> {
                     inputIcon: Icons.face,
                     isObscure: false,
                     hintText: "Name",
-                    controller: loginController,
+                    controller: nameController,
                     validator: (value) {
                       if (value.isEmpty) return 'Please enter the name';
                       return null;
@@ -74,7 +74,7 @@ class _SignupPage extends State<SignupPage> {
                     inputIcon: Icons.email,
                     isObscure: false,
                     hintText: "Email",
-                    controller: loginController,
+                    controller: emailController,
                   ),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
