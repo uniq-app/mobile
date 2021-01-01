@@ -75,6 +75,12 @@ class _SignupPage extends State<SignupPage> {
                     isObscure: false,
                     hintText: "Email",
                     controller: emailController,
+                    validator: (value) {
+                      if (value.isEmpty) return 'Please enter the email';
+                      if (!value.contains("@") && !value.contains("."))
+                        return 'Please enter email';
+                      return null;
+                    },
                   ),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
@@ -82,6 +88,12 @@ class _SignupPage extends State<SignupPage> {
                     inputIcon: Icons.lock,
                     hintText: "Password",
                     controller: passwordController,
+                    validator: (value) {
+                      if (value.isEmpty) return 'Please enter the password';
+                      if (passwordController.text != passwordController2.text)
+                        return 'Passwords are not equal';
+                      return null;
+                    },
                   ),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
@@ -89,16 +101,27 @@ class _SignupPage extends State<SignupPage> {
                     inputIcon: Icons.lock,
                     hintText: "Repeat password",
                     controller: passwordController2,
+                    validator: (value) {
+                      if (value.isEmpty) return 'Please enter the password';
+                      if (passwordController.text != passwordController2.text)
+                        return 'Passwords are not equal';
+                      return null;
+                    },
                   ),
                   if (state is LoginError) Text(state.error.message),
                   SizedBox(height: size.height * 0.03),
                   UniqButton(
                     color: Theme.of(context).buttonColor,
                     push: () {
-                      context.read<AuthBloc>().add(Signup(
-                          email: emailController.text,
-                          username: nameController.text,
-                          password: passwordController.text));
+                      if (_signupKey.currentState.validate()) {
+                        // If the form is valid, display a Snackbar.
+                        Scaffold.of(context).showSnackBar(
+                            SnackBar(content: Text('Processing Data')));
+                        context.read<AuthBloc>().add(Signup(
+                            email: emailController.text,
+                            username: nameController.text,
+                            password: passwordController.text));
+                      }
                     },
                     text: "SIGN UP",
                   ),

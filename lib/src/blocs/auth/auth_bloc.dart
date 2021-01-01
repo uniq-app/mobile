@@ -46,7 +46,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is Signup) {
       yield SignupLoading();
       try {
-        token = await authRepository.login(event.username, event.password);
+        token = await authRepository.register(
+            event.username, event.email, event.password);
         yield SignupSuccess(token: token);
       } on SocketException {
         yield SignupError(error: NoInternetException('No internet'));
@@ -59,7 +60,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print(e);
         yield SignupError(error: NoInternetException('Unknown error: $e'));
       }
-    }
     }
   }
 }
