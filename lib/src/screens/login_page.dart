@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
+import 'package:uniq/src/shared/input_field.dart';
 import 'package:uniq/src/shared/loading.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
@@ -25,9 +26,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text("Login"),
-      ),
+      ),*/
       body: Center(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (BuildContext context, AuthState state) {
@@ -65,8 +66,13 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "Password",
                   controller: passwordController,
                 ),
-                if (state is LoginError) Text(state.error.message),
-                SizedBox(height: size.height * 0.05),
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    onPressed: () {},
+                    child: Text("Forgot password?"),
+                  ),
+                ),
                 UniqButton(
                   color: Theme.of(context).buttonColor,
                   push: () {
@@ -76,6 +82,27 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   text: "LOGIN",
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't have an Account?"),
+                    InkWell(
+                      onTap: () {
+                        Navigator.popAndPushNamed(context, signupRoute);
+                      },
+                      child: new Text(
+                        " - Sign Up",
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                if (state is LoginError) Text(state.error.message),
               ],
             );
           },

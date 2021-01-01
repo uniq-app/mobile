@@ -45,8 +45,25 @@ class AuthApiProvider implements AuthRepository {
   }
 
   @override
-  Future register(String username, String password) async {
-    final response = await client.get('$_apiUrl/register');
+  Future register(String username, String email, String password) async {
+    print("In register data: $username $email $password");
+
+    var credentialsMap = {
+      "username": username,
+      "email": email,
+      "password": password
+    };
+    String body = json.encode(credentialsMap);
+    var headers = {"Content-Type": "application/json"};
+    final response =
+        await client.post('$_apiUrl/register', body: body, headers: headers);
+    if (response.statusCode == 200) {
+      var body = json.decode(response.body);
+      print(body);
+    } else {
+      print("Register failed: ${response.statusCode}");
+      throw Exception('Failed to register');
+    }
   }
 
   @override
