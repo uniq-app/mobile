@@ -8,7 +8,7 @@ class AuthApiProvider implements AuthRepository {
   Client client = Client();
   final storage = new FlutterSecureStorage();
 
-  final String _apiUrl = authApiUrl;
+  final String _apiUrl = '$host:8080/auth';
 
   Future storeToken(String token) async {
     await storage.write(key: "token", value: token);

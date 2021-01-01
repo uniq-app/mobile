@@ -22,7 +22,7 @@ class PhotoApiProvider implements PhotoRepository {
   BoardRepository boardApiProvider = BoardApiProvider();
   PhotoApiProvider();
 
-  static final String _apiUrl = photoApiUrl;
+  static final String _apiUrl = "http://192.168.0.100:80/images";
 
   static String get apiUrl => _apiUrl;
 
@@ -35,7 +35,7 @@ class PhotoApiProvider implements PhotoRepository {
     List<Future> futures = List();
     // Post to selected boards
     for (Board board in checked) {
-      futures.add(boardApiProvider.postPhotos(values, board.id));
+      futures.add(boardApiProvider.putPhotos(values, board.id));
     }
     await Future.wait(futures);
     // Todo: xd
@@ -91,7 +91,7 @@ class PhotoApiProvider implements PhotoRepository {
     List<Future> futures = List();
     // Post to selected boards
     for (Board board in checked) {
-      futures.add(boardApiProvider.postPhotos([value], board.id));
+      futures.add(boardApiProvider.putPhotos([value], board.id));
     }
     await Future.wait(futures);
     // Todo: xd

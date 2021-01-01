@@ -11,11 +11,9 @@ class FetchBoards extends BoardEvent {
   List<Object> get props => [];
 }
 
-class SelectBoard extends BoardEvent {
+class CreateBoard extends BoardEvent {
   final Board board;
-
-  const SelectBoard({@required this.board});
-
+  CreateBoard({@required this.board});
   @override
-  List<Object> get props => [board];
+  List<Object> get props => [];
 }
