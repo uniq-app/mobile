@@ -43,6 +43,24 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         yield BoardsError(
             error: InvalidFormatException('Invalid resposne format'));
       } catch (e) {
+        print(e);
+        yield BoardsError(error: NoInternetException('Unknown error'));
+      }
+    }
+    if (event is DeleteBoard) {
+      yield BoardsLoading();
+      try {
+        await boardRepository.deleteBoard(event.boardId);
+        yield BoardDeleted();
+      } on SocketException {
+        yield BoardsError(error: NoInternetException('No internet'));
+      } on HttpException {
+        yield BoardsError(error: NoServiceFoundException('No service found'));
+      } on FormatException {
+        yield BoardsError(
+            error: InvalidFormatException('Invalid resposne format'));
+      } catch (e) {
+        print(e);
         yield BoardsError(error: NoInternetException('Unknown error'));
       }
     }

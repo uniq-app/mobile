@@ -25,14 +25,14 @@ class Board extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = _id;
     data['name'] = _name;
     data['description'] = _description;
     data['creatorId'] = _creatorId;
     data['isPrivate'] = _isPrivate;
     data['isCreatorHidden'] = _isCreatorHidden;
-    data['createdAt'] = _createdAt;
+    //data['createdAt'] = _createdAt;
     data['cover'] = _cover.toJson();
     return data;
   }

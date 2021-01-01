@@ -33,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         yield LoginError(
             error: InvalidFormatException('Invalid resposne format'));
       } catch (e) {
+        print(e);
         yield LoginError(error: NoInternetException('Unknown error: $e'));
       }
     }
