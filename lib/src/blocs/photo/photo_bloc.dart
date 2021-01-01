@@ -5,7 +5,7 @@ import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
-import 'package:uniq/src/services/exceptions.dart';
+import 'package:uniq/src/shared/exceptions.dart';
 
 class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
   final BoardRepository boardRepository;

@@ -6,8 +6,8 @@ import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/shared/custom_error.dart';
-import 'package:uniq/src/shared/loading.dart';
+import 'package:uniq/src/shared/components/custom_error.dart';
+import 'package:uniq/src/shared/components/loading.dart';
 
 class SelectBoardDialogService {
   final BuildContext context;

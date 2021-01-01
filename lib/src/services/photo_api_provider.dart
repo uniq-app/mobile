@@ -10,7 +10,7 @@ import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
-import 'package:uniq/src/services/http_interceptor.dart';
+import 'package:uniq/src/shared/http_interceptor.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 class PhotoApiProvider implements PhotoRepository {

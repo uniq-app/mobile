@@ -13,7 +13,7 @@ class LoggingInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({ResponseData data}) async {
-    print("Intercepted board response");
+    print("${data.url}: ${data.statusCode}");
     return data;
   }
 }

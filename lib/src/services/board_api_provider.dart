@@ -6,7 +6,7 @@ import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:uniq/src/services/http_interceptor.dart';
+import 'package:uniq/src/shared/http_interceptor.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 // TODO: Add override annotations
