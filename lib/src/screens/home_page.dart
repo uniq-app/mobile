@@ -45,7 +45,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _body() {
-    return BlocBuilder<BoardBloc, BoardState>(
+    return BlocConsumer<BoardBloc, BoardState>(
+      listener: (BuildContext context, BoardState state) {
+        if (state is BoardCreated || state is BoardDeleted) {
+          _loadBoards();
+        }
+      },
       builder: (BuildContext context, BoardState state) {
         if (state is BoardsError) {
           final error = state.error;

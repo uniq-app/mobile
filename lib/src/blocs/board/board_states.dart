@@ -21,3 +21,5 @@ class BoardsError extends BoardState {
 }
 
 class BoardCreated extends BoardState {}
+
+class BoardDeleted extends BoardState {}

@@ -31,12 +31,27 @@ class BoardApiProvider implements BoardRepository {
   }
 
   Future postBoard(Board board) async {
-    final response = await client.get('$_apiUrl/');
+    var boardMap = board.toJson();
+    String body = json.encode(boardMap);
+
+    var headers = {"Content-Type": "application/json"};
+    final response =
+        await client.post('$_apiUrl/', body: body, headers: headers);
     if (response.statusCode == 200) {
-      return BoardResults.fromJson(json.decode(response.body));
+      print("Boards - post board success");
     } else {
       print("Boards - Failed to post board");
       throw Exception('Failed to post boards');
+    }
+  }
+
+  Future deleteBoard(String boardId) async {
+    final response = await client.delete('$_apiUrl/$boardId');
+    if (response.statusCode == 200) {
+      print("Boards - delete board success");
+    } else {
+      print("Boards - Failed to delete board");
+      throw Exception('Failed to delete boards');
     }
   }
 

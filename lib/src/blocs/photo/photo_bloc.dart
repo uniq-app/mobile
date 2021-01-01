@@ -52,6 +52,7 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         yield PhotosError(
             error: InvalidFormatException('Invalid resposne format'));
       } catch (e) {
+        print(e);
         yield PhotosError(error: e);
       }
     }
