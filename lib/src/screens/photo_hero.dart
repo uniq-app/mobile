@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:uniq/src/shared/custom_error.dart';
-import 'package:uniq/src/shared/loading.dart';
+import 'package:uniq/src/shared/components/custom_error.dart';
+import 'package:uniq/src/shared/components/loading.dart';
 
 class PhotoHero extends StatelessWidget {
   final String photo;

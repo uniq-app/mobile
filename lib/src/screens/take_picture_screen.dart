@@ -11,8 +11,8 @@ import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/shared/custom_error.dart';
-import 'package:uniq/src/shared/loading.dart';
+import 'package:uniq/src/shared/components/custom_error.dart';
+import 'package:uniq/src/shared/components/loading.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {

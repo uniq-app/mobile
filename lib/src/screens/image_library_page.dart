@@ -8,10 +8,10 @@ import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
-import 'package:uniq/src/services/image_service.dart';
+import 'package:uniq/src/services/image_picker_service.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/services/select_board_dialog_service.dart';
-import 'package:uniq/src/shared/clickable_add_something.dart';
+import 'package:uniq/src/shared/components/clickable_add_something.dart';
 
 class ImageLibraryPage extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   String _error = 'No Error Dectected';
   PhotoRepository photoRepo = PhotoApiProvider();
   SelectBoardDialogService dialogService;
-  ImageService imageService;
+  ImagePickerService imageService;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     BlocProvider.of<PickedImagesCubit>(context).storePickedImages([]);
     dialogService = new SelectBoardDialogService(
         context: context, onSubmit: _postAllPhotos);
-    imageService = new ImageService(context, mounted);
+    imageService = new ImagePickerService(context, mounted);
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
-import 'package:uniq/src/services/exceptions.dart';
+import 'package:uniq/src/shared/exceptions.dart';
 
 class BoardBloc extends Bloc<BoardEvent, BoardState> {
   final BoardRepository boardRepository;

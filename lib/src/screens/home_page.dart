@@ -6,13 +6,13 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
-import 'package:uniq/src/shared/add_board_button.dart';
-import 'package:uniq/src/shared/board_list_element.dart';
-import 'package:uniq/src/shared/bottom_navbar.dart';
+import 'package:uniq/src/shared/components/add_board_button.dart';
+import 'package:uniq/src/shared/components/board_list_element.dart';
+import 'package:uniq/src/shared/components/bottom_navbar.dart';
 import 'package:uniq/src/shared/constants.dart';
-import 'package:uniq/src/shared/custom_error.dart';
-import 'package:uniq/src/shared/loading.dart';
-import 'package:uniq/src/shared/user_icon_button.dart';
+import 'package:uniq/src/shared/components/custom_error.dart';
+import 'package:uniq/src/shared/components/loading.dart';
+import 'package:uniq/src/shared/components/user_icon_button.dart';
 
 class HomePage extends StatefulWidget {
   @override

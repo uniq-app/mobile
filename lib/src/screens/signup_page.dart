@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
-import 'package:uniq/src/shared/input_field.dart';
-import 'package:uniq/src/shared/loading.dart';
+import 'package:uniq/src/shared/components/input_field.dart';
+import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
 class SignupPage extends StatefulWidget {

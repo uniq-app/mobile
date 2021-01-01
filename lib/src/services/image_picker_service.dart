@@ -4,12 +4,12 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ImageService {
+class ImagePickerService {
   BuildContext context;
   bool mounted;
   List<Asset> _images = List();
 
-  ImageService(this.context, this.mounted);
+  ImagePickerService(this.context, this.mounted);
 
   Future<void> loadAssets() async {
     String error = 'No Error Dectected';
