@@ -97,7 +97,7 @@ class _SignupPage extends State<SignupPage> {
                     push: () {
                       context.read<AuthBloc>().add(Signup(
                           email: emailController.text,
-                          username: loginController.text,
+                          username: nameController.text,
                           password: passwordController.text));
                     },
                     text: "SIGN UP",
