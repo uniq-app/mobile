@@ -7,7 +7,8 @@ class Cover extends Equatable {
   Cover.fromJson(Map<String, dynamic> parsedJson) {
     _photoId = parsedJson['photo_id'] ?? '';
     _boardId = parsedJson['board'] ?? '';
-    _value = parsedJson['value'] ?? '';
+    _value = parsedJson['value'] ??
+        "https://fajnepodroze.pl/wp-content/uploads/2020/06/Welsh-Corgi-Pembroke.jpg";
   }
 
   String get photoId => _photoId;

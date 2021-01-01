@@ -22,7 +22,7 @@ class PhotoApiProvider implements PhotoRepository {
   BoardRepository boardApiProvider = BoardApiProvider();
   PhotoApiProvider();
 
-  static final String _apiUrl = "http://192.168.0.100:80/images";
+  static final String _apiUrl = "$host/images";
 
   static String get apiUrl => _apiUrl;
 
