@@ -147,7 +147,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 (e) => CheckboxListTile(
                   title: Text(e.name),
                   onChanged: (value) {
-                    context.read<BoardBloc>().add(SelectBoard(board: e));
+                    //context.read<BoardBloc>().add(SelectBoard(board: e));
                   },
                   value: checked.contains(e),
                 ),

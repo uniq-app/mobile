@@ -32,9 +32,8 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (BuildContext context, AuthState state) {
             if (state is LoginSuccess) {
-              //Navigator.of(context).pushNamedAndRemoveUntil(
-              //    homeRoute, (Route<dynamic> route) => false);
-              Navigator.of(context).pushNamed(homeRoute);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  homeRoute, (Route<dynamic> route) => false);
             }
           },
           builder: (BuildContext context, AuthState state) {

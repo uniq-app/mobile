@@ -52,7 +52,7 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         yield PhotosError(
             error: InvalidFormatException('Invalid resposne format'));
       } catch (e) {
-        yield PhotosError(error: NoInternetException('Unknown error'));
+        yield PhotosError(error: e);
       }
     }
     if (event is PostSingleImage) {
@@ -69,7 +69,8 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         yield PhotosError(
             error: InvalidFormatException('Invalid resposne format'));
       } catch (e) {
-        yield PhotosError(error: NoInternetException('Unknown error'));
+        print(e);
+        yield PhotosError(error: e);
       }
     }
   }

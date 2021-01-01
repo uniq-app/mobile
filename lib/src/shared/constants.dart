@@ -13,9 +13,5 @@ const String createBoardPage = '/create_board_page';
 const String credentialsCheckRoute = '/check-cred';
 const String profileRoute = '/profile';
 
-const String host = "http://192.168.43.223";
+const String host = "http://192.168.0.100";
 //const String host = "http://10.0.2.2";
-
-const String photoApiUrl = '$host:80/images';
-const String boardApiUrl = '$host:8080/boards';
-const String authApiUrl = '$host:8080/auth';

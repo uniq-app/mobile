@@ -19,3 +19,5 @@ class BoardsError extends BoardState {
   final error;
   BoardsError({this.error});
 }
+
+class BoardCreated extends BoardState {}

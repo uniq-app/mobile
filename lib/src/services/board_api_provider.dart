@@ -18,15 +18,25 @@ class BoardApiProvider implements BoardRepository {
   );
   final storage = new FlutterSecureStorage();
 
-  final String _apiUrl = boardApiUrl;
+  final String _apiUrl = '$host:8080/boards';
 
-  Future<BoardResults> getBoards(String ownerId) async {
-    final response = await client.get('$_apiUrl?creator=$ownerId');
+  Future<BoardResults> getBoards() async {
+    final response = await client.get('$_apiUrl');
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));
     } else {
       print("Boards - Failed to load boards");
       throw Exception('Failed to load boards');
+    }
+  }
+
+  Future postBoard(Board board) async {
+    final response = await client.get('$_apiUrl/');
+    if (response.statusCode == 200) {
+      return BoardResults.fromJson(json.decode(response.body));
+    } else {
+      print("Boards - Failed to post board");
+      throw Exception('Failed to post boards');
     }
   }
 
@@ -43,22 +53,18 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
-  Future<dynamic> postPhotos(List<String> photos, String boardId) async {
+  Future<dynamic> putPhotos(List<String> photos, String boardId) async {
     var photosMapped = photos.map((e) => {"value": e}).toList();
     String body = json.encode(photosMapped);
     var headers = {"Content-Type": "application/json"};
-    final response = await client.post('$_apiUrl/$boardId/photos',
+    final response = await client.put('$_apiUrl/$boardId/photos',
         headers: headers, body: body);
     if (response.statusCode == 200) {
       print('Success - post Photos');
     } else {
-      print("Photos - Failed to load photos");
+      print("Board - Failed to post photos");
       print(response);
-      throw Exception('Failed to load photos');
+      throw Exception('Failed to post photos');
     }
-  }
-
-  Board selectBoard(Board board) {
-    return board;
   }
 }

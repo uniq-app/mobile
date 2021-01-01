@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
 class BoardList extends StatelessWidget {
   final List<Board> boards;
   BoardList(this.boards);
-  String userName = "Zdzisław";
+  final String userName = "Zdzisław";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -118,13 +118,10 @@ class BoardList extends StatelessWidget {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              String image =
-                  "https://images.unsplash.com/photo-1455582916367-25f75bfc6710?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60";
               return BoardListElement(
                 name: boards[index].name,
-                description:
-                    "Opis $index Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                imageLink: image,
+                description: boards[index].description,
+                imageLink: boards[index].cover.value,
                 boardLink: () {
                   Navigator.pushNamed(context, boardDetailsRoute,
                       arguments: boards[index]);
