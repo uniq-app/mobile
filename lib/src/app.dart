@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
+import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
@@ -66,12 +67,15 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(authRepository: AuthApiProvider()),
         ),
+        BlocProvider<PageCubit>(
+          create: (context) => PageCubit(),
+        ),
       ],
       child: OKToast(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Uniq',
-          theme: AppTheme.lightTheme,
+          theme: AppTheme.mainTheme,
           onGenerateRoute: MainRouter.generateRoute,
           initialRoute: credentialsCheckRoute,
         ),
