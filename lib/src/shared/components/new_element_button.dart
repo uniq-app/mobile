@@ -1,10 +1,10 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
-class NewBoardButton extends StatelessWidget {
+class NewElementButton extends StatelessWidget {
   final VoidCallback push;
   final double widthFraction, heightFraction;
-  NewBoardButton(
+  NewElementButton(
       {Key key,
       this.push,
       this.widthFraction = 0.8,

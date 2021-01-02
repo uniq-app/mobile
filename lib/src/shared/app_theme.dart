@@ -9,7 +9,7 @@ class AppTheme {
   //
   AppTheme._();
 
-  static final ThemeData lightTheme = ThemeData(
+  static final ThemeData mainTheme = ThemeData(
     // Define the default brightness and colors.
 
     brightness: Brightness.dark,
@@ -18,12 +18,12 @@ class AppTheme {
     accentColor: Colors.grey[700],
     iconTheme: IconThemeData(color: Colors.deepOrange),
     buttonColor: Colors.grey[900],
-
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Colors.deepPurple[500],
-      selectedItemColor: Colors.amber[300],
+      elevation: 8.0,
+      backgroundColor: Colors.grey[850],
+      selectedItemColor: Colors.white,
     ),
-    bottomAppBarTheme: BottomAppBarTheme(color: Colors.black, elevation: 0),
+    //bottomAppBarTheme: BottomAppBarTheme(color: Colors.black, elevation: 0),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.amber[200],
     ),
