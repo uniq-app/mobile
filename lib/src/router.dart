@@ -5,7 +5,7 @@ import 'package:uniq/src/screens/create_board_page.dart';
 import 'package:uniq/src/screens/edit_board_page.dart';
 import 'package:uniq/src/screens/credentials_check_page.dart';
 import 'package:uniq/src/screens/profile_page.dart';
-import 'package:uniq/src/screens/signup_page.dart';
+import 'package:uniq/src/screens/register_page.dart';
 import 'package:uniq/src/screens/take_picture_screen.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/image_library_page.dart';
@@ -27,7 +27,7 @@ class MainRouter {
       case loginRoute:
         return MaterialPageRoute(builder: (_) => LoginPage());
       case signupRoute:
-        return MaterialPageRoute(builder: (_) => SignupPage());
+        return MaterialPageRoute(builder: (_) => RegisterPage());
       case welcomeRoute:
         return MaterialPageRoute(builder: (_) => WelcomePage());
       case photoDetails:

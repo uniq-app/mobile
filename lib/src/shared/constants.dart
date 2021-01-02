@@ -13,5 +13,5 @@ const String createBoardPage = '/create_board_page';
 const String credentialsCheckRoute = '/check-cred';
 const String profileRoute = '/profile';
 
-const String host = "http://192.168.0.100";
-//const String host = "http://10.0.2.2";
+//const String host = "http://192.168.0.100";
+const String host = "http://10.0.2.2";

@@ -43,22 +43,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await authRepository.logout();
       yield LogoutSuccess();
     }
-    if (event is Signup) {
-      yield SignupLoading();
+    if (event is Register) {
+      yield RegisterLoading();
       try {
         token = await authRepository.register(
             event.username, event.email, event.password);
-        yield SignupSuccess(token: token);
+        print("SignupLoading");
+        yield RegisterSuccess();
       } on SocketException {
-        yield SignupError(error: NoInternetException('No internet'));
+        yield RegisterError(error: NoInternetException('No internet'));
       } on HttpException {
-        yield SignupError(error: NoServiceFoundException('No service found'));
+        yield RegisterError(error: NoServiceFoundException('No service found'));
       } on FormatException {
-        yield SignupError(
+        yield RegisterError(
             error: InvalidFormatException('Invalid resposne format'));
       } catch (e) {
         print(e);
-        yield SignupError(error: NoInternetException('Unknown error: $e'));
+        yield RegisterError(error: NoInternetException('Unknown error: $e'));
       }
     }
   }

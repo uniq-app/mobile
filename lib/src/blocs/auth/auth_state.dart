@@ -27,19 +27,18 @@ class LoginError extends AuthState {
   List<Object> get props => [error];
 }
 
-class SignupLoading extends AuthState {}
+class RegisterLoading extends AuthState {}
 
-class SignupSuccess extends AuthState {
-  final String token;
-  SignupSuccess({@required this.token});
+class RegisterSuccess extends AuthState {
+  RegisterSuccess();
 
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [];
 }
 
-class SignupError extends AuthState {
+class RegisterError extends AuthState {
   final error;
-  SignupError({this.error});
+  RegisterError({this.error});
 
   @override
   List<Object> get props => [error];

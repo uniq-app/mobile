@@ -41,69 +41,72 @@ class _LoginPageState extends State<LoginPage> {
             if (state is LoginLoading) {
               return Loading();
             }
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Login to UNIQ",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 19,
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Login to UNIQ",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19,
+                    ),
                   ),
-                ),
-                SizedBox(height: size.height * 0.05),
-                UniqInputField(
-                  color: Theme.of(context).accentColor,
-                  inputIcon: Icons.email,
-                  isObscure: false,
-                  hintText: "Email",
-                  controller: loginController,
-                ),
-                UniqInputField(
-                  color: Theme.of(context).accentColor,
-                  isObscure: true,
-                  inputIcon: Icons.lock,
-                  hintText: "Password",
-                  controller: passwordController,
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: Text("Forgot password?"),
+                  SizedBox(height: size.height * 0.05),
+                  UniqInputField(
+                    color: Theme.of(context).accentColor,
+                    inputIcon: Icons.email,
+                    isObscure: false,
+                    hintText: "Email",
+                    controller: loginController,
                   ),
-                ),
-                UniqButton(
-                  color: Theme.of(context).buttonColor,
-                  push: () {
-                    context.read<AuthBloc>().add(Login(
-                        username: loginController.text,
-                        password: passwordController.text));
-                  },
-                  text: "LOGIN",
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Don't have an Account?"),
-                    InkWell(
-                      onTap: () {
-                        Navigator.popAndPushNamed(context, signupRoute);
-                      },
-                      child: new Text(
-                        " - Sign Up",
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
-                if (state is LoginError) Text(state.error.message),
-              ],
+                  UniqInputField(
+                    color: Theme.of(context).accentColor,
+                    isObscure: true,
+                    inputIcon: Icons.lock,
+                    hintText: "Password",
+                    controller: passwordController,
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Text("Forgot password?"),
+                    ),
+                  ),
+                  UniqButton(
+                    color: Theme.of(context).buttonColor,
+                    push: () {
+                      context.read<AuthBloc>().add(Login(
+                          username: loginController.text,
+                          password: passwordController.text));
+                    },
+                    text: "LOGIN",
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Don't have an Account?"),
+                      InkWell(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, signupRoute);
+                        },
+                        child: new Text(
+                          " - Sign Up",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  if (state is LoginError) Text(state.error.message),
+                ],
+              ),
             );
           },
         ),
