@@ -38,7 +38,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                 Scaffold.of(context).showSnackBar(
                     SnackBar(content: Text('Resetting password successful!')));
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute, (Route<dynamic> route) => false);
+                    newPasswordPage, (Route<dynamic> route) => false);
               }
             },
             builder: (BuildContext context, AuthState state) {
@@ -92,6 +92,8 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                           context.read<AuthBloc>().add(ResetPassword(
                               email: emailController.text,
                               username: nameController.text));
+//todo: REMOVE this after functionality is finished
+                          Navigator.popAndPushNamed(context, newPasswordPage);
                         }
                       },
                       text: "RESET MY PASSWORD",
