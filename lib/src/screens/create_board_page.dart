@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
@@ -41,7 +42,18 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
       body: BlocListener<BoardBloc, BoardState>(
         listener: (BuildContext context, BoardState state) {
           if (state is BoardCreated) {
+            showToast(
+              "Successfuly created board!",
+              position: ToastPosition.bottom,
+              backgroundColor: Colors.greenAccent,
+            );
             Navigator.pop(context);
+          } else if (state is BoardsError) {
+            showToast(
+              "Failed to create board - ${state.error.message}",
+              position: ToastPosition.bottom,
+              backgroundColor: Colors.redAccent,
+            );
           }
         },
         child: Container(

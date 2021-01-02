@@ -39,7 +39,7 @@ dependencies:
   firebase_messaging: ^7.0.3
   flutter_secure_storage: ^3.3.5
   http_interceptor: ^0.3.3
-
+  oktoast: ^2.1.8
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
@@ -23,7 +24,6 @@ class _EditBoardPageState extends State<EditBoardPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.board.name);
     final TextEditingController nameController = new TextEditingController();
     final TextEditingController descriptionController =
         new TextEditingController();
@@ -33,7 +33,18 @@ class _EditBoardPageState extends State<EditBoardPage> {
       body: BlocListener<BoardBloc, BoardState>(
         listener: (context, state) {
           if (state is BoardDeleted) {
+            showToast(
+              "Successfuly deleted ${widget.board.name}!",
+              position: ToastPosition.bottom,
+              backgroundColor: Colors.greenAccent,
+            );
             Navigator.pop(context);
+          } else if (state is BoardsError) {
+            showToast(
+              "Failed to delete board - ${state.error.message}",
+              position: ToastPosition.bottom,
+              backgroundColor: Colors.redAccent,
+            );
           }
         },
         child: Form(

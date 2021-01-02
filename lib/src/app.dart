@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
@@ -66,12 +67,14 @@ class _MyAppState extends State<MyApp> {
           create: (context) => AuthBloc(authRepository: AuthApiProvider()),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Uniq',
-        theme: AppTheme.lightTheme,
-        onGenerateRoute: MainRouter.generateRoute,
-        initialRoute: credentialsCheckRoute,
+      child: OKToast(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Uniq',
+          theme: AppTheme.lightTheme,
+          onGenerateRoute: MainRouter.generateRoute,
+          initialRoute: credentialsCheckRoute,
+        ),
       ),
     );
   }
