@@ -98,6 +98,7 @@ class BoardList extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
+            automaticallyImplyLeading: false,
             pinned: false,
             floating: true,
             expandedHeight: 120.0,
