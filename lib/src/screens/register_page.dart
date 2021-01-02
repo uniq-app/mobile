@@ -50,7 +50,7 @@ class _RegisterPage extends State<RegisterPage> {
                 return Loading();
               }
               return Form(
-                autovalidate: true,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _RegisterKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

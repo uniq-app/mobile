@@ -6,12 +6,12 @@ import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
+class NewPasswordPage extends StatefulWidget {
   @override
-  _ForgotPasswordPage createState() => _ForgotPasswordPage();
+  _NewPasswordPage createState() => _NewPasswordPage();
 }
 
-class _ForgotPasswordPage extends State<ForgotPasswordPage> {
+class _NewPasswordPage extends State<NewPasswordPage> {
   final codeController = new TextEditingController();
   final passwordController = new TextEditingController();
   final passwordController2 = new TextEditingController();
@@ -23,7 +23,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
     super.dispose();
   }
 
-  final _ForgotPasswordKey = GlobalKey<FormState>();
+  final _NewPasswordKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
@@ -49,7 +49,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
               }
               return Form(
                 autovalidate: true,
-                key: _ForgotPasswordKey,
+                key: _NewPasswordKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -104,7 +104,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                     UniqButton(
                       color: Theme.of(context).buttonColor,
                       push: () {
-                        if (_ForgotPasswordKey.currentState.validate()) {
+                        if (_NewPasswordKey.currentState.validate()) {
                           context.read<AuthBloc>().add(NewPassword(
                               safetyCode: codeController.text,
                               password: passwordController.text));

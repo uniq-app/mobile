@@ -46,7 +46,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                 return Loading();
               }
               return Form(
-                autovalidate: true,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _ForgotPasswordKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
