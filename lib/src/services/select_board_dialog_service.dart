@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
@@ -36,35 +37,47 @@ class SelectBoardDialogService {
                   child: Loading(),
                 );
               }
-              return buildDialog(context, boards: boards, error: error);
+              return buildDialog(context, boards: boards, boardsError: error);
             },
           );
         },
       );
 
-  Widget buildDialog(BuildContext context, {List<Board> boards, String error}) {
+  Widget buildDialog(BuildContext context,
+      {List<Board> boards, String boardsError}) {
     return AlertDialog(
       title: Text('Select boards'),
       content: SingleChildScrollView(
         child: BlocConsumer<PhotoBloc, PhotoState>(
           listener: (context, state) {
             if (state is PhotosPostedSuccess) {
+              showToast(
+                "Successfuly added photos!",
+                position: ToastPosition.bottom,
+                backgroundColor: Colors.greenAccent,
+              );
               Navigator.pop(context, true);
+            } else if (state is PhotosError) {
+              showToast(
+                "Failed to add photos - ${state.error.message}",
+                position: ToastPosition.bottom,
+                backgroundColor: Colors.redAccent,
+              );
             }
           },
           builder: (BuildContext context, PhotoState state) {
             print("Rebuilded dialog (photo) current state: $state");
-            if (state is PhotosError) {
-              final error = state.error.message;
+            if (boardsError != null) {
               return CustomError(
-                message: '$error.\nTap to retry.',
+                message: "$boardsError.\nTap to retry.",
+                onTap: onError,
               );
-            } else if (state is PhotoInitial || state is PhotosLoaded) {
-              return (boards != null)
-                  ? _dialogContainer(boards, context)
-                  : CustomError(message: error);
+            } else if (state is PhotosLoading) {
+              return Loading();
             }
-            return Loading();
+            return (boards != null)
+                ? _dialogContainer(boards, context)
+                : CustomError(message: boardsError);
           },
         ),
       ),

@@ -30,7 +30,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     super.initState();
     BlocProvider.of<PickedImagesCubit>(context).storePickedImages([]);
     dialogService = new SelectBoardDialogService(
-        context: context, onSubmit: _postAllPhotos);
+        context: context, onSubmit: _postAllPhotos, onError: _loadBoards);
     imageService = new ImagePickerService(context, mounted);
   }
 
