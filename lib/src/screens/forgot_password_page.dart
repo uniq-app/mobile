@@ -6,52 +6,53 @@ import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
-class LoginPage extends StatefulWidget {
+class ForgotPasswordPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPasswordPage createState() => _ForgotPasswordPage();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final loginController = new TextEditingController();
-  final passwordController = new TextEditingController();
-
+class _ForgotPasswordPage extends State<ForgotPasswordPage> {
+  final emailController = new TextEditingController();
+  final nameController = new TextEditingController();
   @override
   void dispose() {
-    loginController.dispose();
-    passwordController.dispose();
+    nameController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
-  final _LoginKey = GlobalKey<FormState>();
+  final _ForgotPasswordKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
     return Scaffold(
       /*appBar: AppBar(
-        title: Text("Login"),
+        title: Text("Reset password"),
       ),*/
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Center(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (BuildContext context, AuthState state) {
-              if (state is LoginSuccess) {
+              if (state is RegisterSuccess) {
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text('Resetting password successful!')));
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    homeRoute, (Route<dynamic> route) => false);
+                    newPasswordPage, (Route<dynamic> route) => false);
               }
             },
             builder: (BuildContext context, AuthState state) {
-              if (state is LoginLoading) {
+              if (state is RegisterLoading) {
                 return Loading();
               }
               return Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: _LoginKey,
+                key: _ForgotPasswordKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Login to UNIQ",
+                      "Reset your password",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
@@ -60,46 +61,54 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: size.height * 0.05),
                     UniqInputField(
                       color: Theme.of(context).accentColor,
-                      inputIcon: Icons.email,
+                      inputIcon: Icons.face,
                       isObscure: false,
-                      hintText: "Email",
-                      controller: loginController,
+                      labelText: "Name",
+                      controller: nameController,
+                      validator: (value) {
+                        if (value.isEmpty) return 'Please enter the name';
+                        return null;
+                      },
                     ),
+                    SizedBox(height: size.height * 0.02),
                     UniqInputField(
                       color: Theme.of(context).accentColor,
-                      isObscure: true,
-                      inputIcon: Icons.lock,
-                      hintText: "Password",
-                      controller: passwordController,
+                      inputIcon: Icons.email,
+                      isObscure: false,
+                      labelText: "Email",
+                      controller: emailController,
+                      validator: (value) {
+                        if (value.isEmpty) return 'Please enter the email';
+                        if (!value.contains("@") && !value.contains("."))
+                          return 'Please enter email';
+                        return null;
+                      },
                     ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(forgotPasswordPage);
-                        },
-                        child: Text("Forgot password?"),
-                      ),
-                    ),
+                    SizedBox(height: size.height * 0.03),
                     UniqButton(
                       color: Theme.of(context).buttonColor,
                       push: () {
-                        context.read<AuthBloc>().add(Login(
-                            username: loginController.text,
-                            password: passwordController.text));
+                        if (_ForgotPasswordKey.currentState.validate()) {
+                          context.read<AuthBloc>().add(ResetPassword(
+                              email: emailController.text,
+                              username: nameController.text));
+//todo: REMOVE this after functionality is finished
+                          Navigator.popAndPushNamed(context, newPasswordPage);
+                        }
                       },
-                      text: "LOGIN",
+                      text: "RESET MY PASSWORD",
                     ),
+                    SizedBox(height: size.height * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an Account?"),
+                        Text("Did you change your mind? -"),
                         InkWell(
                           onTap: () {
-                            Navigator.popAndPushNamed(context, signupRoute);
+                            Navigator.popAndPushNamed(context, loginRoute);
                           },
                           child: new Text(
-                            " - Sign Up",
+                            " Login",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold),
@@ -107,10 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    if (state is LoginError) Text(state.error.message),
                   ],
                 ),
               );

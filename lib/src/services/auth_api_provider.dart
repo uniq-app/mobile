@@ -58,8 +58,7 @@ class AuthApiProvider implements AuthRepository {
     final response =
         await client.post('$_apiUrl/register', body: body, headers: headers);
     if (response.statusCode == 200) {
-      var body = json.decode(response.body);
-      print(body);
+      print("register succesful");
     } else {
       print("Register failed: ${response.statusCode}");
       throw Exception('Failed to register');
