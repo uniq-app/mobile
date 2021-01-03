@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uniq/src/screens/application_page.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/welcome_page.dart';
 import 'package:uniq/src/services/auth_api_provider.dart';
@@ -35,7 +36,7 @@ class CredentialsCheckPage extends StatelessWidget {
               MoveToBackground.moveTaskToBack();
               return false;
             },
-            child: HomePage(),
+            child: ApplicationPage(),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           //TODO: Splash screen here?
@@ -45,4 +46,6 @@ class CredentialsCheckPage extends StatelessWidget {
       },
     );
   }
+
+  Widget loadPage(BuildContext context) {}
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
-import 'package:uniq/src/shared/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavbar extends StatefulWidget {
@@ -13,7 +12,7 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-  int _currentIndex = 0;
+  int _currentIndex;
 
   _setPage(int index) {
     context.read<PageCubit>().setPage(index);
@@ -30,7 +29,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           onTap: (index) {
-            print(index);
             if (_currentIndex != index) {
               _currentIndex = index;
               _setPage(index);
@@ -46,32 +44,17 @@ class _BottomNavbarState extends State<BottomNavbar> {
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.camera),
-                onPressed: () {
-                  Navigator.pushNamed(context, cameraRoute);
-                },
-              ),
+              icon: Icon(Icons.camera),
               label: 'Camera',
             ),
             BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.photo_library),
-                onPressed: () {
-                  Navigator.pushNamed(context, imagePickerRoute);
-                },
-              ),
+              icon: Icon(Icons.photo_library),
               label: 'Library',
             ),
             BottomNavigationBarItem(
-              icon: IconButton(
-                icon: Icon(Icons.supervised_user_circle),
-                onPressed: () {
-                  Navigator.pushNamed(context, profileRoute);
-                },
-              ),
+              icon: Icon(Icons.supervised_user_circle),
               label: 'Profile',
-            )
+            ),
           ],
         );
       },

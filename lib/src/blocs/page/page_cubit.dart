@@ -6,7 +6,6 @@ class PageCubit extends Cubit<PageState> {
   PageCubit() : super(PageState.homePage);
 
   setPage(int index) {
-    print(PageState.values[index]);
     emit(PageState.values[index]);
   }
 }
