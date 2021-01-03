@@ -11,7 +11,7 @@ import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/services/image_picker_service.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/services/select_board_dialog_service.dart';
-import 'package:uniq/src/shared/components/clickable_add_something.dart';
+import 'package:uniq/src/shared/components/new_element_button.dart';
 
 class ImageLibraryPage extends StatefulWidget {
   @override
@@ -20,7 +20,6 @@ class ImageLibraryPage extends StatefulWidget {
 
 class _ImageLibraryPageState extends State<ImageLibraryPage> {
   //List<Asset> images = List<Asset>();
-  String _error = 'No Error Dectected';
   PhotoRepository photoRepo = PhotoApiProvider();
   SelectBoardDialogService dialogService;
   ImagePickerService imageService;
@@ -30,7 +29,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     super.initState();
     BlocProvider.of<PickedImagesCubit>(context).storePickedImages([]);
     dialogService = new SelectBoardDialogService(
-        context: context, onSubmit: _postAllPhotos);
+        context: context, onSubmit: _postAllPhotos, onError: _loadBoards);
     imageService = new ImagePickerService(context, mounted);
   }
 
@@ -56,7 +55,6 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   Widget _body() {
     return Column(
       children: <Widget>[
-        Center(child: Text('Error: $_error')),
         Expanded(
           child: buildGridView(),
         )
@@ -75,7 +73,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
             crossAxisCount: 3,
             crossAxisSpacing: 4.0,
             children: [
-              ClickableAddSomething(imageService.loadAssets),
+              NewElementButton(push: imageService.loadAssets),
               ...List.generate(
                 images.length,
                 (index) {

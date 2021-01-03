@@ -16,7 +16,7 @@ class AuthApiProvider implements AuthRepository {
 
   Future<String> getToken() async {
     String token = await storage.read(key: "token");
-    print("Get token: $token");
+    //print("Get token: $token");
     return token;
   }
 

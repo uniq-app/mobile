@@ -6,7 +6,7 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
-import 'package:uniq/src/shared/components/add_board_button.dart';
+import 'package:uniq/src/shared/components/new_element_button.dart';
 import 'package:uniq/src/shared/components/board_list_element.dart';
 import 'package:uniq/src/shared/components/bottom_navbar.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -98,6 +98,7 @@ class BoardList extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
+            automaticallyImplyLeading: false,
             pinned: false,
             floating: true,
             expandedHeight: 120.0,
@@ -144,7 +145,7 @@ class BoardList extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildListDelegate([
-            NewBoardButton(
+            NewElementButton(
               heightFraction: 0.15,
               widthFraction: 0.8,
               push: () {

@@ -36,8 +36,7 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
     if (event is PostAllPhotos) {
       try {
         yield PhotosLoading();
-        var isSuccess =
-            await photoRepository.postAll(event.images, event.checked);
+        await photoRepository.postAll(event.images, event.checked);
         //print("IsSuccess: $isSuccess");
         // Todo: reload photos?
         // Todo: return new custom state?

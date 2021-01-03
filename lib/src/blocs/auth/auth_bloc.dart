@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:uniq/src/repositories/auth_repository.dart';
 import 'package:uniq/src/shared/exceptions.dart';
 
