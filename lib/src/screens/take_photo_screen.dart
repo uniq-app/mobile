@@ -15,12 +15,12 @@ import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 
 // A screen that allows users to take a picture using a given camera.
-class TakePictureScreen extends StatefulWidget {
+class TakePhotoScreen extends StatefulWidget {
   @override
-  TakePictureScreenState createState() => TakePictureScreenState();
+  TakePhotoScreenState createState() => TakePhotoScreenState();
 }
 
-class TakePictureScreenState extends State<TakePictureScreen> {
+class TakePhotoScreenState extends State<TakePhotoScreen> {
   File _image;
   File get image => _image;
   final picker = ImagePicker();
