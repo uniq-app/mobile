@@ -8,20 +8,14 @@ import 'package:uniq/src/screens/credentials_check_page.dart';
 import 'package:uniq/src/screens/forgot_password_page.dart';
 import 'package:uniq/src/screens/new_password_page.dart';
 import 'package:uniq/src/screens/register_page.dart';
-import 'package:uniq/src/screens/take_photo_screen.dart';
-import 'package:uniq/src/screens/home_page.dart';
-import 'package:uniq/src/screens/image_library_page.dart';
 import 'package:uniq/src/screens/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
-import 'package:uniq/src/screens/user_settings_page.dart';
 import 'package:uniq/src/screens/welcome_page.dart';
 import './shared/constants.dart';
 
 class MainRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case homeRoute:
-        return MaterialPageRoute(builder: (_) => HomePage());
       case boardDetailsRoute:
         Board board = settings.arguments as Board;
         return MaterialPageRoute(
@@ -44,21 +38,9 @@ class MainRouter {
             },
           ),
         );
-      case cameraRoute:
-        return MaterialPageRoute(
-          builder: (_) => TakePhotoScreen(),
-        );
-      case imagePickerRoute:
-        return MaterialPageRoute(
-          builder: (_) => ImageLibraryPage(),
-        );
       case createBoardRoute:
         return MaterialPageRoute(
           builder: (_) => CreateBoardPage(),
-        );
-      case userSettingsRoute:
-        return MaterialPageRoute(
-          builder: (_) => UserSettingsPage(),
         );
       case editBoardPage:
         Board board = settings.arguments as Board;

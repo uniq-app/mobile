@@ -12,10 +12,8 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-  int _currentIndex;
-
   _setPage(int index) {
-    context.read<PageCubit>().setPage(index);
+    context.read<PageCubit>().setPage(PageState.values[index]);
   }
 
   @override
@@ -29,8 +27,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           onTap: (index) {
-            if (_currentIndex != index) {
-              _currentIndex = index;
+            if (state.index != index) {
               _setPage(index);
             }
           },

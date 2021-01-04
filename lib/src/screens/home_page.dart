@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
+import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
@@ -113,7 +114,7 @@ class BoardList extends StatelessWidget {
                   color: Colors.white,
                   margin: 20,
                   push: () {
-                    Navigator.pushNamed(context, userSettingsRoute);
+                    context.read<PageCubit>().setPage(PageState.profilePage);
                   },
                 ),
               ),
