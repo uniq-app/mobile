@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -39,10 +40,19 @@ class _RegisterPage extends State<RegisterPage> {
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (BuildContext context, AuthState state) {
               if (state is RegisterSuccess) {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Registration successful!')));
+                showToast(
+                  "Account successfuly created!",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.green[400],
+                );
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     loginRoute, (Route<dynamic> route) => false);
+              } else if (state is RegisterError) {
+                showToast(
+                  "Failed to create account - ${state.error.message}",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.redAccent,
+                );
               }
             },
             builder: (BuildContext context, AuthState state) {
@@ -83,8 +93,8 @@ class _RegisterPage extends State<RegisterPage> {
                       controller: emailController,
                       validator: (value) {
                         if (value.isEmpty) return 'Please enter the email';
-                        if (!value.contains("@") && !value.contains("."))
-                          return 'Please enter email';
+                        if (!value.contains("@") || !value.contains("."))
+                          return 'Please enter correct email';
                         return null;
                       },
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/models/board.dart';
+import 'package:uniq/src/screens/home_page.dart';
 
 class UniqButton extends StatelessWidget {
   final String text;
@@ -44,7 +45,8 @@ class UniqButton extends StatelessWidget {
 
 class DeleteAlert extends StatelessWidget {
   final Board board;
-  const DeleteAlert({Key key, this.board}) : super(key: key);
+  final Function deleteAction;
+  const DeleteAlert({Key key, this.board, this.deleteAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +57,7 @@ class DeleteAlert extends StatelessWidget {
       actions: [
         FlatButton(
             color: Theme.of(context).accentColor,
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: deleteAction,
             child: Text("Yes")),
         FlatButton(
             color: Theme.of(context).primaryColor,

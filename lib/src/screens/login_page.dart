@@ -65,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Email",
                       controller: loginController,
                     ),
+                    SizedBox(height: size.height * 0.02),
                     UniqInputField(
                       color: Theme.of(context).accentColor,
                       isObscure: true,
