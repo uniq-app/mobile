@@ -14,41 +14,45 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: <Widget>[
-            Text(
-              "Your settings",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 19,
+            ListTile(
+              title: Text('Edit profile'),
+              leading: Icon(Icons.person, color: Colors.white),
+              trailing: Icon(Icons.navigate_next, color: Colors.white),
+              onTap: () => print("Edit profile"),
+            ),
+            ListTile(
+              title: Text('Change password'),
+              leading: Icon(Icons.lock, color: Colors.white),
+              trailing: Icon(Icons.navigate_next, color: Colors.white),
+              onTap: () => print("Change password"),
+            ),
+            ListTile(
+              title: Text('Change email'),
+              leading: Icon(Icons.email, color: Colors.white),
+              trailing: Icon(Icons.navigate_next, color: Colors.white),
+              onTap: () => print("Change email"),
+            ),
+            ListTile(
+              title: Text('Notifications'),
+              leading: Icon(Icons.notifications, color: Colors.white),
+              trailing: Icon(Icons.navigate_next, color: Colors.white),
+              onTap: () => print("Notifications"),
+            ),
+            ListTile(
+              title: Text(
+                'Delete account',
+                style: TextStyle(
+                  color: Theme.of(context).errorColor,
+                ),
               ),
-            ),
-            SizedBox(height: size.height * 0.05),
-            SizedBox(height: size.height * 0.05),
-            UniqButton(
-              text: "DUPA",
-              color: Theme.of(context).primaryColor,
-              push: () {},
-            ),
-            UniqButton(
-              text: "DWIE",
-              color: Theme.of(context).accentColor,
-              textColor: Colors.white,
-              push: () {},
-            ),
-            UniqButton(
-              text: "Save",
-              color: Theme.of(context).accentColor,
-              textColor: Colors.white,
-              push: () {},
-            ),
-            UniqButton(
-              text: "Cancell",
-              color: Theme.of(context).accentColor,
-              textColor: Colors.white,
-              push: () {},
+              leading: Icon(Icons.delete_forever, color: Theme.of(context).errorColor),
+              onTap: () => print("Delete account"),
             ),
             _logout(context)
           ],
@@ -69,16 +73,10 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
               welcomeRoute, (Route<dynamic> route) => false);
         }
       },
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            OutlinedButton(
-              onPressed: _sendLogout,
-              child: Text('Logout'),
-            ),
-          ],
-        ),
+      child: ListTile(
+        title: Text('Logout'),
+        leading: Icon(Icons.logout, color: Colors.white),
+        onTap: _sendLogout,
       ),
     );
   }
