@@ -8,7 +8,8 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uniq/src/shared/components/input_field.dart';
+import 'package:uniq/src/shared/components/board_cover_settings.dart';
+import 'package:uniq/src/shared/components/input_form_field.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
 class EditBoardPage extends StatefulWidget {
@@ -41,6 +42,8 @@ class _EditBoardPageState extends State<EditBoardPage> {
 
   _getStatus() {
     if (this.got != true) {
+      nameController.text = widget.board.name;
+      descriptionController.text = widget.board.description;
       this.isPrivate = widget.board.isPrivate;
       this.got = true;
     }
@@ -62,8 +65,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
   Widget build(BuildContext context) {
     _getStatus();
     Size size = MediaQuery.of(context).size;
-    nameController.text = widget.board.name;
-    descriptionController.text = widget.board.description;
+
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -91,14 +93,28 @@ class _EditBoardPageState extends State<EditBoardPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Edit board",
-                    style: Theme.of(context).textTheme.headline4,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Edit board",
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      IconButton(
+                          iconSize: 35,
+                          icon: Icon(Icons.highlight_remove),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                child: DeleteAlert(
+                                    board: widget.board,
+                                    deleteAction: _deleteBoard));
+                          })
+                    ],
                   ),
-                  Text("Coverphoto"),
+                  SizedBox(height: size.height * 0.05),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
-                    //initialValue: widget.board.name,
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
@@ -106,12 +122,14 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   SizedBox(height: size.height * 0.02),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
-                    //initialValue: widget.board.description,
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,
                   ),
                   SizedBox(height: size.height * 0.02),
+                  BoardCoverSettings(
+                    image: widget.board.cover.value,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -146,15 +164,11 @@ class _EditBoardPageState extends State<EditBoardPage> {
                           child: Text("Cancel")),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(Icons.highlight_remove),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            child: DeleteAlert(
-                                board: widget.board,
-                                deleteAction: _deleteBoard));
-                      })
+                  RaisedButton(
+                    elevation: 3.0,
+                    onPressed: () {},
+                    child: const Text('Color'),
+                  ),
                 ],
               ),
             ),

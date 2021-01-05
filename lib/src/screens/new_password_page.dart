@@ -48,7 +48,7 @@ class _NewPasswordPage extends State<NewPasswordPage> {
                 return Loading();
               }
               return Form(
-                autovalidate: true,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _NewPasswordKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +61,7 @@ class _NewPasswordPage extends State<NewPasswordPage> {
                       ),
                     ),
                     SizedBox(height: size.height * 0.05),
-                    UniqInputField(
+                    UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       inputIcon: Icons.face,
                       isObscure: false,
@@ -73,7 +73,7 @@ class _NewPasswordPage extends State<NewPasswordPage> {
                       },
                     ),
                     SizedBox(height: size.height * 0.02),
-                    UniqInputField(
+                    UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       isObscure: true,
                       inputIcon: Icons.lock,
@@ -87,7 +87,7 @@ class _NewPasswordPage extends State<NewPasswordPage> {
                       },
                     ),
                     SizedBox(height: size.height * 0.02),
-                    UniqInputField(
+                    UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       isObscure: true,
                       inputIcon: Icons.lock,

@@ -59,7 +59,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                       ),
                     ),
                     SizedBox(height: size.height * 0.05),
-                    UniqInputField(
+                    UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       inputIcon: Icons.face,
                       isObscure: false,
@@ -71,7 +71,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                       },
                     ),
                     SizedBox(height: size.height * 0.02),
-                    UniqInputField(
+                    UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       inputIcon: Icons.email,
                       isObscure: false,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UniqInputIconField extends StatelessWidget {
+class UniqInputField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final bool isObscure;
   final String hintText, labelText;
@@ -9,7 +9,7 @@ class UniqInputIconField extends StatelessWidget {
   final double fieldRounding;
   final TextEditingController controller;
   final Function(String) validator;
-  const UniqInputIconField(
+  const UniqInputField(
       {Key key,
       this.onChanged,
       this.isObscure = false,
@@ -36,14 +36,6 @@ class UniqInputIconField extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
         labelText: labelText,
         hintText: hintText,
-        prefixIcon: Icon(
-          inputIcon,
-          color: Theme.of(context).primaryColor,
-        ),
-        suffixIcon: Icon(
-          suffixIcon,
-          color: Theme.of(context).primaryColor,
-        ),
       ),
     );
   }
