@@ -113,8 +113,8 @@ class SelectBoardDialogService {
                 .map(
                   (e) => RadioListTile(
                     title: Text(e.name),
-                    value: e.name,
-                    groupValue: selectedBoard.name,
+                    value: e.id,
+                    groupValue: selectedBoard.id,
                     selected: selectedBoard == e,
                     controlAffinity: ListTileControlAffinity.trailing,
                     onChanged: (value) {
