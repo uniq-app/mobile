@@ -5,24 +5,42 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<Offset> _offsetAnimation;
+
   @override
   void initState() {
     super.initState();
-    print("Search page init");
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    )..forward();
+    _offsetAnimation = Tween<Offset>(
+      begin: const Offset(0, 1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+    ));
   }
 
   @override
   void dispose() {
     print("Search page destroy");
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Search'),
+    return SlideTransition(
+      position: _offsetAnimation,
+      child: Container(
+        child: Center(
+          child: Text('Search'),
+        ),
       ),
     );
   }

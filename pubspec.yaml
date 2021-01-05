@@ -42,6 +42,7 @@ dependencies:
   oktoast: ^2.1.8
   move_to_background: ^1.0.1
   flutter_launcher_icons: ^0.8.1
+  splashscreen:
   
 dev_dependencies:
   flutter_test:

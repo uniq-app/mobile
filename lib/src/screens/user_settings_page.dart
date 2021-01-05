@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
-import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/utilities.dart';
 

@@ -16,23 +16,18 @@ class ApplicationPage extends StatefulWidget {
 class _ApplicationPageState extends State<ApplicationPage> {
   @override
   Widget build(BuildContext context) {
-    print("Building scaffold");
     return Scaffold(
       body: BlocBuilder<PageCubit, PageState>(
         builder: (BuildContext context, PageState state) {
           if (state == PageState.homePage) {
             return HomePage();
-          }
-          if (state == PageState.searchPage) {
+          } else if (state == PageState.searchPage) {
             return SearchPage();
-          }
-          if (state == PageState.cameraPage) {
+          } else if (state == PageState.cameraPage) {
             return TakePhotoScreen();
-          }
-          if (state == PageState.libraryPage) {
+          } else if (state == PageState.libraryPage) {
             return ImageLibraryPage();
-          }
-          if (state == PageState.profilePage) {
+          } else if (state == PageState.profilePage) {
             return UserSettingsPage();
           }
           return HomePage();

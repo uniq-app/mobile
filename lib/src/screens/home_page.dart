@@ -9,7 +9,6 @@ import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
 import 'package:uniq/src/shared/components/board_list_element.dart';
-import 'package:uniq/src/shared/components/bottom_navbar.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
@@ -24,8 +23,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    print("In home page init");
-    _loadBoards();
+    if (_getInitBoardState() is BoardInitialState) {
+      _loadBoards();
+    }
+  }
+
+  _getInitBoardState() {
+    return context.read<BoardBloc>().state;
   }
 
   _loadBoards() async {
@@ -39,12 +43,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return _body();
-  }
-
-  Widget _body() {
     return BlocConsumer<BoardBloc, BoardState>(
       listener: (BuildContext context, BoardState state) {
+        print("Listener - state: $state");
         if (state is BoardCreated || state is BoardDeleted) {
           _loadBoards();
         }
