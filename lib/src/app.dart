@@ -68,9 +68,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(authRepository: AuthApiProvider()),
         ),
-        BlocProvider<PageCubit>(
-          create: (context) => PageCubit(),
-        ),
       ],
       child: OKToast(
         child: MaterialApp(
