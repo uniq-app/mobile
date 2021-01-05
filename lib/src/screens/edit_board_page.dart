@@ -9,6 +9,7 @@ import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/components/board_cover_settings.dart';
+import 'package:uniq/src/shared/components/color_picker.dart';
 import 'package:uniq/src/shared/components/input_form_field.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
@@ -169,6 +170,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     onPressed: () {},
                     child: const Text('Color'),
                   ),
+                  BoardColorPicker(),
                 ],
               ),
             ),
