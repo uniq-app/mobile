@@ -43,6 +43,7 @@ class TakePhotoScreenState extends State<TakePhotoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Take a photo.'),
       ),
       body: Center(

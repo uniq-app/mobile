@@ -42,6 +42,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Pick images'),
       ),
       body: _body(),
