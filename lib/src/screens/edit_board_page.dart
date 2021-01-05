@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +7,6 @@ import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/shared/components/form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/utilities.dart';
@@ -23,9 +21,22 @@ class EditBoardPage extends StatefulWidget {
 class _EditBoardPageState extends State<EditBoardPage> {
   bool got = false, isPrivate;
   File _boardCover;
+  final TextEditingController nameController = new TextEditingController();
+  final TextEditingController descriptionController =
+      new TextEditingController();
+  final TextEditingController privateController = new TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descriptionController.dispose();
+    privateController.dispose();
+    super.dispose();
+  }
 
   _deleteBoard() {
     context.read<BoardBloc>().add(DeleteBoard(boardId: widget.board.id));
+    Navigator.pop(context);
   }
 
   _getStatus() {
@@ -51,10 +62,8 @@ class _EditBoardPageState extends State<EditBoardPage> {
   Widget build(BuildContext context) {
     _getStatus();
     Size size = MediaQuery.of(context).size;
-    final TextEditingController nameController = new TextEditingController();
-    final TextEditingController descriptionController =
-        new TextEditingController();
-    final TextEditingController privateController = new TextEditingController();
+    nameController.text = widget.board.name;
+    descriptionController.text = widget.board.description;
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -80,6 +89,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _EditKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Edit board",
@@ -88,20 +98,18 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   Text("Coverphoto"),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
-                    inputIcon: Icons.email,
-                    initialValue: widget.board.name,
+                    //initialValue: widget.board.name,
                     isObscure: false,
                     labelText: "Name",
-                    //controller: nameController,
+                    controller: nameController,
                   ),
                   SizedBox(height: size.height * 0.02),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
-                    inputIcon: Icons.email,
-                    initialValue: widget.board.description,
+                    //initialValue: widget.board.description,
                     isObscure: false,
                     labelText: "Description",
-                    //controller: descriptionController,
+                    controller: descriptionController,
                   ),
                   SizedBox(height: size.height * 0.02),
                   Row(
