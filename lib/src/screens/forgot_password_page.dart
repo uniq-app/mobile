@@ -79,7 +79,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                       controller: emailController,
                       validator: (value) {
                         if (value.isEmpty) return 'Please enter the email';
-                        if (!value.contains("@") && !value.contains("."))
+                        if (!value.contains("@") || !value.contains("."))
                           return 'Please enter email';
                         return null;
                       },
