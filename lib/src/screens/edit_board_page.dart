@@ -7,8 +7,6 @@ import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
-import 'package:uniq/src/blocs/photo/photo_bloc.dart';
-import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/components/board_cover_settings.dart';
@@ -43,24 +41,23 @@ class _EditBoardPageState extends State<EditBoardPage> {
   }
 
   _updateBoard() {
-    context.read<PhotoBloc>().add(PostCoverImage(image: File(boardCover)));
+    File coverImage;
+    if (boardCover != null) coverImage = File(boardCover);
+
     Map<String, dynamic> boardData = new Map<String, dynamic>();
     Map<String, dynamic> coverData = new Map<String, dynamic>();
-    boardData['id'] = widget.board.id;
+    boardData['boardId'] = widget.board.id;
     boardData['name'] = nameController.text;
     boardData['description'] = descriptionController.text;
     boardData['isPrivate'] = isPrivate;
-    boardData['isCreatorHidden'] = true;
-    coverData['value'] = boardCover;
-    boardData['cover'] = coverData;
 
-    context.read<BoardBloc>().add(UpdateBoard(
-        board: Board.fromJson(boardData), boardId: boardData['id']));
+    context.read<BoardBloc>().add(
+        UpdateBoard(board: Board.fromJson(boardData), coverImage: coverImage));
   }
 
   _getStatus() {
     if (this.got != true) {
-      boardCover = widget.board.cover.value;
+      boardCover = widget.board.cover;
       nameController.text = widget.board.name;
       descriptionController.text = widget.board.description;
       this.isPrivate = widget.board.isPrivate;
@@ -74,6 +71,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
     setState(() {
       if (image != null) {
         boardCover = image.path;
+        print(image.path);
       } else {
         print('No image selected.');
       }
@@ -156,7 +154,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.green,
                 );
-              } else if (state is BoardsError) {
+              } else if (state is UpdateError) {
                 showToast(
                   "Failed to update board - ${state.error.message}",
                   position: ToastPosition.bottom,

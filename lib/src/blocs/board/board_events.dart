@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uniq/src/models/board.dart';
@@ -20,10 +21,10 @@ class CreateBoard extends BoardEvent {
 
 class UpdateBoard extends BoardEvent {
   final Board board;
-  final String boardId;
-  UpdateBoard({@required this.board, this.boardId});
+  final File coverImage;
+  UpdateBoard({@required this.board, this.coverImage});
   @override
-  List<Object> get props => [board, boardId];
+  List<Object> get props => [board];
 }
 
 class DeleteBoard extends BoardEvent {

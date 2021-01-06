@@ -81,7 +81,6 @@ class PhotoApiProvider implements PhotoRepository {
     if (response.statusCode == 200) {
       return json.decode(response.body)['id'];
     } else {
-      print("Photos - failed to post photos");
       throw Exception('Failed to load photos');
     }
   }
@@ -97,7 +96,6 @@ class PhotoApiProvider implements PhotoRepository {
     if (response.statusCode == 200) {
       return json.decode(response.body)['id'];
     } else {
-      print("Photos - failed to post photos");
       throw Exception('Failed to load photos');
     }
   }

@@ -25,7 +25,6 @@ class BoardApiProvider implements BoardRepository {
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));
     } else {
-      print("Boards - Failed to load boards");
       throw Exception('Failed to load boards');
     }
   }
@@ -38,22 +37,18 @@ class BoardApiProvider implements BoardRepository {
     final response =
         await client.post('$_apiUrl/', body: body, headers: headers);
     if (response.statusCode == 200) {
-      print("Boards - post board success");
     } else {
-      print("Boards - Failed to post board");
       throw Exception('Failed to post boards');
     }
   }
 
-  Future putBoard(Board board, String boardId) async {
+  Future putBoard(Board board) async {
     String body = json.encode(board.toJson());
     var headers = {"Content-Type": "application/json"};
     final response =
-        await client.put('$_apiUrl/$boardId', body: body, headers: headers);
+        await client.put('$_apiUrl/${board.id}', body: body, headers: headers);
     if (response.statusCode == 200) {
-      print("Boards - update board success");
     } else {
-      print("Boards - Failed to update board");
       throw Exception('Failed to update board');
     }
   }
@@ -61,9 +56,7 @@ class BoardApiProvider implements BoardRepository {
   Future deleteBoard(String boardId) async {
     final response = await client.delete('$_apiUrl/$boardId');
     if (response.statusCode == 200) {
-      print("Boards - delete board success");
     } else {
-      print("Boards - Failed to delete board");
       throw Exception('Failed to delete boards');
     }
   }
@@ -76,7 +69,6 @@ class BoardApiProvider implements BoardRepository {
       body.forEach((el) => photos.add(Photo.fromJson(el)));
       return photos;
     } else {
-      print("Boards - Failed to load photos");
       throw Exception('Failed to load photos');
     }
   }
@@ -88,10 +80,7 @@ class BoardApiProvider implements BoardRepository {
     final response = await client.put('$_apiUrl/$boardId/photos',
         headers: headers, body: body);
     if (response.statusCode == 200) {
-      print('Success - post Photos');
     } else {
-      print("Board - Failed to post photos");
-      print(response);
       throw Exception('Failed to post photos');
     }
   }

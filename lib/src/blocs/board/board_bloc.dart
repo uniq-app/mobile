@@ -4,13 +4,16 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
+import 'package:uniq/src/repositories/photo_repository.dart';
 import 'package:uniq/src/shared/exceptions.dart';
 
 class BoardBloc extends Bloc<BoardEvent, BoardState> {
   final BoardRepository boardRepository;
+  final PhotoRepository photoRepository;
   BoardResults boardResults;
 
-  BoardBloc({this.boardRepository}) : super(BoardInitialState());
+  BoardBloc({this.boardRepository, this.photoRepository})
+      : super(BoardInitialState());
 
   @override
   Stream<BoardState> mapEventToState(BoardEvent event) async* {
@@ -52,7 +55,11 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
     if (event is UpdateBoard) {
       yield BoardsLoading();
       try {
-        await boardRepository.putBoard(event.board, event.boardId);
+        String id = await photoRepository.postImageFromFile(event.coverImage);
+        print(id);
+        event.board.cover = id;
+        print(event.board.cover);
+        await boardRepository.putBoard(event.board);
         yield BoardUpdated();
       } on SocketException {
         yield UpdateError(error: NoInternetException('No internet'));
