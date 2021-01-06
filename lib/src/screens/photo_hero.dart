@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 
 class PhotoHero extends StatelessWidget {
-  final String photo;
+  final String url;
+  final Image image;
   final VoidCallback onTap;
   final String tag;
   final bool isRounded;
 
-  PhotoHero({Key key, this.photo, this.onTap, this.tag, this.isRounded = false})
+  PhotoHero(
+      {Key key,
+      this.url,
+      this.image,
+      this.onTap,
+      this.tag,
+      this.isRounded = false})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
+      child: Container(
         alignment: Alignment.center,
         color: Theme.of(context).scaffoldBackgroundColor,
         child: ClipRRect(
@@ -23,30 +30,31 @@ class PhotoHero extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: onTap,
-                child: CustomImageNetwork(photo: photo),
-              ),
+                  onTap: onTap,
+                  child: (url != null) ? CustomImageNetwork(url: url) : image),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
 class CustomImageNetwork extends StatelessWidget {
+  final String url;
+
   const CustomImageNetwork({
     Key key,
-    @required this.photo,
+    @required this.url,
   }) : super(key: key);
-
-  final String photo;
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      photo,
+      url,
       errorBuilder:
           (BuildContext context, Object exception, StackTrace stackTrace) {
-        print("Failed loading $photo, attempt");
+        print("Failed loading $url, attempt");
         return CustomError(message: "Failed to load");
       },
       loadingBuilder:
