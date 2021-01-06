@@ -15,6 +15,9 @@ class Cover extends Equatable {
   String get boardId => _boardId;
   String get value => _value;
 
+  set boardId(String id) => _boardId = id;
+  set value(String value) => _value = value;
+
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['photo_id'] = _photoId;

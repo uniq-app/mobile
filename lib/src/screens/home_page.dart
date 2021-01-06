@@ -128,7 +128,7 @@ class BoardList extends StatelessWidget {
               return BoardListElement(
                 name: boards[index].name,
                 description: boards[index].description,
-                imageLink: boards[index].cover.value,
+                imageLink: boards[index].cover,
                 boardLink: () {
                   Navigator.pushNamed(context, boardDetailsRoute,
                       arguments: boards[index]);

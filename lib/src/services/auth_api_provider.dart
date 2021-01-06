@@ -16,7 +16,6 @@ class AuthApiProvider implements AuthRepository {
 
   Future<String> getToken() async {
     String token = await storage.read(key: "token");
-    //print("Get token: $token");
     return token;
   }
 
@@ -25,10 +24,8 @@ class AuthApiProvider implements AuthRepository {
   }
 
   @override
-  Future login(String username, String password) async {
-    print("In auth provider: $username $password");
-
-    var credentialsMap = {"username": username, "password": password};
+  Future login(String email, String password) async {
+    var credentialsMap = {"email": email, "password": password};
     String body = json.encode(credentialsMap);
     var headers = {"Content-Type": "application/json"};
 
@@ -39,15 +36,12 @@ class AuthApiProvider implements AuthRepository {
       // Write to local secure storage
       storeToken(body['jwt']);
     } else {
-      print("Login failed: ${response.statusCode}");
       throw Exception('Failed to login');
     }
   }
 
   @override
   Future register(String username, String email, String password) async {
-    print("In register data: $username $email $password");
-
     var credentialsMap = {
       "username": username,
       "email": email,
@@ -58,9 +52,7 @@ class AuthApiProvider implements AuthRepository {
     final response =
         await client.post('$_apiUrl/register', body: body, headers: headers);
     if (response.statusCode == 200) {
-      print("register succesful");
     } else {
-      print("Register failed: ${response.statusCode}");
       throw Exception('Failed to register');
     }
   }

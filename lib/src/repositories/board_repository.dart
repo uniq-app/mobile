@@ -7,7 +7,7 @@ abstract class BoardRepository {
 
   Future postBoard(Board board);
 
-  Future putBoard(Board board, String boardId);
+  Future putBoard(Board board);
 
   Future deleteBoard(String boardId);
 
