@@ -20,6 +20,18 @@ class BoardsError extends BoardState {
   BoardsError({this.error});
 }
 
+class DeleteError extends BoardState {
+  final error;
+  DeleteError({this.error});
+}
+
+class UpdateError extends BoardState {
+  final error;
+  UpdateError({this.error});
+}
+
 class BoardCreated extends BoardState {}
+
+class BoardUpdated extends BoardState {}
 
 class BoardDeleted extends BoardState {}

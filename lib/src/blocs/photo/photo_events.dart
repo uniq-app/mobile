@@ -36,3 +36,8 @@ class PostAllFromCamera extends PhotoEvent {
 }
 
 class ClosePostDialog extends PhotoEvent {}
+
+class PostCoverImage extends PhotoEvent {
+  final File image;
+  PostCoverImage({this.image});
+}

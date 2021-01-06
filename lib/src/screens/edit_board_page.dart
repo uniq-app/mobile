@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,9 +7,12 @@ import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
+import 'package:uniq/src/blocs/photo/photo_bloc.dart';
+import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uniq/src/shared/components/input_field.dart';
+import 'package:uniq/src/shared/components/board_cover_settings.dart';
+import 'package:uniq/src/shared/components/input_form_field.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
 class EditBoardPage extends StatefulWidget {
@@ -20,17 +24,16 @@ class EditBoardPage extends StatefulWidget {
 
 class _EditBoardPageState extends State<EditBoardPage> {
   bool got = false, isPrivate;
-  File _boardCover;
+  String boardCover;
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController descriptionController =
       new TextEditingController();
-  final TextEditingController privateController = new TextEditingController();
 
+  Color tempColor = Colors.amberAccent;
   @override
   void dispose() {
     nameController.dispose();
     descriptionController.dispose();
-    privateController.dispose();
     super.dispose();
   }
 
@@ -39,8 +42,27 @@ class _EditBoardPageState extends State<EditBoardPage> {
     Navigator.pop(context);
   }
 
+  _updateBoard() {
+    context.read<PhotoBloc>().add(PostCoverImage(image: File(boardCover)));
+    Map<String, dynamic> boardData = new Map<String, dynamic>();
+    Map<String, dynamic> coverData = new Map<String, dynamic>();
+    boardData['id'] = widget.board.id;
+    boardData['name'] = nameController.text;
+    boardData['description'] = descriptionController.text;
+    boardData['isPrivate'] = isPrivate;
+    boardData['isCreatorHidden'] = true;
+    coverData['value'] = boardCover;
+    boardData['cover'] = coverData;
+
+    context.read<BoardBloc>().add(UpdateBoard(
+        board: Board.fromJson(boardData), boardId: boardData['id']));
+  }
+
   _getStatus() {
     if (this.got != true) {
+      boardCover = widget.board.cover.value;
+      nameController.text = widget.board.name;
+      descriptionController.text = widget.board.description;
       this.isPrivate = widget.board.isPrivate;
       this.got = true;
     }
@@ -48,13 +70,58 @@ class _EditBoardPageState extends State<EditBoardPage> {
 
   Future _getImage() async {
     final image = await ImagePicker().getImage(source: ImageSource.gallery);
+
     setState(() {
       if (image != null) {
-        _boardCover = File(image.path);
+        boardCover = image.path;
       } else {
         print('No image selected.');
       }
     });
+  }
+
+  Future<bool> colorPickerDialog(boardColor) async {
+    return ColorPicker(
+      color: boardColor,
+      onColorChanged: (Color color) => setState(() => tempColor = color),
+      width: 40,
+      height: 40,
+      borderRadius: 15,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 220,
+      heading: Text(
+        'Select color',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      subheading: Text(
+        'Select color shade',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      wheelSubheading: Text(
+        'Selected color and its shades',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      showMaterialName: false,
+      showColorName: false,
+      showColorCode: false,
+      materialNameTextStyle: Theme.of(context).textTheme.caption,
+      colorNameTextStyle: Theme.of(context).textTheme.caption,
+      colorCodeTextStyle: Theme.of(context).textTheme.caption,
+      pickersEnabled: const <ColorPickerType, bool>{
+        ColorPickerType.both: false,
+        ColorPickerType.primary: true,
+        ColorPickerType.accent: true,
+        ColorPickerType.bw: false,
+        ColorPickerType.custom: false,
+        ColorPickerType.wheel: true,
+      },
+      //customColorSwatchesAndNames: colorsNameMap,
+    ).showPickerDialog(
+      context,
+      constraints: const BoxConstraints(
+          minHeight: 455, minWidth: 320, maxWidth: 320, maxHeight: 455),
+    );
   }
 
   final _EditKey = GlobalKey<FormState>();
@@ -62,8 +129,6 @@ class _EditBoardPageState extends State<EditBoardPage> {
   Widget build(BuildContext context) {
     _getStatus();
     Size size = MediaQuery.of(context).size;
-    nameController.text = widget.board.name;
-    descriptionController.text = widget.board.description;
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -77,9 +142,23 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   backgroundColor: Colors.greenAccent,
                 );
                 Navigator.pop(context);
-              } else if (state is BoardsError) {
+              } else if (state is DeleteError) {
                 showToast(
                   "Failed to delete board - ${state.error.message}",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.redAccent,
+                );
+              }
+              if (state is BoardUpdated) {
+                Navigator.pop(context);
+                showToast(
+                  "Board successfuly updated!",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.green,
+                );
+              } else if (state is BoardsError) {
+                showToast(
+                  "Failed to update board - ${state.error.message}",
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.redAccent,
                 );
@@ -91,14 +170,28 @@ class _EditBoardPageState extends State<EditBoardPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Edit board",
-                    style: Theme.of(context).textTheme.headline4,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Edit board",
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      IconButton(
+                          iconSize: 35,
+                          icon: Icon(Icons.delete_forever),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                child: DeleteAlert(
+                                    board: widget.board,
+                                    deleteAction: _deleteBoard));
+                          })
+                    ],
                   ),
-                  Text("Coverphoto"),
+                  SizedBox(height: size.height * 0.05),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
-                    //initialValue: widget.board.name,
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
@@ -106,55 +199,85 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   SizedBox(height: size.height * 0.02),
                   UniqInputField(
                     color: Theme.of(context).accentColor,
-                    //initialValue: widget.board.description,
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,
                   ),
                   SizedBox(height: size.height * 0.02),
+                  BoardCoverSettings(
+                    image: boardCover,
+                    editLink: _getImage,
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  // todo: Change stateful to bloc
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: InkWell(
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        width: size.width * 0.9,
+                        height: size.height * 0.07,
+                        padding: EdgeInsets.only(left: 20),
+                        color: tempColor,
+                        child: Text("Change color",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300)),
+                      ),
+                      onTap: () async {
+                        final Color colorBeforeDialog = tempColor;
+                        if (!(await colorPickerDialog(tempColor))) {
+                          setState(() {
+                            tempColor = colorBeforeDialog;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.02),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Private"),
-                      Switch(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Private",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300)),
+                      Checkbox(
                         value: isPrivate,
                         onChanged: (value) {
                           setState(() {
                             isPrivate = value;
                           });
                         },
-                        activeTrackColor: Colors.lightGreenAccent,
-                        activeColor: Colors.green,
+                        activeColor: tempColor,
                       ),
                     ],
                   ),
-                  Text("Background color"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      FlatButton(
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Save")),
-                      FlatButton(
-                          color: Theme.of(context).accentColor,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Cancel")),
+                      UniqButton(
+                        screenWidth: 0.35,
+                        screenHeight: 0.07,
+                        color: tempColor,
+                        push: () {
+                          _updateBoard();
+                        },
+                        text: "Save",
+                      ),
+                      UniqButton(
+                        screenWidth: 0.35,
+                        screenHeight: 0.07,
+                        color: Theme.of(context).accentColor,
+                        push: () {
+                          Navigator.pop(context);
+                        },
+                        text: "Cancel",
+                      )
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(Icons.highlight_remove),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            child: DeleteAlert(
-                                board: widget.board,
-                                deleteAction: _deleteBoard));
-                      })
                 ],
               ),
             ),

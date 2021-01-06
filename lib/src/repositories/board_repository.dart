@@ -7,6 +7,8 @@ abstract class BoardRepository {
 
   Future postBoard(Board board);
 
+  Future putBoard(Board board, String boardId);
+
   Future deleteBoard(String boardId);
 
   Future<List<Photo>> getBoardPhotos(String boardId);
