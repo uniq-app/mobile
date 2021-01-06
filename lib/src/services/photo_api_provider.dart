@@ -43,6 +43,22 @@ class PhotoApiProvider implements PhotoRepository {
     return true;
   }
 
+  Future postAllFromCamera(List<File> images, List<Board> checked) async {
+    List<String> values = new List();
+    for (File file in images) {
+      values.add(await postImageFromFile(file));
+    }
+    List<Future> futures = List();
+    // Post to selected boards
+    for (Board board in checked) {
+      futures.add(boardApiProvider.putPhotos(values, board.id));
+    }
+    await Future.wait(futures);
+    // Todo: xd
+    await Future.delayed(Duration(seconds: 1));
+    return true;
+  }
+
   Future<File> getFileFromAsset(Asset asset) async {
     ByteData byteData;
     byteData = await asset.getByteData(quality: 100);
@@ -84,18 +100,5 @@ class PhotoApiProvider implements PhotoRepository {
       print("Photos - failed to post photos");
       throw Exception('Failed to load photos');
     }
-  }
-
-  Future postSingleImageToBoards(File image, List<Board> checked) async {
-    var value = await postImageFromFile(image);
-    List<Future> futures = List();
-    // Post to selected boards
-    for (Board board in checked) {
-      futures.add(boardApiProvider.putPhotos([value], board.id));
-    }
-    await Future.wait(futures);
-    // Todo: xd
-    await Future.delayed(Duration(seconds: 1));
-    return true;
   }
 }

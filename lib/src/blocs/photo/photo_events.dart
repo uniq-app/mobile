@@ -29,10 +29,10 @@ class PostAllPhotos extends PhotoEvent {
   List<Object> get props => [images, checked];
 }
 
-class PostSingleImage extends PhotoEvent {
-  final File image;
+class PostAllFromCamera extends PhotoEvent {
+  final List<File> images;
   final List<Board> checked;
-  PostSingleImage({this.image, this.checked});
+  PostAllFromCamera({this.images, this.checked});
 }
 
 class ClosePostDialog extends PhotoEvent {}

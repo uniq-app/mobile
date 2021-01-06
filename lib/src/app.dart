@@ -8,6 +8,7 @@ import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
+import 'package:uniq/src/blocs/taken_images/taken_images_cubit.dart';
 import 'package:uniq/src/screens/credentials_check_page.dart';
 import 'package:uniq/src/services/auth_api_provider.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
@@ -67,6 +68,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(authRepository: AuthApiProvider()),
+        ),
+        BlocProvider<TakenImagesCubit>(
+          create: (context) => TakenImagesCubit(),
         ),
       ],
       child: OKToast(

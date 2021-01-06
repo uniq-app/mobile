@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class NewElementButton extends StatelessWidget {
   final VoidCallback push;
   final double widthFraction, heightFraction;
-  NewElementButton(
-      {Key key,
-      this.push,
-      this.widthFraction = 0.8,
-      this.heightFraction = 0.15})
-      : super(key: key);
+  final Widget child;
+  NewElementButton({
+    Key key,
+    this.push,
+    this.widthFraction = 0.8,
+    this.heightFraction = 0.15,
+    this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +33,14 @@ class NewElementButton extends StatelessWidget {
               alignment: Alignment.center,
               padding: EdgeInsets.all(12),
               height: size.height * heightFraction,
-              child: Text(
-                "+",
-                style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey),
-              ),
+              child: child ??
+                  Text(
+                    "+",
+                    style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.grey),
+                  ),
             ),
           ),
         ));
