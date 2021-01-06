@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.0+1
-  flutter_staggered_grid_view:
   image_picker: ^0.6.7+15
   multi_image_picker: ^4.7.14
   flutter_bloc: ^6.1.1
@@ -43,6 +42,10 @@ dependencies:
   move_to_background: ^1.0.1
   flutter_launcher_icons: ^0.8.1
   splashscreen:
+  #TODO: Delete unused later
+  reorderables:
+  flutter_staggered_grid_view:
+  reorderableitemsview: ^1.0.0
   
 dev_dependencies:
   flutter_test:

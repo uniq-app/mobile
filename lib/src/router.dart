@@ -31,8 +31,9 @@ class MainRouter {
             settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (BuildContext context) => PhotoHero(
-            photo: arguments['photo'],
+            url: arguments['url'],
             tag: arguments['tag'],
+            image: arguments['image'],
             onTap: () {
               Navigator.pop(context);
             },
