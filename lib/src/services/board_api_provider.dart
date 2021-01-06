@@ -45,6 +45,21 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+  Future putBoard(Board board) async {
+    var boardMap = board.toJson();
+    String body = json.encode(boardMap);
+    var boardId = board.id;
+    var headers = {"Content-Type": "application/json"};
+    final response =
+        await client.put('$_apiUrl/$boardId', body: body, headers: headers);
+    if (response.statusCode == 200) {
+      print("Boards - update board success");
+    } else {
+      print("Boards - Failed to update board");
+      throw Exception('Failed to update board');
+    }
+  }
+
   Future deleteBoard(String boardId) async {
     final response = await client.delete('$_apiUrl/$boardId');
     if (response.statusCode == 200) {

@@ -29,7 +29,9 @@ class BoardCoverSettings extends StatelessWidget {
                 image: DecorationImage(
                   colorFilter:
                       ColorFilter.mode(Colors.grey, BlendMode.multiply),
-                  image: NetworkImage(image),
+                  image: image.contains("http") == true
+                      ? NetworkImage(image)
+                      : AssetImage(image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -39,7 +41,7 @@ class BoardCoverSettings extends StatelessWidget {
                     Text("Change Cover",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 30,
+                            fontSize: 35,
                             fontWeight: FontWeight.w300)),
                   ]),
             ),

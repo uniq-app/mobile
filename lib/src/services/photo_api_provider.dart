@@ -86,6 +86,11 @@ class PhotoApiProvider implements PhotoRepository {
     }
   }
 
+  Future postSingleImage(File image) async {
+    var imageId = await postImageFromFile(image);
+    return imageId;
+  }
+
   Future postSingleImageToBoards(File image, List<Board> checked) async {
     var value = await postImageFromFile(image);
     List<Future> futures = List();
