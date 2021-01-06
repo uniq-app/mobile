@@ -2,15 +2,18 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
 class BoardColorPicker extends StatefulWidget {
-  BoardColorPicker({Key key}) : super(key: key);
+  Color boardColor;
+  BoardColorPicker({
+    Key key,
+    this.boardColor = Colors.amberAccent,
+  }) : super(key: key);
 
   @override
   _BoardColorPickerState createState() => _BoardColorPickerState();
 }
 
 class _BoardColorPickerState extends State<BoardColorPicker> {
-  Color screenPickerColor;
-  Color dialogPickerColor;
+  /*
   // Define custom colors. The 'guide' color values are from
   // https://material.io/design/color/the-color-system.html#color-theme-creation
   static const Color guidePrimary = Color(0xFF6200EE);
@@ -31,26 +34,24 @@ class _BoardColorPickerState extends State<BoardColorPicker> {
     ColorTools.createPrimarySwatch(guideError): 'Guide Error',
     ColorTools.createPrimarySwatch(guideErrorDark): 'Guide Error Dark',
     ColorTools.createPrimarySwatch(blueBlues): 'Blue blues',
-  };
+  };*/
 
   @override
   void initState() {
     super.initState();
-    screenPickerColor = Colors.blue;
-    dialogPickerColor = Colors.red;
   }
 
-  Future<bool> colorPickerDialog() async {
+  Future<bool> colorPickerDialog(boardColor) async {
     return ColorPicker(
-      color: dialogPickerColor,
+      color: boardColor,
       onColorChanged: (Color color) =>
-          setState(() => dialogPickerColor = color),
+          setState(() => widget.boardColor = color),
       width: 40,
       height: 40,
-      borderRadius: 4,
+      borderRadius: 15,
       spacing: 5,
       runSpacing: 5,
-      wheelDiameter: 155,
+      wheelDiameter: 250,
       heading: Text(
         'Select color',
         style: Theme.of(context).textTheme.subtitle1,
@@ -74,10 +75,10 @@ class _BoardColorPickerState extends State<BoardColorPicker> {
         ColorPickerType.primary: true,
         ColorPickerType.accent: true,
         ColorPickerType.bw: false,
-        ColorPickerType.custom: true,
+        ColorPickerType.custom: false,
         ColorPickerType.wheel: true,
       },
-      customColorSwatchesAndNames: colorsNameMap,
+      //customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
       context,
       constraints:
@@ -87,26 +88,16 @@ class _BoardColorPickerState extends State<BoardColorPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: const Text('Click this color to change it in a dialog'),
-      subtitle: Text(
-        '${ColorTools.materialNameAndCode(dialogPickerColor, colorSwatchNameMap: colorsNameMap)} '
-        'aka ${ColorTools.nameThatColor(dialogPickerColor)}',
-      ),
-      trailing: ColorIndicator(
-        width: 44,
-        height: 44,
-        borderRadius: 4,
-        color: dialogPickerColor,
-        onSelect: () async {
-          final Color colorBeforeDialog = dialogPickerColor;
-          if (!(await colorPickerDialog())) {
-            setState(() {
-              dialogPickerColor = colorBeforeDialog;
-            });
-          }
-        },
-      ),
+    return ColorIndicator(
+      color: widget.boardColor,
+      onSelect: () async {
+        final Color colorBeforeDialog = widget.boardColor;
+        if (!(await colorPickerDialog(widget.boardColor))) {
+          setState(() {
+            widget.boardColor = colorBeforeDialog;
+          });
+        }
+      },
     );
   }
 }

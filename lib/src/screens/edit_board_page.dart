@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,7 +28,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
   final TextEditingController descriptionController =
       new TextEditingController();
   final TextEditingController privateController = new TextEditingController();
-
+  Color tempColor = Colors.amberAccent;
   @override
   void dispose() {
     nameController.dispose();
@@ -59,6 +60,50 @@ class _EditBoardPageState extends State<EditBoardPage> {
         print('No image selected.');
       }
     });
+  }
+
+  Future<bool> colorPickerDialog(boardColor) async {
+    return ColorPicker(
+      color: boardColor,
+      onColorChanged: (Color color) => setState(() => tempColor = color),
+      width: 40,
+      height: 40,
+      borderRadius: 15,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 220,
+      heading: Text(
+        'Select color',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      subheading: Text(
+        'Select color shade',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      wheelSubheading: Text(
+        'Selected color and its shades',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      showMaterialName: false,
+      showColorName: false,
+      showColorCode: false,
+      materialNameTextStyle: Theme.of(context).textTheme.caption,
+      colorNameTextStyle: Theme.of(context).textTheme.caption,
+      colorCodeTextStyle: Theme.of(context).textTheme.caption,
+      pickersEnabled: const <ColorPickerType, bool>{
+        ColorPickerType.both: false,
+        ColorPickerType.primary: true,
+        ColorPickerType.accent: true,
+        ColorPickerType.bw: false,
+        ColorPickerType.custom: false,
+        ColorPickerType.wheel: true,
+      },
+      //customColorSwatchesAndNames: colorsNameMap,
+    ).showPickerDialog(
+      context,
+      constraints: const BoxConstraints(
+          minHeight: 455, minWidth: 320, maxWidth: 320, maxHeight: 455),
+    );
   }
 
   final _EditKey = GlobalKey<FormState>();
@@ -103,7 +148,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                       ),
                       IconButton(
                           iconSize: 35,
-                          icon: Icon(Icons.highlight_remove),
+                          icon: Icon(Icons.delete_forever),
                           onPressed: () {
                             showDialog(
                                 context: context,
@@ -131,46 +176,77 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   BoardCoverSettings(
                     image: widget.board.cover.value,
                   ),
+                  SizedBox(height: size.height * 0.02),
+                  // todo: Change stateful to bloc
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: InkWell(
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        width: size.width * 0.9,
+                        height: size.height * 0.07,
+                        padding: EdgeInsets.only(left: 20),
+                        color: tempColor,
+                        child: Text("Change color",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300)),
+                      ),
+                      onTap: () async {
+                        final Color colorBeforeDialog = tempColor;
+                        if (!(await colorPickerDialog(tempColor))) {
+                          setState(() {
+                            tempColor = colorBeforeDialog;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.02),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Private"),
-                      Switch(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Private",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300)),
+                      Checkbox(
                         value: isPrivate,
                         onChanged: (value) {
                           setState(() {
                             isPrivate = value;
                           });
                         },
-                        activeTrackColor: Colors.lightGreenAccent,
-                        activeColor: Colors.green,
+                        activeColor: tempColor,
                       ),
                     ],
                   ),
-                  Text("Background color"),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      FlatButton(
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Save")),
-                      FlatButton(
-                          color: Theme.of(context).accentColor,
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Cancel")),
+                      UniqButton(
+                        screenWidth: 0.35,
+                        screenHeight: 0.07,
+                        color: tempColor,
+                        push: () {
+                          Navigator.pop(context);
+                        },
+                        text: "Save",
+                      ),
+                      UniqButton(
+                        screenWidth: 0.35,
+                        screenHeight: 0.07,
+                        color: Theme.of(context).accentColor,
+                        push: () {
+                          Navigator.pop(context);
+                        },
+                        text: "Cancel",
+                      )
                     ],
                   ),
-                  RaisedButton(
-                    elevation: 3.0,
-                    onPressed: () {},
-                    child: const Text('Color'),
-                  ),
-                  BoardColorPicker(),
                 ],
               ),
             ),

@@ -7,7 +7,7 @@ class BoardCoverSettings extends StatelessWidget {
   const BoardCoverSettings(
       {Key key,
       this.image =
-          "https://images.unsplash.com/photo-1609869873312-9cb82a7724c7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=30",
+          "https://images.unsplash.com/photo-1567201864585-6baec9110dac?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=50",
       this.editLink,
       this.widthFraction = 0.8,
       this.heightFraction = 0.15})
@@ -39,7 +39,7 @@ class BoardCoverSettings extends StatelessWidget {
                     Text("Change Cover",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 35,
+                            fontSize: 30,
                             fontWeight: FontWeight.w300)),
                   ]),
             ),
