@@ -58,15 +58,14 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: size.height * 0.05),
-                    UniqInputField(
+                    UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       inputIcon: Icons.email,
                       isObscure: false,
                       hintText: "Email",
                       controller: loginController,
                     ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputField(
+                    UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       isObscure: true,
                       inputIcon: Icons.lock,

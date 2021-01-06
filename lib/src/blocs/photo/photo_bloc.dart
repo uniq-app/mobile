@@ -72,5 +72,22 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         yield PhotosError(error: e);
       }
     }
+    if (event is PostCoverImage) {
+      try {
+        yield PhotosLoading();
+        await photoRepository.postImageFromFile(event.image);
+        yield PhotosPostedSuccess();
+      } on SocketException {
+        yield PhotosError(error: NoInternetException('No internet'));
+      } on HttpException {
+        yield PhotosError(error: NoServiceFoundException('No service found'));
+      } on FormatException {
+        yield PhotosError(
+            error: InvalidFormatException('Invalid resposne format'));
+      } catch (e) {
+        print(e);
+        yield PhotosError(error: e);
+      }
+    }
   }
 }

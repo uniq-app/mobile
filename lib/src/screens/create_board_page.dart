@@ -66,22 +66,22 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
                 style: Theme.of(context).textTheme.headline4,
               ),
               Text("Name"),
-              UniqInputField(
+              UniqInputIconField(
                 hintText: "Name",
                 color: Theme.of(context).primaryColor,
               ),
               Text("Description"),
-              UniqInputField(
+              UniqInputIconField(
                 hintText: "Description",
                 color: Theme.of(context).primaryColor,
               ),
               Text("Private"),
-              UniqInputField(
+              UniqInputIconField(
                 hintText: "Private",
                 color: Theme.of(context).primaryColor,
               ),
               Text("Name"),
-              UniqInputField(
+              UniqInputIconField(
                 hintText: "Name",
                 color: Theme.of(context).primaryColor,
               ),

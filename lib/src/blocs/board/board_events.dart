@@ -18,6 +18,14 @@ class CreateBoard extends BoardEvent {
   List<Object> get props => [board];
 }
 
+class UpdateBoard extends BoardEvent {
+  final Board board;
+  final String boardId;
+  UpdateBoard({@required this.board, this.boardId});
+  @override
+  List<Object> get props => [board, boardId];
+}
+
 class DeleteBoard extends BoardEvent {
   final String boardId;
   DeleteBoard({@required this.boardId});
