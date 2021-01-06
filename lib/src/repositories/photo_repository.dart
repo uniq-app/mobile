@@ -6,6 +6,5 @@ abstract class PhotoRepository {
   Future postAll(List<Asset> assets, List<Board> checked);
   Future<String> postImage(Asset asset);
   Future<String> postImageFromFile(File file);
-  Future postSingleImage(File image);
   Future postSingleImageToBoards(File image, List<Board> checked);
 }

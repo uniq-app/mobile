@@ -46,7 +46,9 @@ class _HomePageState extends State<HomePage> {
     return BlocConsumer<BoardBloc, BoardState>(
       listener: (BuildContext context, BoardState state) {
         print("Listener - state: $state");
-        if (state is BoardCreated || state is BoardDeleted) {
+        if (state is BoardCreated ||
+            state is BoardDeleted ||
+            state is BoardUpdated) {
           _loadBoards();
         }
       },

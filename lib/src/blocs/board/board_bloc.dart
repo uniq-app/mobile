@@ -52,7 +52,7 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
     if (event is UpdateBoard) {
       yield BoardsLoading();
       try {
-        await boardRepository.putBoard(event.board);
+        await boardRepository.putBoard(event.board, event.boardId);
         yield BoardUpdated();
       } on SocketException {
         yield UpdateError(error: NoInternetException('No internet'));

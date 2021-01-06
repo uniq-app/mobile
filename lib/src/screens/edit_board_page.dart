@@ -43,6 +43,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
   }
 
   _updateBoard() {
+    context.read<PhotoBloc>().add(PostCoverImage(image: File(boardCover)));
     Map<String, dynamic> boardData = new Map<String, dynamic>();
     Map<String, dynamic> coverData = new Map<String, dynamic>();
     boardData['id'] = widget.board.id;
@@ -52,11 +53,9 @@ class _EditBoardPageState extends State<EditBoardPage> {
     boardData['isCreatorHidden'] = true;
     coverData['value'] = boardCover;
     boardData['cover'] = coverData;
-    context.read<PhotoBloc>().add(PostSingleImage(image: File(boardCover)));
-    context
-        .read<BoardBloc>()
-        .add(UpdateBoard(board: Board.fromJson(boardData)));
-    Navigator.pop(context);
+
+    context.read<BoardBloc>().add(UpdateBoard(
+        board: Board.fromJson(boardData), boardId: boardData['id']));
   }
 
   _getStatus() {
@@ -152,6 +151,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                 );
               }
               if (state is BoardUpdated) {
+                Navigator.pop(context);
                 showToast(
                   "Board successfuly updated!",
                   position: ToastPosition.bottom,

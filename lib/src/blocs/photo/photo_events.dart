@@ -29,6 +29,11 @@ class PostAllPhotos extends PhotoEvent {
   List<Object> get props => [images, checked];
 }
 
+class PostCoverImage extends PhotoEvent {
+  final File image;
+  PostCoverImage({this.image});
+}
+
 class PostSingleImage extends PhotoEvent {
   final File image;
   final List<Board> checked;
