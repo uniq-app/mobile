@@ -7,6 +7,7 @@ class UniqInputField extends StatelessWidget {
   final IconData inputIcon, suffixIcon;
   final Color color;
   final double fieldRounding;
+  final int maxLength;
   final TextEditingController controller;
   final Function(String) validator;
   const UniqInputField(
@@ -20,7 +21,8 @@ class UniqInputField extends StatelessWidget {
       this.controller,
       this.validator,
       this.labelText,
-      this.suffixIcon})
+      this.suffixIcon,
+      this.maxLength})
       : super(key: key);
 
   @override
@@ -32,6 +34,7 @@ class UniqInputField extends StatelessWidget {
       controller: controller,
       cursorColor: Theme.of(context).primaryColor,
       validator: validator,
+      maxLength: maxLength,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
         labelText: labelText,

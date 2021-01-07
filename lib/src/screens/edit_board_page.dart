@@ -193,6 +193,11 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
+                    maxLength: 30,
+                    validator: (value) {
+                      if (value.isEmpty) return 'Enter name of the board';
+                      return null;
+                    },
                   ),
                   SizedBox(height: size.height * 0.02),
                   UniqInputField(
@@ -200,6 +205,11 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,
+                    validator: (value) {
+                      if (value.isEmpty)
+                        return 'Enter description of the board';
+                      return null;
+                    },
                   ),
                   SizedBox(height: size.height * 0.02),
                   BoardCoverSettings(
