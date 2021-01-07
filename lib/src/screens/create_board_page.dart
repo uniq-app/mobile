@@ -22,7 +22,7 @@ class CreateBoardPage extends StatefulWidget {
 
 class _CreateBoardPageState extends State<CreateBoardPage> {
   bool isPrivate = true;
-  String boardCover = "",
+  String boardCover,
       defaultBoardCover =
           "https://images.unsplash.com/photo-1567201864585-6baec9110dac?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=50";
   final TextEditingController nameController = new TextEditingController();
@@ -45,12 +45,13 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     boardData['isPrivate'] = isPrivate;
     boardData['isCreatorHidden'] = true;
     if (File(boardCover).exists() != null) {
+      print("File exist");
       coverImage = File(boardCover);
       context.read<BoardBloc>().add(CreateBoard(
           board: Board.fromJson(boardData), coverImage: coverImage));
     } else {
-      context.read<BoardBloc>().add(
-          CreateBoard(board: Board.fromJson(boardData), coverLink: boardCover));
+      context.read<BoardBloc>().add(CreateBoard(
+          board: Board.fromJson(boardData), coverLink: defaultBoardCover));
     }
   }
 
