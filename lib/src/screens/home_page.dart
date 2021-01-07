@@ -7,6 +7,7 @@ import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
+import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
 import 'package:uniq/src/shared/components/board_list_element.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -68,25 +69,6 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
-  Widget buildList(BoardResults boardResults) {
-    List<Board> boards = boardResults.results;
-    return SafeArea(
-      child: ListView.builder(
-        padding: EdgeInsets.all(10),
-        itemCount: boards.length,
-        itemBuilder: (BuildContext context, int index) {
-          String name = boards[index].name;
-          return BoardListElement(
-              name: name,
-              boardLink: () {
-                Navigator.pushNamed(context, boardDetailsRoute,
-                    arguments: boards[index]);
-              });
-        },
-      ),
-    );
-  }
 }
 
 class BoardList extends StatelessWidget {
@@ -126,9 +108,7 @@ class BoardList extends StatelessWidget {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return BoardListElement(
-                name: boards[index].name,
-                description: boards[index].description,
-                imageLink: boards[index].cover,
+                board: boards[index],
                 boardLink: () {
                   Navigator.pushNamed(context, boardDetailsRoute,
                       arguments: boards[index]);
@@ -137,8 +117,6 @@ class BoardList extends StatelessWidget {
                   Navigator.pushNamed(context, editBoardPage,
                       arguments: boards[index]);
                 },
-                //Navigator.pushNamed(context, boardDetailsRoute,
-                //arguments: boards[index]);
               );
             },
             childCount: boards.length,

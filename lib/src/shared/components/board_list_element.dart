@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:uniq/src/models/board.dart';
+import 'package:uniq/src/services/photo_api_provider.dart';
 
 class BoardListElement extends StatelessWidget {
-  final String name, description, imageLink;
-  final String id;
+  final Board board;
   final VoidCallback boardLink, editLink;
   final double widthFraction, heightFraction;
-  const BoardListElement(
+
+  BoardListElement(
       {Key key,
-      this.name,
-      this.description,
-      this.imageLink =
-          "https://images.unsplash.com/photo-1455582916367-25f75bfc6710?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=60",
-      this.id,
+      this.board,
       this.boardLink,
       this.editLink,
       this.widthFraction = 0.8,
@@ -21,6 +19,7 @@ class BoardListElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    String url = "${PhotoApiProvider.apiUrl}/thumbnail/${board.cover}";
     return Container(
       margin: EdgeInsets.all(10),
       child: InkWell(
@@ -31,7 +30,10 @@ class BoardListElement extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 colorFilter: ColorFilter.mode(Colors.grey, BlendMode.multiply),
-                image: NetworkImage(imageLink),
+                // TODO: ???
+                image: NetworkImage((board.cover != '')
+                    ? url
+                    : "https://fajnepodroze.pl/wp-content/uploads/2020/06/Welsh-Corgi-Pembroke.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -46,7 +48,7 @@ class BoardListElement extends StatelessWidget {
                 TableRow(children: [
                   Container(
                     padding: EdgeInsets.only(bottom: 3),
-                    child: Text(name,
+                    child: Text(board.name,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -66,7 +68,7 @@ class BoardListElement extends StatelessWidget {
                     child: Container(
                       color: Color(0x77181818),
                       height: size.width * 0.11,
-                      child: Text(description ?? '',
+                      child: Text(board.description ?? '',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 17,

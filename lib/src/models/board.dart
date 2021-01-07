@@ -20,8 +20,7 @@ class Board extends Equatable {
     _createdAt = (parsedJson['timestamp'] != null)
         ? DateTime.parse(parsedJson['timestamp'])
         : DateTime.now();
-    _cover = parsedJson['cover'] ??
-        "https://fajnepodroze.pl/wp-content/uploads/2020/06/Welsh-Corgi-Pembroke.jpg";
+    _cover = parsedJson['cover'] ?? '';
     _extraData = parsedJson['extraData'];
   }
 
@@ -33,6 +32,16 @@ class Board extends Equatable {
     data['creatorId'] = _creatorId;
     data['isPrivate'] = _isPrivate;
     data['cover'] = _cover;
+    return data;
+  }
+
+  Map<String, dynamic> toJsonWithoutCover() {
+    Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = _id;
+    data['name'] = _name;
+    data['description'] = _description;
+    data['creatorId'] = _creatorId;
+    data['isPrivate'] = _isPrivate;
     return data;
   }
 
