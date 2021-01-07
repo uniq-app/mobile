@@ -47,3 +47,15 @@ class RegisterError extends AuthState {
 class LogoutLoading extends AuthState {}
 
 class LogoutSuccess extends AuthState {}
+
+class ActivateLoading extends AuthState {}
+
+class ActivateSuccess extends AuthState {}
+
+class ActivateError extends AuthState {
+  final error;
+  ActivateError({this.error});
+
+  @override
+  List<Object> get props => [error];
+}

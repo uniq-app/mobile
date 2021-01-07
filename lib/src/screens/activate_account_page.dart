@@ -5,24 +5,23 @@ import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/utilities.dart';
+import 'package:oktoast/oktoast.dart';
 
-class LoginPage extends StatefulWidget {
+class ActivateAccountPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ActivateAccountPageState createState() => _ActivateAccountPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final loginController = new TextEditingController();
-  final passwordController = new TextEditingController();
+class _ActivateAccountPageState extends State<ActivateAccountPage> {
+  final codeController = new TextEditingController();
 
   @override
   void dispose() {
-    loginController.dispose();
-    passwordController.dispose();
+    codeController.dispose();
     super.dispose();
   }
 
-  final _LoginKey = GlobalKey<FormState>();
+  final _ActivateKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
@@ -35,23 +34,34 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (BuildContext context, AuthState state) {
-              if (state is LoginSuccess) {
+              if (state is ActivateSuccess) {
+                showToast(
+                  "Account successfuly activated!",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.green[400],
+                );
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    applicationPage, (Route<dynamic> route) => false);
+                    loginRoute, (Route<dynamic> route) => false);
+              } else if (state is ActivateError) {
+                showToast(
+                  "Error during activation process :(",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.red[400],
+                );
               }
             },
             builder: (BuildContext context, AuthState state) {
-              if (state is LoginLoading) {
+              if (state is ActivateLoading) {
                 return Loading();
               }
               return Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: _LoginKey,
+                key: _ActivateKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Login to UNIQ",
+                      "Activate UNIQ account",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
@@ -60,69 +70,49 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: size.height * 0.05),
                     UniqInputIconField(
                       color: Theme.of(context).accentColor,
-                      inputIcon: Icons.email,
+                      inputIcon: Icons.security,
                       isObscure: false,
-                      hintText: "Email",
-                      controller: loginController,
+                      hintText: "Security code",
+                      controller: codeController,
                       validator: (value) {
-                        if (value.isEmpty) return 'Enter your email';
+                        if (!value.contains(new RegExp('[0-9]{6}')))
+                          return 'Invalid code';
+
                         return null;
                       },
                     ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      isObscure: true,
-                      inputIcon: Icons.lock,
-                      hintText: "Password",
-                      controller: passwordController,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Enter password';
-                        return null;
-                      },
-                    ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(forgotPasswordPage);
-                        },
-                        child: Text("Forgot password?"),
-                      ),
-                    ),
+                    SizedBox(height: size.height * 0.03),
                     UniqButton(
                       color: Theme.of(context).buttonColor,
                       push: () {
-                        if (_LoginKey.currentState.validate()) {
-                          context.read<AuthBloc>().add(Login(
-                              username: loginController.text,
-                              password: passwordController.text));
+                        if (_ActivateKey.currentState.validate()) {
+                          context
+                              .read<AuthBloc>()
+                              .add(Activate(code: codeController.text));
                         }
                       },
-                      text: "LOGIN",
+                      text: "ACTIVATE",
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an Account?"),
+                        Text("Did not received code?"),
                         InkWell(
                           onTap: () {
-                            Navigator.popAndPushNamed(context, signupRoute);
+                            showToast(
+                              "Not implemented yet",
+                              position: ToastPosition.bottom,
+                              backgroundColor: Colors.redAccent,
+                            );
                           },
                           child: new Text(
-                            " - Sign Up",
+                            " - Resend email",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold),
                           ),
                         )
                       ],
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.popAndPushNamed(context, activateRoute);
-                      },
-                      child: Text("Activate"),
                     ),
                     SizedBox(
                       height: size.height * 0.03,
