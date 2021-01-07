@@ -193,6 +193,11 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Name cannot be empty";
+                      }
+                    },
                   ),
                   SizedBox(height: size.height * 0.02),
                   UniqInputField(
@@ -200,6 +205,11 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Name cannot be empty";
+                      }
+                    },
                   ),
                   SizedBox(height: size.height * 0.02),
                   BoardCoverSettings(
@@ -261,7 +271,9 @@ class _EditBoardPageState extends State<EditBoardPage> {
                         screenHeight: 0.07,
                         color: tempColor,
                         push: () {
-                          _updateBoard();
+                          if (_EditKey.currentState.validate()) {
+                            _updateBoard();
+                          }
                         },
                         text: "Save",
                       ),

@@ -64,6 +64,12 @@ class _LoginPageState extends State<LoginPage> {
                       isObscure: false,
                       hintText: "Email",
                       controller: loginController,
+                      validator: (value) {
+                        if (value.isEmpty) return "Name cannot be empty";
+                      },
+                    ),
+                    SizedBox(
+                      height: size.height * 0.02,
                     ),
                     UniqInputIconField(
                       color: Theme.of(context).accentColor,
@@ -71,6 +77,9 @@ class _LoginPageState extends State<LoginPage> {
                       inputIcon: Icons.lock,
                       hintText: "Password",
                       controller: passwordController,
+                      validator: (value) {
+                        if (value.isEmpty) return "Password cannot be empty";
+                      },
                     ),
                     Container(
                       alignment: Alignment.centerRight,

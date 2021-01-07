@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class BoardCoverSettings extends StatelessWidget {
@@ -31,7 +33,7 @@ class BoardCoverSettings extends StatelessWidget {
                       ColorFilter.mode(Colors.grey, BlendMode.multiply),
                   image: image.contains("http") == true
                       ? NetworkImage(image)
-                      : AssetImage(image),
+                      : FileImage(File(image)),
                   fit: BoxFit.cover,
                 ),
               ),

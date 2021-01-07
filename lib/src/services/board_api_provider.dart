@@ -36,6 +36,7 @@ class BoardApiProvider implements BoardRepository {
     var headers = {"Content-Type": "application/json"};
     final response =
         await client.post('$_apiUrl/', body: body, headers: headers);
+    print(response.statusCode);
     if (response.statusCode == 200) {
     } else {
       throw Exception('Failed to post boards');

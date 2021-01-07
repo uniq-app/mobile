@@ -37,6 +37,13 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
     if (event is CreateBoard) {
       yield BoardsLoading();
       try {
+        if (event.coverImage != null) {
+          String id = await photoRepository.postImageFromFile(event.coverImage);
+          print(id);
+          event.board.cover = id;
+        } else
+          event.board.cover = event.coverLink;
+
         await boardRepository.postBoard(event.board);
         yield BoardCreated();
       } on SocketException {
