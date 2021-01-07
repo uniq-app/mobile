@@ -4,14 +4,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:reorderableitemsview/reorderableitemsview.dart';
-import 'package:reorderables/reorderables.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/photo.dart';
-import 'package:uniq/src/screens/moveable_stack.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
@@ -19,7 +16,9 @@ import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:flutter/material.dart';
-//import 'package:uniq/src/shared/components/reorderable_grid.dart';
+
+import 'package:uniq/src/shared/components/reorderable_grid.dart';
+//import 'package:reorderableitemsview/reorderableitemsview.dart';
 
 class BoardDetailsPage extends StatefulWidget {
   final Board board;
@@ -144,9 +143,6 @@ class _GridPageViewState extends State<GridPageView> {
       longPressToDrag: true,
       crossAxisSpacing: 8.0,
       mainAxisSpacing: 8.0,
-      feedBackWidgetBuilder: (context, index, child) {
-        return NewElementButton();
-      },
     );
   }
 }

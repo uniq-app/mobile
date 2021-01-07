@@ -394,19 +394,20 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
           index < widget.staggeredTiles.length) {
         final StaggeredTile tile = widget.staggeredTiles[index];
 
+        // Cross axis -> czyli rząd
         final double usableCrossAxisExtent = constraints.biggest.width;
         final double cellExtent = usableCrossAxisExtent / widget.crossAxisCount;
-
-        mainAxisExtent = constraints.biggest.height;
-
         crossAxisExtent = cellExtent * tile.crossAxisCellCount;
 
+        mainAxisExtent = tile.mainAxisExtent ??
+            (tile.mainAxisCellCount * cellExtent) +
+                (tile.mainAxisCellCount - 1);
+
         newConstraints = constraints.copyWith(
-          minWidth: crossAxisExtent,
-          maxWidth: crossAxisExtent,
-          minHeight: mainAxisExtent,
-          maxHeight: mainAxisExtent,
-        );
+            minWidth: crossAxisExtent,
+            maxWidth: crossAxisExtent,
+            minHeight: mainAxisExtent,
+            maxHeight: double.infinity);
       } else {
         newConstraints = constraints.copyWith(
           minWidth: 0.0,
