@@ -59,6 +59,7 @@ class AuthApiProvider implements AuthRepository {
 
     if (response.statusCode == 201 || response.statusCode == 200) {
     } else {
+      if (response.statusCode == 409) throw Exception('Email already in use');
       throw Exception('Failed to register');
     }
   }

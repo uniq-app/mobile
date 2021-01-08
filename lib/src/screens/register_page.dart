@@ -158,6 +158,11 @@ class _RegisterPage extends State<RegisterPage> {
                         )
                       ],
                     ),
+                    OutlinedButton(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(activateRoute),
+                      child: Text('Activate account'),
+                    )
                   ],
                 ),
               );
