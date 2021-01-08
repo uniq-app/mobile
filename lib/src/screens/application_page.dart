@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
+import 'package:uniq/src/screens/followed_boards.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/image_library_page.dart';
-import 'package:uniq/src/screens/search_page.dart';
 import 'package:uniq/src/screens/take_photo_screen.dart';
 import 'package:uniq/src/screens/user_settings_page.dart';
 import 'package:uniq/src/shared/components/bottom_navbar.dart';
@@ -35,8 +35,8 @@ class _ApplicationPageState extends State<ApplicationPage> {
               builder: (BuildContext context, PageState state) {
                 if (state == PageState.homePage) {
                   return HomePage();
-                } else if (state == PageState.searchPage) {
-                  return SearchPage();
+                } else if (state == PageState.followedBoardsPage) {
+                  return FollowedBoards();
                 } else if (state == PageState.cameraPage) {
                   return TakePhotoScreen();
                 } else if (state == PageState.libraryPage) {

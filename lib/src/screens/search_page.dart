@@ -51,7 +51,6 @@ class _SearchPageState extends State<SearchPage>
         child: Builder(
           builder: (context) => Scaffold(
             appBar: AppBar(
-              automaticallyImplyLeading: false,
               title: Text('Search'),
             ),
             body: Column(
