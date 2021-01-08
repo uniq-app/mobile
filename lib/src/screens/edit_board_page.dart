@@ -27,6 +27,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController descriptionController =
       new TextEditingController();
+  File coverImageFromFile;
 
   Color tempColor = Colors.amberAccent;
   @override
@@ -42,9 +43,6 @@ class _EditBoardPageState extends State<EditBoardPage> {
   }
 
   _updateBoard() {
-    File coverImage;
-    if (boardCover != null) coverImage = File(boardCover);
-
     Map<String, dynamic> boardData = new Map<String, dynamic>();
     Map<String, dynamic> coverData = new Map<String, dynamic>();
     boardData['boardId'] = widget.board.id;
@@ -52,8 +50,8 @@ class _EditBoardPageState extends State<EditBoardPage> {
     boardData['description'] = descriptionController.text;
     boardData['isPrivate'] = isPrivate;
 
-    context.read<BoardBloc>().add(
-        UpdateBoard(board: Board.fromJson(boardData), coverImage: coverImage));
+    context.read<BoardBloc>().add(UpdateBoard(
+        board: Board.fromJson(boardData), coverImage: coverImageFromFile));
   }
 
   _getStatus() {
@@ -71,6 +69,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
     setState(() {
       if (image != null) {
         boardCover = image.path;
+        coverImageFromFile = File(boardCover);
         print(image.path);
       } else {
         print('No image selected.');
@@ -126,6 +125,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
   @override
   Widget build(BuildContext context) {
     _getStatus();
+    print("CoverImageFromFile: $coverImageFromFile");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -212,9 +212,9 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     },
                   ),
                   SizedBox(height: size.height * 0.02),
-                  if (boardCover != null)
+                  if (coverImageFromFile != null)
                     BoardCoverSettings(
-                      image: boardCover,
+                      imageFromFile: coverImageFromFile,
                       editLink: _getImage,
                     )
                   else if (widget.board.cover != '')
