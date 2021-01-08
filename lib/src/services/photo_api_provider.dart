@@ -89,7 +89,6 @@ class PhotoApiProvider implements PhotoRepository {
     var request = new MultipartRequest("POST", Uri.parse(_apiUrl));
     request.files.add(MultipartFile.fromBytes('file', file.readAsBytesSync(),
         filename: file.path.split("/").last));
-
     var responseStream = await request.send();
     var response = await Response.fromStream(responseStream);
 

@@ -38,10 +38,10 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
       yield BoardsLoading();
       try {
         if (event.coverImage.path.isNotEmpty) {
+          print("sending photo");
           String id = await photoRepository.postImageFromFile(event.coverImage);
           event.board.cover = id;
         }
-
         await boardRepository.postBoard(event.board);
         print("Isent board");
         yield BoardCreated();

@@ -51,12 +51,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     final image = await ImagePicker().getImage(source: ImageSource.gallery);
 
     setState(() {
-      if (image != null) {
-        boardCover = image.path;
-        print(boardCover);
-      } else {
-        print('No image selected.');
-      }
+      if (image != null) boardCover = image.path;
     });
   }
 
