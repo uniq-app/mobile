@@ -11,6 +11,7 @@ const String credentialsCheckRoute = '/check-cred';
 const String forgotPasswordPage = '/forgot_password_page';
 const String newPasswordPage = '/new_password_page';
 const String applicationPage = '/app_page';
+const String activateRoute = '/activate_account_page';
 
 //const String host = "http://192.168.0.101";
 const String host = "http://10.0.2.2";

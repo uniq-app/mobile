@@ -11,6 +11,7 @@ import 'package:uniq/src/screens/register_page.dart';
 import 'package:uniq/src/screens/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/screens/welcome_page.dart';
+import 'package:uniq/src/screens/activate_account_page.dart';
 import './shared/constants.dart';
 
 class MainRouter {
@@ -69,6 +70,10 @@ class MainRouter {
       case applicationPage:
         return MaterialPageRoute(
           builder: (_) => ApplicationPage(),
+        );
+      case activateRoute:
+        return MaterialPageRoute(
+          builder: (_) => ActivateAccountPage(),
         );
       default:
         return MaterialPageRoute(

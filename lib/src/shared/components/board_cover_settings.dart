@@ -17,6 +17,7 @@ class BoardCoverSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("BUILDING IMAGE: $image");
     Size size = MediaQuery.of(context).size;
     return Container(
       child: ClipRRect(
@@ -31,7 +32,7 @@ class BoardCoverSettings extends StatelessWidget {
                 image: DecorationImage(
                   colorFilter:
                       ColorFilter.mode(Colors.grey, BlendMode.multiply),
-                  image: image.contains("http") == true
+                  image: (image.contains("http") == true)
                       ? NetworkImage(image)
                       : FileImage(File(image)),
                   fit: BoxFit.cover,

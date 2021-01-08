@@ -46,7 +46,7 @@ class _RegisterPage extends State<RegisterPage> {
                   backgroundColor: Colors.green[400],
                 );
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute, (Route<dynamic> route) => false);
+                    activateRoute, (Route<dynamic> route) => false);
               } else if (state is RegisterError) {
                 showToast(
                   "Failed to create account - ${state.error.message}",

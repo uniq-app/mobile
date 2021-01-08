@@ -9,6 +9,7 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/board_cover_settings.dart';
 import 'package:uniq/src/shared/components/input_form_field.dart';
 import 'package:uniq/src/shared/utilities.dart';
@@ -57,7 +58,6 @@ class _EditBoardPageState extends State<EditBoardPage> {
 
   _getStatus() {
     if (this.got != true) {
-      boardCover = widget.board.cover;
       nameController.text = widget.board.name;
       descriptionController.text = widget.board.description;
       this.isPrivate = widget.board.isPrivate;
@@ -193,10 +193,10 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
+                    maxLength: 30,
                     validator: (value) {
-                      if (value.isEmpty) {
-                        return "Name cannot be empty";
-                      }
+                      if (value.isEmpty) return 'Enter name of the board';
+                      return null;
                     },
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -206,16 +206,28 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     labelText: "Description",
                     controller: descriptionController,
                     validator: (value) {
-                      if (value.isEmpty) {
-                        return "Name cannot be empty";
-                      }
+                      if (value.isEmpty)
+                        return 'Enter description of the board';
+                      return null;
                     },
                   ),
                   SizedBox(height: size.height * 0.02),
-                  BoardCoverSettings(
-                    image: boardCover,
-                    editLink: _getImage,
-                  ),
+                  if (boardCover != null)
+                    BoardCoverSettings(
+                      image: boardCover,
+                      editLink: _getImage,
+                    )
+                  else if (widget.board.cover != '')
+                    BoardCoverSettings(
+                      image:
+                          "${PhotoApiProvider.apiUrl}/thumbnail/${widget.board.cover}",
+                      editLink: _getImage,
+                    )
+                  else
+                    BoardCoverSettings(
+                      editLink: _getImage,
+                    ),
+
                   SizedBox(height: size.height * 0.02),
                   // todo: Change stateful to bloc
                   ClipRRect(
