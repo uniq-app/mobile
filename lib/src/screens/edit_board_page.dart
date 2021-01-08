@@ -46,7 +46,6 @@ class _EditBoardPageState extends State<EditBoardPage> {
     if (boardCover != null) coverImage = File(boardCover);
 
     Map<String, dynamic> boardData = new Map<String, dynamic>();
-    Map<String, dynamic> coverData = new Map<String, dynamic>();
     boardData['boardId'] = widget.board.id;
     boardData['name'] = nameController.text;
     boardData['description'] = descriptionController.text;
@@ -283,7 +282,9 @@ class _EditBoardPageState extends State<EditBoardPage> {
                         screenHeight: 0.07,
                         color: tempColor,
                         push: () {
-                          _updateBoard();
+                          if (_EditKey.currentState.validate()) {
+                            _updateBoard();
+                          }
                         },
                         text: "Save",
                       ),

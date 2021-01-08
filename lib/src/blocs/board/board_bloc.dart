@@ -37,7 +37,13 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
     if (event is CreateBoard) {
       yield BoardsLoading();
       try {
+        if (event.coverImage != null) {
+          print("sending photo");
+          String id = await photoRepository.postImageFromFile(event.coverImage);
+          event.board.cover = id;
+        }
         await boardRepository.postBoard(event.board);
+        print("Isent board");
         yield BoardCreated();
       } on SocketException {
         yield BoardsError(error: NoInternetException('No internet'));
@@ -47,7 +53,7 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         yield BoardsError(
             error: InvalidFormatException('Invalid resposne format'));
       } catch (e) {
-        print(e);
+        print("ERROR: $e");
         yield BoardsError(error: NoInternetException('Unknown error'));
       }
     }
