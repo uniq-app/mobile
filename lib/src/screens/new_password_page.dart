@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
@@ -105,7 +106,7 @@ class _NewPasswordPage extends State<NewPasswordPage> {
                       color: Theme.of(context).buttonColor,
                       push: () {
                         if (_NewPasswordKey.currentState.validate()) {
-                          context.read<AuthBloc>().add(NewPassword(
+                          context.read<UserBloc>().add(NewPassword(
                               safetyCode: codeController.text,
                               password: passwordController.text));
                         }

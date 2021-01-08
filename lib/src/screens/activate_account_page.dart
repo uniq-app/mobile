@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
@@ -32,8 +32,8 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Center(
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (BuildContext context, AuthState state) {
+          child: BlocConsumer<UserBloc, UserState>(
+            listener: (BuildContext context, UserState state) {
               if (state is ActivateSuccess) {
                 showToast(
                   "Account successfuly activated!",
@@ -50,7 +50,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                 );
               }
             },
-            builder: (BuildContext context, AuthState state) {
+            builder: (BuildContext context, UserState state) {
               if (state is ActivateLoading) {
                 return Loading();
               }
@@ -87,7 +87,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                       push: () {
                         if (_ActivateKey.currentState.validate()) {
                           context
-                              .read<AuthBloc>()
+                              .read<UserBloc>()
                               .add(Activate(code: codeController.text));
                         }
                       },
@@ -96,7 +96,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Did not received code?"),
+                        Text("Did not receive code?"),
                         InkWell(
                           onTap: () {
                             showToast(
@@ -117,7 +117,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                     SizedBox(
                       height: size.height * 0.03,
                     ),
-                    if (state is LoginError) Text(state.error.message),
+                    if (state is ActivateError) Text(state.error.message),
                   ],
                 ),
               );

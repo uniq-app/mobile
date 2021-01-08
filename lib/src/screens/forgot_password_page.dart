@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
@@ -89,7 +90,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                       color: Theme.of(context).buttonColor,
                       push: () {
                         if (_ForgotPasswordKey.currentState.validate()) {
-                          context.read<AuthBloc>().add(ResetPassword(
+                          context.read<UserBloc>().add(ResetPassword(
                               email: emailController.text,
                               username: nameController.text));
 //todo: REMOVE this after functionality is finished

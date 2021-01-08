@@ -25,11 +25,14 @@ class AuthApiProvider implements AuthRepository {
   }
 
   @override
-  Future login(String email, String password) async {
-    var credentialsMap = {"email": email, "password": password};
+  Future login(String email, String password, String fcmToken) async {
+    var credentialsMap = {
+      "email": email,
+      "password": password,
+      "fcmtoken": fcmToken
+    };
     String body = json.encode(credentialsMap);
     var headers = {"Content-Type": "application/json"};
-
     final response =
         await client.post('$_apiUrl/login', body: body, headers: headers);
 
@@ -56,6 +59,7 @@ class AuthApiProvider implements AuthRepository {
 
     if (response.statusCode == 201 || response.statusCode == 200) {
     } else {
+      if (response.statusCode == 409) throw Exception('Email already in use');
       throw Exception('Failed to register');
     }
   }
