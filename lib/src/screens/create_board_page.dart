@@ -22,9 +22,7 @@ class CreateBoardPage extends StatefulWidget {
 
 class _CreateBoardPageState extends State<CreateBoardPage> {
   bool isPrivate = true;
-  String boardCover,
-      defaultBoardCover =
-          "https://images.unsplash.com/photo-1567201864585-6baec9110dac?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=50";
+  String boardCover;
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController descriptionController =
       new TextEditingController();
@@ -44,16 +42,9 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     boardData['description'] = descriptionController.text;
     boardData['isPrivate'] = isPrivate;
     boardData['isCreatorHidden'] = true;
-    if (boardCover != null) {
-      print("File is not http");
-      coverImage = File(boardCover);
-      context.read<BoardBloc>().add(CreateBoard(
-          board: Board.fromJson(boardData), coverImage: coverImage));
-    } else {
-      context
-          .read<BoardBloc>()
-          .add(CreateBoard(board: Board.fromJson(boardData)));
-    }
+    coverImage = File(boardCover);
+    context.read<BoardBloc>().add(
+        CreateBoard(board: Board.fromJson(boardData), coverImage: coverImage));
   }
 
   Future _getImage() async {
@@ -177,7 +168,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
                   ),
                   SizedBox(height: size.height * 0.02),
                   BoardCoverSettings(
-                    image: boardCover ?? defaultBoardCover,
+                    image: boardCover,
                     editLink: _getImage,
                   ),
                   SizedBox(height: size.height * 0.02),

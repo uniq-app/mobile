@@ -37,13 +37,13 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
     if (event is CreateBoard) {
       yield BoardsLoading();
       try {
-        if (event.coverImage != null) {
-          print("No selected image" + event.coverImage.path);
+        if (event.coverImage.path.isNotEmpty) {
           String id = await photoRepository.postImageFromFile(event.coverImage);
           event.board.cover = id;
         }
 
         await boardRepository.postBoard(event.board);
+        print("Isent board");
         yield BoardCreated();
       } on SocketException {
         yield BoardsError(error: NoInternetException('No internet'));
