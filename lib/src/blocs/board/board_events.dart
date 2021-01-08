@@ -15,8 +15,7 @@ class FetchBoards extends BoardEvent {
 class CreateBoard extends BoardEvent {
   final Board board;
   final File coverImage;
-  final String coverLink;
-  CreateBoard({@required this.board, this.coverImage, this.coverLink});
+  CreateBoard({@required this.board, this.coverImage});
   @override
   List<Object> get props => [board, coverImage];
 }

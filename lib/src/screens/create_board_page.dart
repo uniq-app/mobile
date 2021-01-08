@@ -44,14 +44,15 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     boardData['description'] = descriptionController.text;
     boardData['isPrivate'] = isPrivate;
     boardData['isCreatorHidden'] = true;
-    if (File(boardCover).exists() != null) {
-      print("File exist");
+    if (boardCover != null) {
+      print("File is not http");
       coverImage = File(boardCover);
       context.read<BoardBloc>().add(CreateBoard(
           board: Board.fromJson(boardData), coverImage: coverImage));
     } else {
-      context.read<BoardBloc>().add(CreateBoard(
-          board: Board.fromJson(boardData), coverLink: defaultBoardCover));
+      context
+          .read<BoardBloc>()
+          .add(CreateBoard(board: Board.fromJson(boardData)));
     }
   }
 
