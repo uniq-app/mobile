@@ -22,8 +22,6 @@ class CreateBoardPage extends StatefulWidget {
 
 class _CreateBoardPageState extends State<CreateBoardPage> {
   bool isPrivate = true;
-  String defaultBoardCover =
-      "https://images.unsplash.com/photo-1567201864585-6baec9110dac?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=50";
   String boardCover;
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController descriptionController =
