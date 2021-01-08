@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uniq/src/repositories/auth_repository.dart';
 import 'package:uniq/src/shared/exceptions.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -13,8 +14,9 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
   String token;
+  final FirebaseMessaging fcm;
 
-  AuthBloc({this.authRepository}) : super(AuthInitial());
+  AuthBloc({this.authRepository, this.fcm}) : super(AuthInitial());
 
   @override
   Stream<AuthState> mapEventToState(
@@ -23,7 +25,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is Login) {
       yield LoginLoading();
       try {
-        token = await authRepository.login(event.username, event.password);
+        String fcmToken = await fcm.getToken();
+        token = await authRepository.login(
+            event.username, event.password, fcmToken);
         yield LoginSuccess(token: token);
       } on SocketException {
         yield LoginError(error: NoInternetException('No internet'));
