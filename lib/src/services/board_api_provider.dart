@@ -30,8 +30,12 @@ class BoardApiProvider implements BoardRepository {
   }
 
   Future postBoard(Board board) async {
-    var boardMap = board.toJson();
-    String body = json.encode(boardMap);
+    String body;
+    if (board.cover != '')
+      body = json.encode(board.toJson());
+    else
+      body = json.encode(board.toJsonWithoutCover());
+    print(body);
 
     var headers = {"Content-Type": "application/json"};
     final response =
