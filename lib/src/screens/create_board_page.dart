@@ -40,7 +40,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
   _createBoard() {
     File coverImage;
     if (boardCover != null) coverImage = File(boardCover);
-
+    print("In create board");
     Map<String, dynamic> boardData = new Map<String, dynamic>();
     boardData['name'] = nameController.text;
     boardData['description'] = descriptionController.text;
@@ -55,7 +55,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     setState(() {
       if (image != null) {
         boardCover = image.path;
-        print(boardCover);
+        print(image.path);
       } else {
         print('No image selected.');
       }
@@ -171,7 +171,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
                   SizedBox(height: size.height * 0.02),
                   // TODO: Kolor domyślny jak nie wybrano covera
                   BoardCoverSettings(
-                    image: boardCover ?? defaultBoardCover,
+                    image: boardCover,
                     editLink: _getImage,
                   ),
                   SizedBox(height: size.height * 0.02),

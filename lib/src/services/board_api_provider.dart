@@ -53,7 +53,6 @@ class BoardApiProvider implements BoardRepository {
       body = json.encode(board.toJson());
     else
       body = json.encode(board.toJsonWithoutCover());
-    print(body);
     var headers = {"Content-Type": "application/json"};
     final response =
         await client.put('$_apiUrl/${board.id}', body: body, headers: headers);

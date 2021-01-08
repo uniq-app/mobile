@@ -76,6 +76,7 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
       try {
         yield PhotosLoading();
         await photoRepository.postImageFromFile(event.image);
+        print("posting image from file");
         yield PhotosPostedSuccess();
       } on SocketException {
         yield PhotosError(error: NoInternetException('No internet'));
