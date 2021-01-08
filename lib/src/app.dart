@@ -7,9 +7,11 @@ import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
 import 'package:uniq/src/blocs/taken_images/taken_images_cubit.dart';
+import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/services/auth_api_provider.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
+import 'package:uniq/src/services/user_api_provider.dart';
 import 'package:uniq/src/shared/app_theme.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import './shared/constants.dart';
@@ -71,6 +73,11 @@ class _MyAppState extends State<MyApp> {
           create: (context) => AuthBloc(
             authRepository: AuthApiProvider(),
             fcm: FirebaseMessaging(),
+          ),
+        ),
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(
+            userRepository: UserApiProvider(),
           ),
         ),
         BlocProvider<TakenImagesCubit>(
