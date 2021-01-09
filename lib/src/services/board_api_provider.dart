@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
+import 'package:uniq/src/shared/http_interceptor.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:uniq/src/shared/http_interceptor.dart';
+
 import 'package:uniq/src/shared/constants.dart';
 
 // TODO: Add override annotations
@@ -18,7 +19,7 @@ class BoardApiProvider implements BoardRepository {
   );
   final storage = new FlutterSecureStorage();
 
-  final String _apiUrl = '$host:8080/boards';
+  final String _apiUrl = '$host:$backendPort/boards';
 
   Future<BoardResults> getBoards() async {
     final response = await client.get('$_apiUrl');
@@ -41,12 +42,17 @@ class BoardApiProvider implements BoardRepository {
   }
 
   Future postBoard(Board board) async {
-    var boardMap = board.toJson();
-    String body = json.encode(boardMap);
+    String body;
+    if (board.cover != '')
+      body = json.encode(board.toJson());
+    else
+      body = json.encode(board.toJsonWithoutCover());
+    print(body);
 
     var headers = {"Content-Type": "application/json"};
     final response =
         await client.post('$_apiUrl/', body: body, headers: headers);
+    print(response.statusCode);
     if (response.statusCode == 200) {
     } else {
       throw Exception('Failed to post boards');
@@ -59,7 +65,6 @@ class BoardApiProvider implements BoardRepository {
       body = json.encode(board.toJson());
     else
       body = json.encode(board.toJsonWithoutCover());
-    print(body);
     var headers = {"Content-Type": "application/json"};
     final response =
         await client.put('$_apiUrl/${board.id}', body: body, headers: headers);

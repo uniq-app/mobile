@@ -30,10 +30,9 @@ class BoardListElement extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 colorFilter: ColorFilter.mode(Colors.grey, BlendMode.multiply),
-                // TODO: ???
-                image: NetworkImage((board.cover != '')
-                    ? url
-                    : "https://fajnepodroze.pl/wp-content/uploads/2020/06/Welsh-Corgi-Pembroke.jpg"),
+                image: board.cover != ''
+                    ? NetworkImage(url)
+                    : AssetImage('assets/defaultCover.jfif'),
                 fit: BoxFit.cover,
               ),
             ),

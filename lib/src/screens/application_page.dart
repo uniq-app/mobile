@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/screens/followed_boards.dart';
+
+import 'package:uniq/src/blocs/profile/profile_bloc.dart';
 import 'package:uniq/src/screens/home_page.dart';
 import 'package:uniq/src/screens/image_library_page.dart';
 import 'package:uniq/src/screens/take_photo_screen.dart';
 import 'package:uniq/src/screens/user_settings_page.dart';
+import 'package:uniq/src/services/profile_api_provider.dart';
 import 'package:uniq/src/shared/components/bottom_navbar.dart';
 import 'package:move_to_background/move_to_background.dart';
 
@@ -17,8 +20,16 @@ class ApplicationPage extends StatefulWidget {
 class _ApplicationPageState extends State<ApplicationPage> {
   @override
   Widget build(BuildContext _) {
-    return BlocProvider<PageCubit>(
-      create: (context) => PageCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PageCubit>(
+          create: (context) => PageCubit(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) =>
+              ProfileBloc(profileRepository: ProfileApiProvider()),
+        ),
+      ],
       child: Builder(
         builder: (context) => WillPopScope(
           onWillPop: () async {

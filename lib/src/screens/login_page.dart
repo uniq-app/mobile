@@ -65,9 +65,11 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Email",
                       controller: loginController,
                       validator: (value) {
-                        if (value.isEmpty) return 'Enter your email';
-                        return null;
+                        if (value.isEmpty) return "Name cannot be empty";
                       },
+                    ),
+                    SizedBox(
+                      height: size.height * 0.02,
                     ),
                     SizedBox(height: size.height * 0.02),
                     UniqInputIconField(
@@ -77,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Password",
                       controller: passwordController,
                       validator: (value) {
-                        if (value.isEmpty) return 'Enter password';
+                        if (value.isEmpty) return "Password cannot be empty";
                         return null;
                       },
                     ),

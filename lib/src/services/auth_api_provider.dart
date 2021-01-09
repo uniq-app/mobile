@@ -8,8 +8,7 @@ class AuthApiProvider implements AuthRepository {
   Client client = Client();
   final storage = new FlutterSecureStorage();
 
-  final String _apiUrl = '$host:8080/auth';
-  final String _apiUrlUser = '$host:8080/user';
+  final String _apiUrl = '$host:$backendPort/auth';
 
   Future storeToken(String token) async {
     await storage.write(key: "token", value: token);
@@ -59,20 +58,8 @@ class AuthApiProvider implements AuthRepository {
 
     if (response.statusCode == 201 || response.statusCode == 200) {
     } else {
+      if (response.statusCode == 409) throw Exception('Email already in use');
       throw Exception('Failed to register');
-    }
-  }
-
-  @override
-  Future activate(String code) async {
-    var headers = {"Content-Type": "application/json"};
-    final response =
-        await client.put('$_apiUrlUser/activation/$code', headers: headers);
-    print(response.statusCode);
-    print(response.body);
-    if (response.statusCode == 201 || response.statusCode == 200) {
-    } else {
-      throw Exception('Failed to activate');
     }
   }
 

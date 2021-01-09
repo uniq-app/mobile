@@ -16,14 +16,6 @@ class Login extends AuthEvent {
   List<Object> get props => [username, password];
 }
 
-class Activate extends AuthEvent {
-  final String code;
-  Activate({@required this.code});
-
-  @override
-  List<Object> get props => [code];
-}
-
 class Register extends AuthEvent {
   final String username;
   final String password;
@@ -33,24 +25,6 @@ class Register extends AuthEvent {
 
   @override
   List<Object> get props => [username, email, password];
-}
-
-class ResetPassword extends AuthEvent {
-  final String username;
-  final String email;
-  ResetPassword({@required this.email, @required this.username});
-
-  @override
-  List<Object> get props => [username, email];
-}
-
-class NewPassword extends AuthEvent {
-  final String safetyCode;
-  final String password;
-  NewPassword({@required this.safetyCode, @required this.password});
-
-  @override
-  List<Object> get props => [safetyCode, password];
 }
 
 class Logout extends AuthEvent {}

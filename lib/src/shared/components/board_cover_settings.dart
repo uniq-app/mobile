@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class BoardCoverSettings extends StatelessWidget {
@@ -6,8 +8,7 @@ class BoardCoverSettings extends StatelessWidget {
   final double widthFraction, heightFraction;
   const BoardCoverSettings(
       {Key key,
-      this.image =
-          "https://images.unsplash.com/photo-1567201864585-6baec9110dac?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=50",
+      this.image,
       this.editLink,
       this.widthFraction = 0.8,
       this.heightFraction = 0.15})
@@ -30,9 +31,11 @@ class BoardCoverSettings extends StatelessWidget {
                 image: DecorationImage(
                   colorFilter:
                       ColorFilter.mode(Colors.grey, BlendMode.multiply),
-                  image: (image.contains("http") == true)
-                      ? NetworkImage(image)
-                      : AssetImage(image),
+                  image: (image == null)
+                      ? AssetImage('assets/defaultCover.jfif')
+                      : (image.contains('http'))
+                          ? NetworkImage(image)
+                          : FileImage(File(image)),
                   fit: BoxFit.cover,
                 ),
               ),

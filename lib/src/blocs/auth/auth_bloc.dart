@@ -65,23 +65,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         yield RegisterError(error: NoInternetException('Unknown error: $e'));
       }
     }
-    if (event is Activate) {
-      yield ActivateLoading();
-      try {
-        await authRepository.activate(event.code);
-        print("ActivateLoading");
-        yield ActivateSuccess();
-      } on SocketException {
-        yield ActivateError(error: NoInternetException('No internet'));
-      } on HttpException {
-        yield ActivateError(error: NoServiceFoundException('No service found'));
-      } on FormatException {
-        yield ActivateError(
-            error: InvalidFormatException('Invalid resposne format'));
-      } catch (e) {
-        print(e);
-        yield ActivateError(error: NoInternetException('Unknown error: $e'));
-      }
-    }
   }
 }
