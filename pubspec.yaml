@@ -100,9 +100,9 @@ flutter:
       fonts:
         - asset: fonts/Nunito-Black.ttf
         - asset: fonts/Nunito-Bold.ttf
-        - asset: fonts/Nunito-Light.tff
-        - asset: fonts/Nunito-Regular.tff
-        - asset: fonts/Nunito-ExtraLight.tff
+        - asset: fonts/Nunito-Light.ttf
+        - asset: fonts/Nunito-Regular.ttf
+        - asset: fonts/Nunito-ExtraLight.ttf
 
   #   - images/a_dot_ham.jpeg
 
