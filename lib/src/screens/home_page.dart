@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
-              BoardList(boards),
+              BoardList(boards, Icon(Icons.settings)),
               SliverList(
                 delegate: SliverChildListDelegate([
                   NewElementButton(

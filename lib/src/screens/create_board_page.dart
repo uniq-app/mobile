@@ -148,7 +148,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
 
                   SizedBox(height: size.height * 0.05),
                   UniqInputField(
-                    color: Theme.of(context).accentColor,
+                    cursorColor: Theme.of(context).accentColor,
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
@@ -158,7 +158,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
                   ),
                   SizedBox(height: size.height * 0.02),
                   UniqInputField(
-                    color: Theme.of(context).accentColor,
+                    cursorColor: Theme.of(context).accentColor,
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,

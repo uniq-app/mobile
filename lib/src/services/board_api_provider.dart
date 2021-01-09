@@ -30,7 +30,10 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+<<<<<<< HEAD
   @override
+=======
+>>>>>>> origin/master
   Future searchForBoards(String query) async {
     final response = await client.get('$_apiUrl/search?q=$query');
     if (response.statusCode == 200) {

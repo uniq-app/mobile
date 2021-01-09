@@ -188,7 +188,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   ),
                   SizedBox(height: size.height * 0.05),
                   UniqInputField(
-                    color: Theme.of(context).accentColor,
+                    cursorColor: Theme.of(context).accentColor,
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
@@ -200,7 +200,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                   ),
                   SizedBox(height: size.height * 0.02),
                   UniqInputField(
-                    color: Theme.of(context).accentColor,
+                    cursorColor: Theme.of(context).accentColor,
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,
