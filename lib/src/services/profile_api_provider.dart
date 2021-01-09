@@ -5,7 +5,7 @@ import 'package:uniq/src/shared/constants.dart';
 class ProfileApiProvider implements ProfileRepository {
   Client client = Client();
 
-  final String _apiUrl = '$host:8080/profile';
+  final String _apiUrl = '$host:$backendPort/profile';
 
   @override
   Future getProfileDetails() async {

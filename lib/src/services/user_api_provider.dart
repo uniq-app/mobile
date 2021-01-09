@@ -7,7 +7,7 @@ class UserApiProvider implements UserRepository {
   Client client = Client();
   final storage = new FlutterSecureStorage();
 
-  final String _apiUrl = '$host:8080/user';
+  final String _apiUrl = '$host:$backendPort/user';
 
   @override
   Future activate(String code) async {
