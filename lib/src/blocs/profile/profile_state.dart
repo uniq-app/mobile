@@ -11,7 +11,10 @@ class ProfileInitial extends ProfileState {}
 
 class GetProfileDetailsLoading extends ProfileState {}
 
-class GetProfileDetailsSuccess extends ProfileState {}
+class GetProfileDetailsSuccess extends ProfileState {
+  final ProfileDetails profile;
+  GetProfileDetailsSuccess({@required this.profile});
+}
 
 class GetProfileDetailsError extends ProfileState {
   final error;

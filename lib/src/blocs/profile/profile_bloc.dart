@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:uniq/src/models/profile_details.dart';
 import 'package:uniq/src/repositories/profile_repository.dart';
 import 'package:uniq/src/shared/exceptions.dart';
 
@@ -12,6 +13,7 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileRepository profileRepository;
+  ProfileDetails profileDetails;
   ProfileBloc({@required this.profileRepository}) : super(ProfileInitial());
 
   @override
@@ -21,8 +23,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (event is GetProfileDetails) {
       yield GetProfileDetailsLoading();
       try {
-        await profileRepository.getProfileDetails();
-        yield GetProfileDetailsSuccess();
+        profileDetails = await profileRepository.getProfileDetails();
+        yield GetProfileDetailsSuccess(profile: profileDetails);
       } on SocketException {
         yield GetProfileDetailsError(error: NoInternetException('No internet'));
       } on HttpException {

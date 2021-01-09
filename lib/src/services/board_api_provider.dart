@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
+import 'package:uniq/src/shared/http_interceptor.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:uniq/src/shared/http_interceptor.dart';
+
 import 'package:uniq/src/shared/constants.dart';
 
 // TODO: Add override annotations
