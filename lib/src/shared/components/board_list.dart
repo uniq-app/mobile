@@ -9,23 +9,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BoardList extends StatelessWidget {
   final List<Board> boards;
-  BoardList(this.boards);
+  final Icon icon;
+  BoardList(this.boards, this.icon);
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return BoardListElement(
-            board: boards[index],
-            boardLink: () {
-              Navigator.pushNamed(context, boardDetailsRoute,
-                  arguments: boards[index]);
-            },
-            editLink: () {
-              Navigator.pushNamed(context, editBoardPage,
-                  arguments: boards[index]);
-            },
-          );
+          if (icon == Icon(Icons.settings)) {
+            return BoardListElement(
+              icon: icon,
+              board: boards[index],
+              boardLink: () {
+                Navigator.pushNamed(context, boardDetailsRoute,
+                    arguments: boards[index]);
+              },
+              iconAction: () {
+                Navigator.pushNamed(context, editBoardPage,
+                    arguments: boards[index]);
+              },
+            );
+          } else {
+            return BoardListElement(
+              icon: icon,
+              board: boards[index],
+              boardLink: () {
+                Navigator.pushNamed(context, boardDetailsRoute,
+                    arguments: boards[index]);
+              },
+              iconAction: () {
+                //TODO
+              },
+            );
+          }
         },
         childCount: boards.length,
       ),
