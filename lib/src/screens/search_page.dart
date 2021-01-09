@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:uniq/src/blocs/search_boards/search_boards_bloc.dart';
+import 'package:uniq/src/models/board.dart';
+import 'package:uniq/src/services/board_api_provider.dart';
+import 'package:uniq/src/shared/components/custom_error.dart';
+import 'package:uniq/src/shared/components/input_form_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/shared/components/loading.dart';
+import 'package:uniq/src/shared/components/others_board_list.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -9,7 +17,7 @@ class _SearchPageState extends State<SearchPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
-
+  final queryController = new TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -35,11 +43,85 @@ class _SearchPageState extends State<SearchPage>
 
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: _offsetAnimation,
-      child: Container(
-        child: Center(
-          child: Text('Search'),
+    Size size = MediaQuery.of(context).size;
+    return BlocProvider<SearchBoardsBloc>(
+      create: (context) => SearchBoardsBloc(
+        boardRepository: BoardApiProvider(),
+      ),
+      child: Builder(
+        builder: (context) => Scaffold(
+          body: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                title: Container(
+                  child: UniqInputField(
+                    textInputAction: TextInputAction.search,
+                    cursorColor: Colors.white,
+                    isObscure: false,
+                    labelText: "Search",
+                    controller: queryController,
+                    onEditingCompleted: () {
+                      context
+                          .read<SearchBoardsBloc>()
+                          .add(SearchForBoards(query: queryController.text));
+                    },
+                  ),
+                ),
+                pinned: true,
+                expandedHeight: 70.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Column(
+                    children: [],
+                  ),
+                ),
+              ),
+              BlocBuilder<SearchBoardsBloc, SearchBoardsState>(
+                builder: (BuildContext context, SearchBoardsState state) {
+                  if (state is SearchForBoardsLoading) {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Loading(),
+                        ],
+                      ),
+                    );
+                  } else if (state is SearchForBoardsSuccess) {
+                    final List<Board> boards = state.boardResults.results;
+                    return OthersBoardList(boards, Icon(Icons.favorite));
+                  } else if (state is SearchForBoardsNotFound) {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Text('Not found boards matching query'),
+                        ],
+                      ),
+                    );
+                  } else if (state is SearchForBoardsError) {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          CustomError(
+                            message: state.error.message,
+                            onTap: () => {},
+                          )
+                        ],
+                      ),
+                    );
+                  } else {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Center(
+                            child: Text("Search for boards"),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

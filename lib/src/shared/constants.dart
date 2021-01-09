@@ -12,7 +12,7 @@ const String forgotPasswordPage = '/forgot_password_page';
 const String newPasswordPage = '/new_password_page';
 const String applicationPage = '/app_page';
 const String activateRoute = '/activate_account_page';
-
+const String searchPageRoute = '/search_page';
 const String host = "http://vps-325dcc92.vps.ovh.net";
 const String imageServicePort = "8081";
 const String backendPort = "8080";

@@ -2,7 +2,7 @@ part of 'page_cubit.dart';
 
 enum PageState {
   homePage,
-  searchPage,
+  followedBoardsPage,
   cameraPage,
   libraryPage,
   profilePage,

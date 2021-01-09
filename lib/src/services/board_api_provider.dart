@@ -31,6 +31,17 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+  Future searchForBoards(String query) async {
+    final response = await client.get('$_apiUrl/search?q=$query');
+    if (response.statusCode == 200) {
+      return BoardResults.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 204) {
+      return null;
+    } else {
+      throw Exception('Failed to load boards');
+    }
+  }
+
   @override
   Future postBoard(Board board) async {
     String body;

@@ -4,16 +4,17 @@ import 'package:uniq/src/services/photo_api_provider.dart';
 
 class BoardListElement extends StatelessWidget {
   final Board board;
-  final VoidCallback boardLink, editLink;
+  final VoidCallback boardLink, iconAction;
   final double widthFraction, heightFraction;
-
+  final Icon icon;
   BoardListElement(
       {Key key,
       this.board,
       this.boardLink,
-      this.editLink,
+      this.iconAction,
       this.widthFraction = 0.8,
-      this.heightFraction = 0.15})
+      this.heightFraction = 0.15,
+      this.icon})
       : super(key: key);
 
   @override
@@ -32,7 +33,7 @@ class BoardListElement extends StatelessWidget {
                 colorFilter: ColorFilter.mode(Colors.grey, BlendMode.multiply),
                 image: board.cover != ''
                     ? NetworkImage(url)
-                    : AssetImage('assets/defaultCover.jfif'),
+                    : AssetImage('assets/defaultCover.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,15 +51,16 @@ class BoardListElement extends StatelessWidget {
                     child: Text(board.name,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 35,
+                            fontSize: 36,
                             fontWeight: FontWeight.w300)),
                   ),
                   IconButton(
                     alignment: Alignment.topRight,
                     padding: EdgeInsets.only(top: 0),
-                    icon: Icon(Icons.settings),
+                    icon: icon,
                     color: Colors.white,
-                    onPressed: editLink,
+                    iconSize: 36,
+                    onPressed: iconAction,
                   )
                 ]),
                 TableRow(children: [
