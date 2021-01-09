@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/application_page.dart';
 import 'package:uniq/src/screens/board_details_page.dart';
@@ -76,10 +78,7 @@ class MainRouter {
         return MaterialPageRoute(
           builder: (_) => ActivateAccountPage(),
         );
-      case searchPageRoute:
-        return MaterialPageRoute(
-          builder: (_) => SearchPage(),
-        );
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

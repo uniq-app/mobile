@@ -10,7 +10,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:uniq/src/shared/constants.dart';
 
-// TODO: Add override annotations
 class BoardApiProvider implements BoardRepository {
   Client client = HttpClientWithInterceptor.build(
     interceptors: [
@@ -126,7 +125,6 @@ class BoardApiProvider implements BoardRepository {
   Future followBoard(String boardId) async {
     final response = await client.post('$_apiUrl/$boardId/follow');
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return BoardResults.fromJson(json.decode(response.body));
     } else {
       throw Exception('Couldnt follow board: $boardId');
     }
@@ -136,7 +134,6 @@ class BoardApiProvider implements BoardRepository {
   Future unfollowBoard(String boardId) async {
     final response = await client.post('$_apiUrl/$boardId/unfollow');
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return BoardResults.fromJson(json.decode(response.body));
     } else {
       throw Exception('Couldnt unfollow board $boardId');
     }

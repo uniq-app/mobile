@@ -29,7 +29,10 @@ class UnfollowBoardError extends FollowedBoardsState {
 
 class GetFollowedBoardsLoading extends FollowedBoardsState {}
 
-class GetFollowedBoardsSuccess extends FollowedBoardsState {}
+class GetFollowedBoardsSuccess extends FollowedBoardsState {
+  final BoardResults boardResults;
+  GetFollowedBoardsSuccess({@required this.boardResults});
+}
 
 class GetFollowedBoardsError extends FollowedBoardsState {
   final error;
