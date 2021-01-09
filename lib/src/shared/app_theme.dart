@@ -13,7 +13,7 @@ class AppTheme {
     // Define the default brightness and colors.
 
     brightness: Brightness.dark,
-    primaryColor: Colors.deepPurple[300],
+    primaryColor: Color(0xffB65DC7),
     primaryColorLight: Colors.deepPurple[400],
     accentColor: Colors.grey[700],
     iconTheme: IconThemeData(color: Colors.deepOrange),
