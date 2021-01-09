@@ -22,7 +22,7 @@ class PhotoApiProvider implements PhotoRepository {
   BoardRepository boardApiProvider = BoardApiProvider();
   PhotoApiProvider();
 
-  static final String _apiUrl = "$host/images";
+  static final String _apiUrl = "$host:$imageServicePort/images";
 
   static String get apiUrl => _apiUrl;
 

@@ -13,7 +13,7 @@ class ProfileApiProvider implements ProfileRepository {
     ],
   );
 
-  final String _apiUrl = '$host:8080/profile';
+  final String _apiUrl = '$host:$backendPort/profile';
 
   @override
   Future getProfileDetails() async {

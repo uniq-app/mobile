@@ -19,7 +19,7 @@ class BoardApiProvider implements BoardRepository {
   );
   final storage = new FlutterSecureStorage();
 
-  final String _apiUrl = '$host:8080/boards';
+  final String _apiUrl = '$host:$backendPort/boards';
 
   Future<BoardResults> getBoards() async {
     final response = await client.get('$_apiUrl');
