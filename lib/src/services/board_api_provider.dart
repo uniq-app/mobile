@@ -21,6 +21,7 @@ class BoardApiProvider implements BoardRepository {
 
   final String _apiUrl = '$host:$backendPort/boards';
 
+  @override
   Future<BoardResults> getBoards() async {
     final response = await client.get('$_apiUrl');
     if (response.statusCode == 200) {
@@ -30,6 +31,7 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+  @override
   Future postBoard(Board board) async {
     String body;
     if (board.cover != '')
@@ -48,6 +50,7 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+  @override
   Future putBoard(Board board) async {
     String body;
     if (board.cover != '')
@@ -63,6 +66,7 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+  @override
   Future deleteBoard(String boardId) async {
     final response = await client.delete('$_apiUrl/$boardId');
     if (response.statusCode == 200) {
@@ -71,6 +75,7 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+  @override
   Future<List<Photo>> getBoardPhotos(String boardId) async {
     final response = await client.get('$_apiUrl/$boardId/photos');
     if (response.statusCode == 200) {
@@ -83,6 +88,7 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
+  @override
   Future<dynamic> putPhotos(List<String> photos, String boardId) async {
     var photosMapped = photos.map((e) => {"value": e}).toList();
     String body = json.encode(photosMapped);
@@ -92,6 +98,36 @@ class BoardApiProvider implements BoardRepository {
     if (response.statusCode == 200) {
     } else {
       throw Exception('Failed to post photos');
+    }
+  }
+
+  @override
+  Future getFollowedBoards() async {
+    final response = await client.get('$_apiUrl/followed');
+    if (response.statusCode == 200) {
+      return BoardResults.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load followed boards');
+    }
+  }
+
+  @override
+  Future followBoard(String boardId) async {
+    final response = await client.post('$_apiUrl/$boardId/follow');
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return BoardResults.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Couldnt follow board: $boardId');
+    }
+  }
+
+  @override
+  Future unfollowBoard(String boardId) async {
+    final response = await client.post('$_apiUrl/$boardId/unfollow');
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return BoardResults.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Couldnt unfollow board $boardId');
     }
   }
 }

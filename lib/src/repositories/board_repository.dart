@@ -14,4 +14,8 @@ abstract class BoardRepository {
   Future<List<Photo>> getBoardPhotos(String boardId);
 
   Future<dynamic> putPhotos(List<String> photos, String boardId);
+
+  Future getFollowedBoards();
+  Future followBoard(String boardId);
+  Future unfollowBoard(String boardId);
 }
