@@ -53,27 +53,24 @@ class _SearchPageState extends State<SearchPage>
           body: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                title: Column(
-                  children: [
-                    UniqInputField(
-                      color: Theme.of(context).accentColor,
-                      isObscure: false,
-                      labelText: "Search",
-                      controller: queryController,
-                    ),
-                    OutlinedButton(
-                      onPressed: () => {
-                        if (queryController.text.length > 0)
-                          context
-                              .read<SearchBoardsBloc>()
-                              .add(SearchForBoards(query: queryController.text))
-                      },
-                      child: Text('Search'),
-                    ),
-                  ],
+                title: Container(
+                  child: UniqInputField(
+                    textInputAction: TextInputAction.search,
+                    fillColor: Colors.white,
+                    focusColor: Colors.white,
+                    cursorColor: Colors.white,
+                    isObscure: false,
+                    labelText: "Search",
+                    controller: queryController,
+                    onEditingCompleted: () {
+                      context
+                          .read<SearchBoardsBloc>()
+                          .add(SearchForBoards(query: queryController.text));
+                    },
+                  ),
                 ),
                 pinned: true,
-                expandedHeight: 60.0,
+                expandedHeight: 70.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Column(
                     children: [],
