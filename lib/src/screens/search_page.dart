@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/blocs/search_boards/search_boards_bloc.dart';
+import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
 import 'package:uniq/src/shared/components/board_list.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
@@ -41,59 +42,90 @@ class _SearchPageState extends State<SearchPage>
   }
 
   @override
-  Widget build(BuildContext _) {
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return BlocProvider<SearchBoardsBloc>(
       create: (context) => SearchBoardsBloc(
         boardRepository: BoardApiProvider(),
       ),
-      child: SlideTransition(
-        position: _offsetAnimation,
-        child: Builder(
-          builder: (context) => Scaffold(
-            appBar: AppBar(
-              title: Text('Search'),
-            ),
-            body: Column(
-              children: [
-                UniqInputField(
-                  color: Theme.of(context).accentColor,
-                  isObscure: false,
-                  labelText: "Search",
-                  controller: queryController,
+      child: Builder(
+        builder: (context) => Scaffold(
+          body: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                title: Column(
+                  children: [
+                    UniqInputField(
+                      color: Theme.of(context).accentColor,
+                      isObscure: false,
+                      labelText: "Search",
+                      controller: queryController,
+                    ),
+                    OutlinedButton(
+                      onPressed: () => {
+                        if (queryController.text.length > 0)
+                          context
+                              .read<SearchBoardsBloc>()
+                              .add(SearchForBoards(query: queryController.text))
+                      },
+                      child: Text('Search'),
+                    ),
+                  ],
                 ),
-                OutlinedButton(
-                  onPressed: () => {
-                    if (queryController.text.length > 0)
-                      context
-                          .read<SearchBoardsBloc>()
-                          .add(SearchForBoards(query: queryController.text))
-                  },
-                  child: Text('Search'),
+                pinned: true,
+                expandedHeight: 60.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Column(
+                    children: [],
+                  ),
                 ),
-                BlocBuilder<SearchBoardsBloc, SearchBoardsState>(
-                  builder: (BuildContext context, SearchBoardsState state) {
-                    if (state is SearchForBoardsLoading) {
-                      return Loading();
-                    } else if (state is SearchForBoardsSuccess) {
-                      return Text('Found');
-                      // TODO: Here
-                      //return BoardList(state.boardResults.results);
-                    } else if (state is SearchForBoardsNotFound) {
-                      return Text('Not found boards matching query');
-                    } else if (state is SearchForBoardsError) {
-                      return CustomError(
-                        message: state.error.message,
-                        onTap: () => {},
-                      );
-                    } else {
-                      return Center(
-                        child: Text("Search for boards"),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
+              ),
+              BlocBuilder<SearchBoardsBloc, SearchBoardsState>(
+                builder: (BuildContext context, SearchBoardsState state) {
+                  if (state is SearchForBoardsLoading) {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Loading(),
+                        ],
+                      ),
+                    );
+                  } else if (state is SearchForBoardsSuccess) {
+                    final List<Board> boards = state.boardResults.results;
+                    return BoardList(boards);
+                  } else if (state is SearchForBoardsNotFound) {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Text('Not found boards matching query'),
+                        ],
+                      ),
+                    );
+                  } else if (state is SearchForBoardsError) {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          CustomError(
+                            message: state.error.message,
+                            onTap: () => {},
+                          )
+                        ],
+                      ),
+                    );
+                  } else {
+                    return SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          Center(
+                            child: Text("Search for boards"),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
           ),
         ),
       ),
