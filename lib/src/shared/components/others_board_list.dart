@@ -20,16 +20,10 @@ class _OthersBoardListState extends State<OthersBoardList> {
   @override
   void initState() {
     super.initState();
-    _getFollowedBoards();
   }
 
-  _getFollowedBoards() {
-    var state = context.read<FollowedBoardsBloc>().state;
-    print("State: $state");
-    if (state is GetFollowedBoardsSuccess) {
-      followedBoards = state.boardResults.results;
-      print(followedBoards);
-    }
+  _isFollowed(Board board) {
+    return followedBoards.contains(board);
   }
 
   @override
@@ -56,11 +50,16 @@ class _OthersBoardListState extends State<OthersBoardList> {
         .add(UnfollowBoard(boardId: board.id));
   }
 
+  _loadFollowedBoards() {
+    context.read<FollowedBoardsBloc>().add(GetFollowedBoards());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FollowedBoardsBloc, FollowedBoardsState>(
       listener: (context, FollowedBoardsState state) {
         if (state is FollowBoardSuccess) {
+          _loadFollowedBoards();
           showToast(
             "Added to followed",
             position: ToastPosition.bottom,
@@ -74,6 +73,7 @@ class _OthersBoardListState extends State<OthersBoardList> {
           );
         }
         if (state is UnfollowBoardSuccess) {
+          _loadFollowedBoards();
           showToast(
             "Unfollow success",
             position: ToastPosition.bottom,
@@ -88,13 +88,18 @@ class _OthersBoardListState extends State<OthersBoardList> {
         }
       },
       builder: (BuildContext context, FollowedBoardsState state) {
+        if (state is GetFollowedBoardsSuccess)
+          followedBoards = state.boardResults.results;
+        print(followedBoards);
         return SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext _, int index) {
               return BoardListElement(
                 icon: Icon(
                   Icons.favorite,
-                  color: Colors.red,
+                  color: _isFollowed(widget.boards[index])
+                      ? Colors.red
+                      : Colors.white,
                 ),
                 board: widget.boards[index],
                 boardLink: () {
