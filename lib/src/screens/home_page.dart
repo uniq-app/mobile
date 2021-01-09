@@ -104,7 +104,8 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Welcome ${state.profile.username}',
+                                //'Welcome ${state.profile.username}',
+                                'Welcome',
                                 style: Theme.of(context)
                                     .appBarTheme
                                     .textTheme

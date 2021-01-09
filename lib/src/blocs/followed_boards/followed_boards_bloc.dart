@@ -27,7 +27,7 @@ class FollowedBoardsBloc
       yield GetFollowedBoardsLoading();
       try {
         boardResults = await boardRepository.getFollowedBoards();
-        yield GetFollowedBoardsSuccess();
+        yield GetFollowedBoardsSuccess(boardResults: boardResults);
       } on SocketException {
         yield GetFollowedBoardsError(error: NoInternetException('No internet'));
       } on HttpException {
