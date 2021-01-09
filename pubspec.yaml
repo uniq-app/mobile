@@ -30,6 +30,7 @@ dependencies:
   equatable: ^1.2.5
   dotted_border: ^1.0.7
   flex_color_picker: ^1.1.3
+  flutter_svg: ^0.19.0
   path_provider:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -54,7 +55,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon_launcher.png"
+  image_path: "assets/images/icon_launcher.svg"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -68,8 +69,41 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/404.png
+    - assets/images/404.svg
     - assets/defaultCover.jpg
+    - assets/images/blank_canvas.svg
+    - assets/images/access_denied.svg
+    - assets/images/build.svg
+    - assets/images/camera.svg
+    - assets/images/chill.svg
+    - assets/images/completed.svg
+    - assets/images/create.svg
+    - assets/images/form.svg
+    - assets/images/image_focus.svg
+    - assets/images/image.svg
+    - assets/images/imagination.svg
+    - assets/images/imagination2.svg
+    - assets/images/inspire_watch.svg
+    - assets/images/live_photo.svg
+    - assets/images/love.svg
+    - assets/images/organize_photos.svg
+    - assets/images/nature.svg
+    - assets/images/password.svg
+    - assets/images/search.svg
+    - assets/images/polaroid_photo.svg
+    - assets/images/verified.svg
+    - assets/images/work_in_progress.svg
+
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-Black.ttf
+        - asset: fonts/Nunito-Bold.ttf
+        - asset: fonts/Nunito-Light.tff
+        - asset: fonts/Nunito-Regular.tff
+        - asset: fonts/Nunito-ExtraLight.tff
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

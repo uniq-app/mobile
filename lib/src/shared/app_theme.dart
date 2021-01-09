@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 /*
  * ThemeData Api
  * https://api.flutter.dev/flutter/material/ThemeData-class.html
@@ -25,7 +24,7 @@ class AppTheme {
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 8.0,
-      backgroundColor: Colors.grey[850],
+      backgroundColor: Colors.grey[800],
       selectedItemColor: Colors.white,
     ),
     //bottomAppBarTheme: BottomAppBarTheme(color: Colors.black, elevation: 0),
@@ -33,8 +32,7 @@ class AppTheme {
       backgroundColor: Colors.amber[200],
     ),
     // Define the default font family.
-    fontFamily: 'Lato',
-
+    fontFamily: 'Nunito',
     // Define the default TextTheme. Use this to specify the default
     // text styling for headlines, titles, bodies of text, and more.
     textTheme: TextTheme(),

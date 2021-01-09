@@ -6,7 +6,7 @@ class UniqButton extends StatelessWidget {
   final String text;
   final Function push;
   final Color color, textColor;
-  final double radius, screenWidth, screenHeight, margin, padding;
+  final double radius, screenWidth, screenHeight, margin, padding, fontSize;
   const UniqButton({
     Key key,
     this.text,
@@ -14,10 +14,11 @@ class UniqButton extends StatelessWidget {
     this.color,
     this.textColor = Colors.white,
     this.radius = 15,
-    this.screenWidth = 0.8,
+    this.screenWidth = 1,
     this.screenHeight = 0.07,
     this.margin = 10,
-    this.padding = 20,
+    this.padding = 5,
+    this.fontSize,
   }) : super(key: key);
 
   @override
@@ -35,7 +36,7 @@ class UniqButton extends StatelessWidget {
           onPressed: push,
           child: Text(
             text,
-            style: TextStyle(color: textColor),
+            style: TextStyle(color: textColor, fontSize: fontSize),
           ),
         ),
       ),
