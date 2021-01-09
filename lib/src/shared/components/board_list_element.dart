@@ -32,7 +32,7 @@ class BoardListElement extends StatelessWidget {
                 colorFilter: ColorFilter.mode(Colors.grey, BlendMode.multiply),
                 image: board.cover != ''
                     ? NetworkImage(url)
-                    : AssetImage('assets/defaultCover.jfif'),
+                    : AssetImage('assets/defaultCover.jpg'),
                 fit: BoxFit.cover,
               ),
             ),

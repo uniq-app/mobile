@@ -10,7 +10,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:uniq/src/shared/constants.dart';
 
-// TODO: Add override annotations
 class BoardApiProvider implements BoardRepository {
   Client client = HttpClientWithInterceptor.build(
     interceptors: [
@@ -26,6 +25,18 @@ class BoardApiProvider implements BoardRepository {
     final response = await client.get('$_apiUrl');
     if (response.statusCode == 200) {
       return BoardResults.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load boards');
+    }
+  }
+
+  @override
+  Future searchForBoards(String query) async {
+    final response = await client.get('$_apiUrl/search?q=$query');
+    if (response.statusCode == 200) {
+      return BoardResults.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 204) {
+      return null;
     } else {
       throw Exception('Failed to load boards');
     }

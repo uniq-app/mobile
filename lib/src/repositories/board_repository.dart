@@ -18,4 +18,5 @@ abstract class BoardRepository {
   Future getFollowedBoards();
   Future followBoard(String boardId);
   Future unfollowBoard(String boardId);
+  Future searchForBoards(String query);
 }

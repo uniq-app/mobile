@@ -32,7 +32,7 @@ class BoardCoverSettings extends StatelessWidget {
                   colorFilter:
                       ColorFilter.mode(Colors.grey, BlendMode.multiply),
                   image: (image == null)
-                      ? AssetImage('assets/defaultCover.jfif')
+                      ? AssetImage('assets/defaultCover.jpg')
                       : (image.contains('http'))
                           ? NetworkImage(image)
                           : FileImage(File(image)),
