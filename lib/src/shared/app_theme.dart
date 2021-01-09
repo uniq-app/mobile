@@ -18,6 +18,11 @@ class AppTheme {
     accentColor: Colors.grey[700],
     iconTheme: IconThemeData(color: Colors.deepOrange),
     buttonColor: Colors.grey[900],
+    appBarTheme: AppBarTheme(
+      textTheme: TextTheme(
+        headline6: TextStyle(fontSize: 16),
+      ),
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 8.0,
       backgroundColor: Colors.grey[850],
