@@ -30,10 +30,6 @@ class BoardApiProvider implements BoardRepository {
     }
   }
 
-<<<<<<< HEAD
-  @override
-=======
->>>>>>> origin/master
   Future searchForBoards(String query) async {
     final response = await client.get('$_apiUrl/search?q=$query');
     if (response.statusCode == 200) {
@@ -129,7 +125,6 @@ class BoardApiProvider implements BoardRepository {
   Future followBoard(String boardId) async {
     final response = await client.post('$_apiUrl/$boardId/follow');
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return BoardResults.fromJson(json.decode(response.body));
     } else {
       throw Exception('Couldnt follow board: $boardId');
     }
@@ -139,7 +134,6 @@ class BoardApiProvider implements BoardRepository {
   Future unfollowBoard(String boardId) async {
     final response = await client.post('$_apiUrl/$boardId/unfollow');
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return BoardResults.fromJson(json.decode(response.body));
     } else {
       throw Exception('Couldnt unfollow board $boardId');
     }

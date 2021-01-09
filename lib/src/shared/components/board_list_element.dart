@@ -59,7 +59,7 @@ class BoardListElement extends StatelessWidget {
                     padding: EdgeInsets.only(top: 0),
                     icon: icon,
                     color: Colors.white,
-                    iconSize: 36,
+                    iconSize: 28,
                     onPressed: iconAction,
                   )
                 ]),

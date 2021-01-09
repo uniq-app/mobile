@@ -87,7 +87,7 @@ class _SearchPageState extends State<SearchPage>
                     );
                   } else if (state is SearchForBoardsSuccess) {
                     final List<Board> boards = state.boardResults.results;
-                    return OthersBoardList(boards, Icon(Icons.favorite));
+                    return OthersBoardList(boards);
                   } else if (state is SearchForBoardsNotFound) {
                     return SliverList(
                       delegate: SliverChildListDelegate(

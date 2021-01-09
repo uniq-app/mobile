@@ -88,7 +88,6 @@ class _HomePageState extends State<HomePage> {
                   // TODO: Implement profile update listener
                 },
                 builder: (BuildContext context, ProfileState state) {
-                  print("Profile state: $state");
                   if (state is GetProfileDetailsSuccess) {
                     return SliverAppBar(
                       automaticallyImplyLeading: false,
