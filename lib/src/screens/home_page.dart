@@ -56,6 +56,10 @@ class _HomePageState extends State<HomePage> {
     context.read<BoardBloc>().add(FetchBoards());
   }
 
+  _loadStashedBoards() async {
+    context.read<BoardBloc>().add(LoadStashedBoards());
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -70,14 +74,22 @@ class _HomePageState extends State<HomePage> {
             state is BoardDeleted ||
             state is BoardUpdated) {
           _loadBoards();
+        } else if (state is DeleteError ||
+            state is UpdateError ||
+            state is CreateError) {
+          _loadStashedBoards();
         }
+        print("State: $state");
       },
       builder: (BuildContext context, BoardState state) {
         if (state is BoardsError) {
           final error = state.error;
           return CustomError(
             message: '${error.message}.\nTap to retry.',
-            onTap: _loadBoards,
+            onTap: () => {
+              _loadBoards(),
+              _loadUserInfo(),
+            },
           );
         } else if (state is BoardsLoaded) {
           final List<Board> boards = state.boardResults.results;
@@ -85,7 +97,9 @@ class _HomePageState extends State<HomePage> {
             slivers: <Widget>[
               BlocConsumer<ProfileBloc, ProfileState>(
                 listener: (context, ProfileState state) {
-                  // TODO: Implement profile update listener
+                  if (state is PutProfileDetailsSuccess) {
+                    _loadUserInfo();
+                  }
                 },
                 builder: (BuildContext context, ProfileState state) {
                   if (state is GetProfileDetailsSuccess) {
@@ -103,8 +117,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                //'Welcome ${state.profile.username}',
-                                'Welcome',
+                                'Welcome ${state.profile.username}',
                                 style: Theme.of(context)
                                     .appBarTheme
                                     .textTheme
@@ -117,6 +130,7 @@ class _HomePageState extends State<HomePage> {
                                   child: UserIconButton(
                                     iconSize: 1.0,
                                     radius: 30,
+                                    // TODO: Remove imageLink?
                                     imageLink:
                                         "https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
                                     color: Colors.white,
@@ -162,11 +176,21 @@ class _HomePageState extends State<HomePage> {
                       automaticallyImplyLeading: false,
                       pinned: false,
                       floating: true,
-                      title: CustomError(
-                        message: "Couldnt load profile, Tap to try again",
-                        onTap: () => {
-                          context.read<ProfileBloc>().add(GetProfileDetails())
-                        },
+                      title: InkWell(
+                        child: Column(
+                          children: [
+                            CustomError(
+                              message: "Couldn't load user details",
+                            ),
+                            Center(
+                              child: Icon(
+                                Icons.replay_outlined,
+                                size: 28,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onTap: _loadUserInfo,
                       ),
                     );
                   }

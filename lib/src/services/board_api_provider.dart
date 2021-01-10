@@ -54,7 +54,7 @@ class BoardApiProvider implements BoardRepository {
     final response =
         await client.post('$_apiUrl/', body: body, headers: headers);
     print(response.statusCode);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
     } else {
       throw Exception('Failed to post boards');
     }
@@ -70,7 +70,7 @@ class BoardApiProvider implements BoardRepository {
     var headers = {"Content-Type": "application/json"};
     final response =
         await client.put('$_apiUrl/${board.id}', body: body, headers: headers);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
     } else {
       throw Exception('Failed to update board');
     }
@@ -79,7 +79,7 @@ class BoardApiProvider implements BoardRepository {
   @override
   Future deleteBoard(String boardId) async {
     final response = await client.delete('$_apiUrl/$boardId');
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 204) {
     } else {
       throw Exception('Failed to delete boards');
     }
@@ -105,7 +105,7 @@ class BoardApiProvider implements BoardRepository {
     var headers = {"Content-Type": "application/json"};
     final response = await client.put('$_apiUrl/$boardId/photos',
         headers: headers, body: body);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
     } else {
       throw Exception('Failed to post photos');
     }

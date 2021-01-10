@@ -1,4 +1,4 @@
 abstract class ProfileRepository {
   Future getProfileDetails();
-  Future putProfileDetails();
+  Future putProfileDetails(Map<String, dynamic> data);
 }

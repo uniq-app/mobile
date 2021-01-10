@@ -23,18 +23,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       yield ActivateLoading();
       try {
         await userRepository.activate(event.code);
-        print("ActivateLoading");
         yield ActivateSuccess();
       } on SocketException {
-        yield ActivateError(error: NoInternetException('No internet'));
+        yield ActivateError(error: NoInternetException());
       } on HttpException {
-        yield ActivateError(error: NoServiceFoundException('No service found'));
+        yield ActivateError(error: NoServiceFoundException());
       } on FormatException {
-        yield ActivateError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield ActivateError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
-        yield ActivateError(error: NoInternetException('Unknown error: $e'));
+        yield ActivateError(error: e);
       }
     }
   }

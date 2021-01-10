@@ -24,37 +24,35 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         await Future.delayed(Duration(milliseconds: 300));
         yield BoardsLoaded(boardResults: boardResults, checked: new List());
       } on SocketException {
-        yield BoardsError(error: NoInternetException('No internet'));
+        yield BoardsError(error: NoInternetException());
       } on HttpException {
-        yield BoardsError(error: NoServiceFoundException('No service found'));
+        yield BoardsError(error: NoServiceFoundException());
       } on FormatException {
-        yield BoardsError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield BoardsError(error: InvalidFormatException());
       } catch (e) {
-        yield BoardsError(error: NoInternetException('Unknown error'));
+        yield BoardsError(error: e);
       }
+    }
+    if (event is LoadStashedBoards) {
+      yield BoardsLoaded(boardResults: boardResults, checked: new List());
     }
     if (event is CreateBoard) {
       yield BoardsLoading();
       try {
         if (event.coverImage != null) {
-          print("sending photo");
           String id = await photoRepository.postImageFromFile(event.coverImage);
           event.board.cover = id;
         }
         await boardRepository.postBoard(event.board);
-        print("Isent board");
         yield BoardCreated();
       } on SocketException {
-        yield BoardsError(error: NoInternetException('No internet'));
+        yield CreateError(error: NoInternetException());
       } on HttpException {
-        yield BoardsError(error: NoServiceFoundException('No service found'));
+        yield CreateError(error: NoServiceFoundException());
       } on FormatException {
-        yield BoardsError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield CreateError(error: InvalidFormatException());
       } catch (e) {
-        print("ERROR: $e");
-        yield BoardsError(error: NoInternetException('Unknown error'));
+        yield CreateError(error: e);
       }
     }
 
@@ -68,15 +66,13 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         await boardRepository.putBoard(event.board);
         yield BoardUpdated();
       } on SocketException {
-        yield UpdateError(error: NoInternetException('No internet'));
+        yield UpdateError(error: NoInternetException());
       } on HttpException {
-        yield UpdateError(error: NoServiceFoundException('No service found'));
+        yield UpdateError(error: NoServiceFoundException());
       } on FormatException {
-        yield UpdateError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield UpdateError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
-        yield UpdateError(error: NoInternetException('Unknown error'));
+        yield UpdateError(error: e);
       }
     }
     if (event is DeleteBoard) {
@@ -85,15 +81,13 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         await boardRepository.deleteBoard(event.boardId);
         yield BoardDeleted();
       } on SocketException {
-        yield DeleteError(error: NoInternetException('No internet'));
+        yield DeleteError(error: NoInternetException());
       } on HttpException {
-        yield DeleteError(error: NoServiceFoundException('No service found'));
+        yield DeleteError(error: NoServiceFoundException());
       } on FormatException {
-        yield DeleteError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield DeleteError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
-        yield DeleteError(error: NoInternetException('Unknown error'));
+        yield DeleteError(error: e);
       }
     }
   }

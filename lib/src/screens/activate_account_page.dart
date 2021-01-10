@@ -45,7 +45,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                     loginRoute, (Route<dynamic> route) => false);
               } else if (state is ActivateError) {
                 showToast(
-                  "Error during activation process :(",
+                  "Error during activation process",
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.red[400],
                 );

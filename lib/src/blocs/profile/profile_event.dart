@@ -12,6 +12,6 @@ class GetProfileDetails extends ProfileEvent {
 }
 
 class PutProfileDetails extends ProfileEvent {
-  // TODO: Implement argument
-  const PutProfileDetails();
+  final Map<String, dynamic> data;
+  const PutProfileDetails({@required this.data});
 }
