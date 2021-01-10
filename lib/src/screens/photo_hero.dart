@@ -21,7 +21,7 @@ class PhotoHero extends StatelessWidget {
     return SizedBox(
       child: Container(
         alignment: Alignment.center,
-        color: Theme.of(context).scaffoldBackgroundColor,
+        //color: Theme.of(context).scaffoldBackgroundColor,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(isRounded ? 4 : 0),
           child: Hero(
