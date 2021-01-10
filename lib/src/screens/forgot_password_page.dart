@@ -37,7 +37,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
             listener: (BuildContext context, AuthState state) {
               if (state is RegisterSuccess) {
                 Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Resetting password successful!')));
+                    SnackBar(content: Text('resetting password successful!')));
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     newPasswordPage, (Route<dynamic> route) => false);
               }
@@ -53,7 +53,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Reset your password",
+                      "forgot your password",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
@@ -62,21 +62,9 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                     SizedBox(height: size.height * 0.05),
                     UniqInputIconField(
                       color: Theme.of(context).accentColor,
-                      inputIcon: Icons.face,
-                      isObscure: false,
-                      labelText: "Name",
-                      controller: nameController,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Please enter the name';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
                       inputIcon: Icons.email,
                       isObscure: false,
-                      labelText: "Email",
+                      labelText: "email",
                       controller: emailController,
                       validator: (value) {
                         if (value.isEmpty) return 'Please enter the email';
@@ -84,6 +72,11 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                           return 'Please enter email';
                         return null;
                       },
+                    ),
+                    SizedBox(height: size.height * 0.01),
+                    Text(
+                      "we will send you security code for authorization",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                     SizedBox(height: size.height * 0.03),
                     UniqButton(
@@ -97,22 +90,24 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                           Navigator.popAndPushNamed(context, newPasswordPage);
                         }
                       },
-                      text: "RESET MY PASSWORD",
+                      text: "reset my password",
                     ),
-                    SizedBox(height: size.height * 0.01),
+                    SizedBox(height: size.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Did you change your mind? -"),
+                        Text("did you change your mind? -",
+                            style: TextStyle(fontSize: 14)),
                         InkWell(
                           onTap: () {
                             Navigator.popAndPushNamed(context, loginRoute);
                           },
                           child: new Text(
-                            " Login",
+                            " login",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
                           ),
                         )
                       ],

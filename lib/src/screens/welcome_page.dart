@@ -13,8 +13,9 @@ class WelcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-                height: size.height * 0.4,
-                child: SvgPicture.asset("assets/images/imagination.svg")),
+              height: size.height * 0.4,
+              child: SvgPicture.asset("assets/images/imagination.svg"),
+            ),
             Text(
               "welcome to UNIQ",
               style: TextStyle(
@@ -30,6 +31,7 @@ class WelcomePage extends StatelessWidget {
                 Navigator.pushNamed(context, loginRoute);
               },
             ),
+            SizedBox(height: size.height * 0.02),
             UniqButton(
               fontSize: 18,
               text: "register",

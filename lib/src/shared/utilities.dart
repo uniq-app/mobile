@@ -6,7 +6,7 @@ class UniqButton extends StatelessWidget {
   final String text;
   final Function push;
   final Color color, textColor;
-  final double radius, screenWidth, screenHeight, margin, padding, fontSize;
+  final double radius, screenWidth, screenHeight, padding, fontSize;
   const UniqButton({
     Key key,
     this.text,
@@ -16,16 +16,14 @@ class UniqButton extends StatelessWidget {
     this.radius = 15,
     this.screenWidth = 1,
     this.screenHeight = 0.07,
-    this.margin = 10,
     this.padding = 5,
-    this.fontSize,
+    this.fontSize = 18,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: margin),
       width: size.width * screenWidth,
       height: size.height * screenHeight,
       child: ClipRRect(

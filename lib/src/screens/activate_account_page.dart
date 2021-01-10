@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
@@ -60,14 +61,19 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Container(
+                      height: size.height * 0.3,
+                      child: SvgPicture.asset("assets/images/verified.svg"),
+                    ),
+                    SizedBox(height: size.height * 0.03),
                     Text(
-                      "Activate UNIQ account",
+                      "activate UNIQ account",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
                       ),
                     ),
-                    SizedBox(height: size.height * 0.05),
+                    SizedBox(height: size.height * 0.03),
                     UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       inputIcon: Icons.security,
@@ -81,7 +87,12 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                         return null;
                       },
                     ),
-                    SizedBox(height: size.height * 0.03),
+                    SizedBox(height: size.height * 0.01),
+                    Text(
+                      "enter the security code that we sent you to your e-mail",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                    SizedBox(height: size.height * 0.02),
                     UniqButton(
                       color: Theme.of(context).buttonColor,
                       push: () {
@@ -91,12 +102,14 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                               .add(Activate(code: codeController.text));
                         }
                       },
-                      text: "ACTIVATE",
+                      text: "activate",
                     ),
+                    SizedBox(height: size.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Did not receive code?"),
+                        Text("did not receive code? -",
+                            style: TextStyle(fontSize: 14)),
                         InkWell(
                           onTap: () {
                             showToast(
@@ -106,18 +119,20 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                             );
                           },
                           child: new Text(
-                            " - Resend email",
+                            " resend email",
                             style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    if (state is ActivateError) Text(state.error.message),
+                    // SizedBox(
+                    //   height: size.height * 0.03,
+                    // ),
+                    // if (state is ActivateError) Text(state.error.message),
                   ],
                 ),
               );
