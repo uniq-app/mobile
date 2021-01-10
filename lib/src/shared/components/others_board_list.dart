@@ -100,6 +100,7 @@ class _OthersBoardListState extends State<OthersBoardList> {
                     Navigator.pushNamed(context, boardDetailsRoute,
                         arguments: widget.boards[index]);
                   },
+                  iconSize: 35,
                   iconAction: () =>
                       _toggleFollow(context, widget.boards[index]),
                 );

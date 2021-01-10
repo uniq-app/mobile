@@ -52,7 +52,7 @@ class BoardListElement extends StatelessWidget {
                       child: Text(board.name,
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 34,
+                              fontSize: 30,
                               fontWeight: FontWeight.w300)),
                     ),
                     IconButton(

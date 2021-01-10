@@ -192,7 +192,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
-                    maxLength: 17,
+                    maxLength: 20,
                     validator: (value) {
                       if (value.isEmpty) return 'Enter name of the board';
                       return null;
