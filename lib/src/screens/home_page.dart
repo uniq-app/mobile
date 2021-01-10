@@ -74,9 +74,12 @@ class _HomePageState extends State<HomePage> {
             state is BoardDeleted ||
             state is BoardUpdated) {
           _loadBoards();
-        } else if (state is DeleteError || state is UpdateError) {
+        } else if (state is DeleteError ||
+            state is UpdateError ||
+            state is CreateError) {
           _loadStashedBoards();
         }
+        print("State: $state");
       },
       builder: (BuildContext context, BoardState state) {
         if (state is BoardsError) {

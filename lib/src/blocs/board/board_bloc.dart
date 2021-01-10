@@ -46,13 +46,13 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         await boardRepository.postBoard(event.board);
         yield BoardCreated();
       } on SocketException {
-        yield BoardsError(error: NoInternetException());
+        yield CreateError(error: NoInternetException());
       } on HttpException {
-        yield BoardsError(error: NoServiceFoundException());
+        yield CreateError(error: NoServiceFoundException());
       } on FormatException {
-        yield BoardsError(error: InvalidFormatException());
+        yield CreateError(error: InvalidFormatException());
       } catch (e) {
-        yield BoardsError(error: e);
+        yield CreateError(error: e);
       }
     }
 

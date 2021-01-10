@@ -30,6 +30,11 @@ class UpdateError extends BoardState {
   UpdateError({this.error});
 }
 
+class CreateError extends BoardState {
+  final error;
+  CreateError({this.error});
+}
+
 class BoardCreated extends BoardState {}
 
 class BoardUpdated extends BoardState {}
