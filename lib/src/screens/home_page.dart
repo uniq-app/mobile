@@ -56,6 +56,10 @@ class _HomePageState extends State<HomePage> {
     context.read<BoardBloc>().add(FetchBoards());
   }
 
+  _loadStashedBoards() async {
+    context.read<BoardBloc>().add(LoadStashedBoards());
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -70,6 +74,8 @@ class _HomePageState extends State<HomePage> {
             state is BoardDeleted ||
             state is BoardUpdated) {
           _loadBoards();
+        } else if (state is DeleteError || state is UpdateError) {
+          _loadStashedBoards();
         }
       },
       builder: (BuildContext context, BoardState state) {

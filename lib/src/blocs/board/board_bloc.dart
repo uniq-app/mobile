@@ -33,6 +33,9 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         yield BoardsError(error: e);
       }
     }
+    if (event is LoadStashedBoards) {
+      yield BoardsLoaded(boardResults: boardResults, checked: new List());
+    }
     if (event is CreateBoard) {
       yield BoardsLoading();
       try {

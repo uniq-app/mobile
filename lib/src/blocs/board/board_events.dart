@@ -12,6 +12,11 @@ class FetchBoards extends BoardEvent {
   List<Object> get props => [];
 }
 
+class LoadStashedBoards extends BoardEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class CreateBoard extends BoardEvent {
   final Board board;
   final File coverImage;
