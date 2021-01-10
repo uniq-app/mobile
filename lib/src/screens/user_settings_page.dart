@@ -10,9 +10,10 @@ class UserSettingsPage extends StatefulWidget {
 }
 
 class _UserSettingsPageState extends State<UserSettingsPage> {
+  bool notificationsEnabled = false;
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
@@ -41,7 +42,15 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
             ListTile(
               title: Text('Notifications'),
               leading: Icon(Icons.notifications, color: Colors.white),
-              trailing: Icon(Icons.navigate_next, color: Colors.white),
+              trailing: Switch(
+                value: notificationsEnabled,
+                activeColor: Theme.of(context).primaryColor,
+                onChanged: (value) {
+                  setState(() {
+                    notificationsEnabled = value;
+                  });
+                },
+              ),
               onTap: () => print("Notifications"),
             ),
             ListTile(
