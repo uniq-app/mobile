@@ -46,7 +46,10 @@ class _FollowedBoardsState extends State<FollowedBoards> {
           ),
           BlocConsumer<FollowedBoardsBloc, FollowedBoardsState>(
             listener: (context, state) {
-              // TODO:?
+              if (state is FollowBoardSuccess ||
+                  state is UnfollowBoardSuccess) {
+                _loadFollowedBoards();
+              }
             },
             builder: (context, FollowedBoardsState state) {
               if (state is GetFollowedBoardsSuccess) {
