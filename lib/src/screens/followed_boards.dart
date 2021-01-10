@@ -65,7 +65,7 @@ class _FollowedBoardsState extends State<FollowedBoards> {
               } else if (state is GetFollowedBoardsError) {
                 return SliverFillRemaining(
                   child: CustomError(
-                    message: "${state.error.message}\n\n Tap to retry",
+                    message: "${state.error.message}\nTap to retry",
                     onTap: _loadFollowedBoards,
                   ),
                 );

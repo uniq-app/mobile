@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -34,6 +35,13 @@ class _LoginPageState extends State<LoginPage> {
             if (state is LoginSuccess) {
               Navigator.of(context).pushNamedAndRemoveUntil(
                   applicationPage, (Route<dynamic> route) => false);
+            }
+            if (state is LoginError) {
+              showToast(
+                "${state.error.message}",
+                position: ToastPosition.bottom,
+                backgroundColor: Colors.redAccent,
+              );
             }
           },
           builder: (BuildContext context, AuthState state) {

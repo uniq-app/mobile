@@ -26,36 +26,28 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         profileDetails = await profileRepository.getProfileDetails();
         yield GetProfileDetailsSuccess(profile: profileDetails);
       } on SocketException {
-        yield GetProfileDetailsError(error: NoInternetException('No internet'));
+        yield GetProfileDetailsError(error: NoInternetException());
       } on HttpException {
-        yield GetProfileDetailsError(
-            error: NoServiceFoundException('No service found'));
+        yield GetProfileDetailsError(error: NoServiceFoundException());
       } on FormatException {
-        yield GetProfileDetailsError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield GetProfileDetailsError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
-        yield GetProfileDetailsError(
-            error: NoInternetException('Unknown error'));
+        yield GetProfileDetailsError(error: e);
       }
     }
     if (event is PutProfileDetails) {
       yield PutProfileDetailsLoading();
       try {
-        await profileRepository.putProfileDetails();
+        await profileRepository.putProfileDetails(event.data);
         yield PutProfileDetailsSuccess();
       } on SocketException {
-        yield PutProfileDetailsError(error: NoInternetException('No internet'));
+        yield PutProfileDetailsError(error: NoInternetException());
       } on HttpException {
-        yield PutProfileDetailsError(
-            error: NoServiceFoundException('No service found'));
+        yield PutProfileDetailsError(error: NoServiceFoundException());
       } on FormatException {
-        yield PutProfileDetailsError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield PutProfileDetailsError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
-        yield PutProfileDetailsError(
-            error: NoInternetException('Unknown error'));
+        yield PutProfileDetailsError(error: e);
       }
     }
   }

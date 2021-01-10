@@ -26,7 +26,13 @@ class ProfileApiProvider implements ProfileRepository {
   }
 
   @override
-  Future putProfileDetails() async {
-    // TODO: Implement put method;
+  Future putProfileDetails(Map<String, dynamic> data) async {
+    var body = json.encode(data);
+    final response = await client.put('$_apiUrl', body: body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ProfileDetails.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to edit profile');
+    }
   }
 }

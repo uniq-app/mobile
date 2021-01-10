@@ -32,15 +32,13 @@ class SearchBoardsBloc extends Bloc<SearchBoardsEvent, SearchBoardsState> {
           yield SearchForBoardsSuccess(boardResults: boardResults);
         }
       } on SocketException {
-        yield SearchForBoardsError(error: NoInternetException('No internet'));
+        yield SearchForBoardsError(error: NoInternetException());
       } on HttpException {
-        yield SearchForBoardsError(
-            error: NoServiceFoundException('No service found'));
+        yield SearchForBoardsError(error: NoServiceFoundException());
       } on FormatException {
-        yield SearchForBoardsError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield SearchForBoardsError(error: InvalidFormatException());
       } catch (e) {
-        yield SearchForBoardsError(error: NoInternetException('Unknown error'));
+        yield SearchForBoardsError(error: e);
       }
     }
   }

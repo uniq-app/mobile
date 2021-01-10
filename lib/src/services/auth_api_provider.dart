@@ -35,7 +35,7 @@ class AuthApiProvider implements AuthRepository {
     final response =
         await client.post('$_apiUrl/login', body: body, headers: headers);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       var body = json.decode(response.body);
       // Write to local secure storage
       storeToken(body['jwt']);
@@ -65,7 +65,15 @@ class AuthApiProvider implements AuthRepository {
 
   @override
   Future logout() async {
-    // todo: Need to call board service?? final response = await client.get('$_apiUrl/logout');
-    return await deleteToken();
+    await deleteToken();
+    final response = await client.post('$_apiUrl/logout');
+
+    /* 
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      await deleteToken();
+    } else {
+      throw Exception('Failed to logout');
+    }
+    */
   }
 }

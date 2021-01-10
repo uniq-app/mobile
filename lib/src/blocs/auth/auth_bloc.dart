@@ -30,15 +30,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             event.username, event.password, fcmToken);
         yield LoginSuccess(token: token);
       } on SocketException {
-        yield LoginError(error: NoInternetException('No internet'));
+        yield LoginError(error: NoInternetException());
       } on HttpException {
-        yield LoginError(error: NoServiceFoundException('No service found'));
+        yield LoginError(error: NoServiceFoundException());
       } on FormatException {
-        yield LoginError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield LoginError(error: InvalidFormatException());
       } catch (e) {
         print(e);
-        yield LoginError(error: NoInternetException('Unknown error: $e'));
+        yield LoginError(error: e);
       }
     }
     if (event is Logout) {
@@ -51,18 +50,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         token = await authRepository.register(
             event.username, event.email, event.password);
-        print("SignupLoading");
         yield RegisterSuccess();
       } on SocketException {
-        yield RegisterError(error: NoInternetException('No internet'));
+        yield RegisterError(error: NoInternetException());
       } on HttpException {
-        yield RegisterError(error: NoServiceFoundException('No service found'));
+        yield RegisterError(error: NoServiceFoundException());
       } on FormatException {
-        yield RegisterError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield RegisterError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
-        yield RegisterError(error: NoInternetException('Unknown error: $e'));
+        yield RegisterError(error: e);
       }
     }
   }

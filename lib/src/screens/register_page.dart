@@ -48,7 +48,7 @@ class _RegisterPage extends State<RegisterPage> {
                     activateRoute, (Route<dynamic> route) => false);
               } else if (state is RegisterError) {
                 showToast(
-                  "Failed to create account - ${state.error.message}",
+                  "${state.error.message}",
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.redAccent,
                 );

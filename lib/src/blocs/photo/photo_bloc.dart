@@ -23,14 +23,13 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         photos = await boardRepository.getBoardPhotos(event.boardId);
         yield PhotosLoaded(photos: photos);
       } on SocketException {
-        yield PhotosError(error: NoInternetException('No internet'));
+        yield PhotosError(error: NoInternetException());
       } on HttpException {
-        yield PhotosError(error: NoServiceFoundException('No service found'));
+        yield PhotosError(error: NoServiceFoundException());
       } on FormatException {
-        yield PhotosError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield PhotosError(error: InvalidFormatException());
       } catch (e) {
-        yield PhotosError(error: NoInternetException('Unknown error'));
+        yield PhotosError(error: e);
       }
     }
     if (event is PostAllPhotos) {
@@ -44,14 +43,12 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         await Future.delayed(Duration(milliseconds: 300));
         yield PhotoInitial();
       } on SocketException {
-        yield PhotosError(error: NoInternetException('No internet'));
+        yield PhotosError(error: NoInternetException());
       } on HttpException {
-        yield PhotosError(error: NoServiceFoundException('No service found'));
+        yield PhotosError(error: NoServiceFoundException());
       } on FormatException {
-        yield PhotosError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield PhotosError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
         yield PhotosError(error: e);
       }
     }
@@ -61,14 +58,12 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         await photoRepository.postAllFromCamera(event.images, event.checked);
         yield PhotosPostedSuccess();
       } on SocketException {
-        yield PhotosError(error: NoInternetException('No internet'));
+        yield PhotosError(error: NoInternetException());
       } on HttpException {
-        yield PhotosError(error: NoServiceFoundException('No service found'));
+        yield PhotosError(error: NoServiceFoundException());
       } on FormatException {
-        yield PhotosError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield PhotosError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
         yield PhotosError(error: e);
       }
     }
@@ -76,17 +71,14 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
       try {
         yield PhotosLoading();
         await photoRepository.postImageFromFile(event.image);
-        print("posting image from file");
         yield PhotosPostedSuccess();
       } on SocketException {
-        yield PhotosError(error: NoInternetException('No internet'));
+        yield PhotosError(error: NoInternetException());
       } on HttpException {
-        yield PhotosError(error: NoServiceFoundException('No service found'));
+        yield PhotosError(error: NoServiceFoundException());
       } on FormatException {
-        yield PhotosError(
-            error: InvalidFormatException('Invalid resposne format'));
+        yield PhotosError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
         yield PhotosError(error: e);
       }
     }
