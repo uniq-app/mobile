@@ -35,7 +35,6 @@ class _RegisterPage extends State<RegisterPage> {
         title: Text("Register"),
       ),*/
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Center(
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (BuildContext context, AuthState state) {
@@ -62,108 +61,116 @@ class _RegisterPage extends State<RegisterPage> {
               return Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _RegisterKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Create UNIQ account",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.05),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      inputIcon: Icons.face,
-                      isObscure: false,
-                      labelText: "Name",
-                      controller: nameController,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Please enter the name';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      inputIcon: Icons.email,
-                      isObscure: false,
-                      labelText: "Email",
-                      controller: emailController,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Please enter the email';
-                        if (!value.contains("@") || !value.contains("."))
-                          return 'Please enter correct email';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      isObscure: true,
-                      inputIcon: Icons.lock,
-                      labelText: "Password",
-                      controller: passwordController,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Please enter the password';
-                        if (passwordController.text != passwordController2.text)
-                          return 'Passwords are not equal';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      isObscure: true,
-                      inputIcon: Icons.lock,
-                      labelText: "Repeat password",
-                      controller: passwordController2,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Please enter the password';
-                        if (passwordController.text != passwordController2.text)
-                          return 'Passwords are not equal';
-                        return null;
-                      },
-                    ),
-                    if (state is RegisterError) Text(state.error.message),
-                    SizedBox(height: size.height * 0.03),
-                    UniqButton(
-                      color: Theme.of(context).buttonColor,
-                      push: () {
-                        if (_RegisterKey.currentState.validate()) {
-                          context.read<AuthBloc>().add(Register(
-                              email: emailController.text,
-                              username: nameController.text,
-                              password: passwordController.text));
-                        }
-                      },
-                      text: "REGISTER",
-                    ),
-                    SizedBox(height: size.height * 0.01),
-                    Row(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Already have an Account? -"),
-                        InkWell(
-                          onTap: () {
-                            Navigator.popAndPushNamed(context, loginRoute);
-                          },
-                          child: new Text(
-                            " Login",
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
+                      children: <Widget>[
+                        Text(
+                          "create UNIQ account",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
                           ),
-                        )
+                        ),
+                        SizedBox(height: size.height * 0.05),
+                        UniqInputIconField(
+                          color: Theme.of(context).accentColor,
+                          inputIcon: Icons.face,
+                          isObscure: false,
+                          labelText: "name",
+                          controller: nameController,
+                          validator: (value) {
+                            if (value.isEmpty) return 'Please enter the name';
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: size.height * 0.015),
+                        UniqInputIconField(
+                          color: Theme.of(context).accentColor,
+                          inputIcon: Icons.email,
+                          isObscure: false,
+                          labelText: "email",
+                          controller: emailController,
+                          validator: (value) {
+                            if (value.isEmpty) return 'Please enter the email';
+                            if (!value.contains("@") || !value.contains("."))
+                              return 'please enter correct email';
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: size.height * 0.015),
+                        UniqInputIconField(
+                          color: Theme.of(context).accentColor,
+                          isObscure: true,
+                          inputIcon: Icons.lock,
+                          labelText: "password",
+                          controller: passwordController,
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'please enter the password';
+                            if (passwordController.text !=
+                                passwordController2.text)
+                              return 'passwords are not equal';
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: size.height * 0.015),
+                        UniqInputIconField(
+                          color: Theme.of(context).accentColor,
+                          isObscure: true,
+                          inputIcon: Icons.lock,
+                          labelText: "repeat password",
+                          controller: passwordController2,
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'please enter the password';
+                            if (passwordController.text !=
+                                passwordController2.text)
+                              return 'passwords are not equal';
+                            return null;
+                          },
+                        ),
+                        if (state is RegisterError) Text(state.error.message),
+                        SizedBox(height: size.height * 0.03),
+                        UniqButton(
+                          color: Theme.of(context).buttonColor,
+                          push: () {
+                            if (_RegisterKey.currentState.validate()) {
+                              context.read<AuthBloc>().add(Register(
+                                  email: emailController.text,
+                                  username: nameController.text,
+                                  password: passwordController.text));
+                            }
+                          },
+                          text: "register",
+                          fontSize: 16,
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("already have an account? -",
+                                style: TextStyle(fontSize: 14)),
+                            InkWell(
+                              onTap: () {
+                                Navigator.popAndPushNamed(context, loginRoute);
+                              },
+                              child: new Text(
+                                " login",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
-                    OutlinedButton(
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed(activateRoute),
-                      child: Text('Activate account'),
-                    )
-                  ],
+                  ),
                 ),
               );
             },

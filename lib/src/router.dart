@@ -85,7 +85,7 @@ class MainRouter {
             body: Center(
               child: Column(
                 children: [
-                  Image.asset('assets/404.png'),
+                  Image.asset('assets/404.svg'),
                   Text('404! ${settings.name} is leaking...'),
                 ],
               ),
