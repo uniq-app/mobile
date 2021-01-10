@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -27,114 +28,132 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text("Login"),
-      ),*/
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: Center(
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (BuildContext context, AuthState state) {
-              if (state is LoginSuccess) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    applicationPage, (Route<dynamic> route) => false);
-              }
-            },
-            builder: (BuildContext context, AuthState state) {
-              if (state is LoginLoading) {
-                return Loading();
-              }
-              return Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: _LoginKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Login to UNIQ",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
+      body: Center(
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (BuildContext context, AuthState state) {
+            if (state is LoginSuccess) {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  applicationPage, (Route<dynamic> route) => false);
+            }
+          },
+          builder: (BuildContext context, AuthState state) {
+            if (state is LoginLoading) {
+              return Loading();
+            }
+            return Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _LoginKey,
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(size.width * 0.05),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: size.height * 0.3,
+                        child: SvgPicture.asset("assets/images/create.svg"),
                       ),
-                    ),
-                    SizedBox(height: size.height * 0.05),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      inputIcon: Icons.email,
-                      isObscure: false,
-                      hintText: "Email",
-                      controller: loginController,
-                      validator: (value) {
-                        if (value.isEmpty) return "Name cannot be empty";
-                      },
-                    ),
-                    SizedBox(
-                      height: size.height * 0.02,
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      isObscure: true,
-                      inputIcon: Icons.lock,
-                      hintText: "Password",
-                      controller: passwordController,
-                      validator: (value) {
-                        if (value.isEmpty) return "Password cannot be empty";
-                        return null;
-                      },
-                    ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(forgotPasswordPage);
+                      SizedBox(height: size.height * 0.02),
+                      Text(
+                        "login to UNIQ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 19,
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      UniqInputIconField(
+                        color: Theme.of(context).accentColor,
+                        inputIcon: Icons.email,
+                        isObscure: false,
+                        hintText: "email",
+                        controller: loginController,
+                        validator: (value) {
+                          if (value.isEmpty) return "Name cannot be empty";
                         },
-                        child: Text("Forgot password?"),
                       ),
-                    ),
-                    UniqButton(
-                      color: Theme.of(context).buttonColor,
-                      push: () {
-                        if (_LoginKey.currentState.validate()) {
-                          context.read<AuthBloc>().add(Login(
-                              username: loginController.text,
-                              password: passwordController.text));
-                        }
-                      },
-                      text: "LOGIN",
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Don't have an Account?"),
-                        InkWell(
-                          onTap: () {
-                            Navigator.popAndPushNamed(context, signupRoute);
-                          },
-                          child: new Text(
-                            " - Sign Up",
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
+                      SizedBox(height: size.height * 0.02),
+                      UniqInputIconField(
+                        color: Theme.of(context).accentColor,
+                        isObscure: true,
+                        inputIcon: Icons.lock,
+                        hintText: "password",
+                        controller: passwordController,
+                        validator: (value) {
+                          if (value.isEmpty) return "Password cannot be empty";
+                          return null;
+                        },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .popAndPushNamed(activateRoute);
+                            },
+                            child: Text(
+                              "activate account",
+                              style: TextStyle(fontSize: 14),
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.popAndPushNamed(context, activateRoute);
-                      },
-                      child: Text("Activate"),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.03,
-                    ),
-                    if (state is LoginError) Text(state.error.message),
-                  ],
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(forgotPasswordPage);
+                            },
+                            child: Text(
+                              "forgot password",
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      UniqButton(
+                        color: Theme.of(context).buttonColor,
+                        push: () {
+                          if (_LoginKey.currentState.validate()) {
+                            context.read<AuthBloc>().add(
+                                  Login(
+                                    username: loginController.text,
+                                    password: passwordController.text,
+                                  ),
+                                );
+                          }
+                        },
+                        text: "login",
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "don't have an account?",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.popAndPushNamed(context, signupRoute);
+                            },
+                            child: new Text(
+                              " - register",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      if (state is LoginError) Text(state.error.message),
+                    ],
+                  ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/user/user_bloc.dart';
@@ -37,7 +38,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
             listener: (BuildContext context, AuthState state) {
               if (state is RegisterSuccess) {
                 Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Resetting password successful!')));
+                    SnackBar(content: Text('resetting password successful!')));
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     newPasswordPage, (Route<dynamic> route) => false);
               }
@@ -52,31 +53,25 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Container(
+                      height: size.height * 0.3,
+                      child:
+                          SvgPicture.asset("assets/images/forgot_password.svg"),
+                    ),
+                    SizedBox(height: size.height * 0.02),
                     Text(
-                      "Reset your password",
+                      "forget your password",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
                       ),
                     ),
-                    SizedBox(height: size.height * 0.05),
-                    UniqInputIconField(
-                      color: Theme.of(context).accentColor,
-                      inputIcon: Icons.face,
-                      isObscure: false,
-                      labelText: "Name",
-                      controller: nameController,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Please enter the name';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.02),
+                    SizedBox(height: size.height * 0.03),
                     UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       inputIcon: Icons.email,
                       isObscure: false,
-                      labelText: "Email",
+                      labelText: "email",
                       controller: emailController,
                       validator: (value) {
                         if (value.isEmpty) return 'Please enter the email';
@@ -84,6 +79,11 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                           return 'Please enter email';
                         return null;
                       },
+                    ),
+                    SizedBox(height: size.height * 0.01),
+                    Text(
+                      "we will send you security code for authorization",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                     SizedBox(height: size.height * 0.03),
                     UniqButton(
@@ -93,26 +93,28 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                           context.read<UserBloc>().add(ResetPassword(
                               email: emailController.text,
                               username: nameController.text));
-//todo: REMOVE this after functionality is finished
+//TODO : REMOVE this after functionality is finished
                           Navigator.popAndPushNamed(context, newPasswordPage);
                         }
                       },
-                      text: "RESET MY PASSWORD",
+                      text: "send security code",
                     ),
-                    SizedBox(height: size.height * 0.01),
+                    SizedBox(height: size.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Did you change your mind? -"),
+                        Text("did you change your mind? -",
+                            style: TextStyle(fontSize: 14)),
                         InkWell(
                           onTap: () {
                             Navigator.popAndPushNamed(context, loginRoute);
                           },
                           child: new Text(
-                            " Login",
+                            " login",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
                           ),
                         )
                       ],
