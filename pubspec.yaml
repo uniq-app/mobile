@@ -70,6 +70,43 @@ flutter:
   assets:
     - assets/404.png
     - assets/defaultCover.jpg
+    - assets/images/blank_canvas.svg
+    - assets/images/access_denied.svg
+    - assets/images/build.svg
+    - assets/images/camera.svg
+    - assets/images/chill.svg
+    - assets/images/completed.svg
+    - assets/images/create.svg
+    - assets/images/form.svg
+    - assets/images/image_focus.svg
+    - assets/images/image.svg
+    - assets/images/imagination.svg
+    - assets/images/imagination2.svg
+    - assets/images/inspire_watch.svg
+    - assets/images/live_photo.svg
+    - assets/images/love.svg
+    - assets/images/organize_photos.svg
+    - assets/images/nature.svg
+    - assets/images/password.svg
+    - assets/images/search.svg
+    - assets/images/polaroid_photo.svg
+    - assets/images/verified.svg
+    - assets/images/work_in_progress.svg
+    - assets/images/forgot_password.svg
+    - assets/images/authentication.svg
+    - assets/images/login.svg
+
+
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-Black.ttf
+        - asset: fonts/Nunito-Bold.ttf
+        - asset: fonts/Nunito-Light.ttf
+        - asset: fonts/Nunito-Regular.ttf
+        - asset: fonts/Nunito-ExtraLight.ttf
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
