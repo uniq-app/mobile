@@ -114,9 +114,12 @@ class _LoginPageState extends State<LoginPage> {
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_LoginKey.currentState.validate()) {
-                            context.read<AuthBloc>().add(Login(
-                                username: loginController.text,
-                                password: passwordController.text));
+                            context.read<AuthBloc>().add(
+                                  Login(
+                                    username: loginController.text,
+                                    password: passwordController.text,
+                                  ),
+                                );
                           }
                         },
                         text: "login",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/user/user_bloc.dart';
@@ -52,14 +53,20 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Container(
+                      height: size.height * 0.3,
+                      child:
+                          SvgPicture.asset("assets/images/forgot_password.svg"),
+                    ),
+                    SizedBox(height: size.height * 0.02),
                     Text(
-                      "forgot your password",
+                      "forget your password",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 19,
                       ),
                     ),
-                    SizedBox(height: size.height * 0.05),
+                    SizedBox(height: size.height * 0.03),
                     UniqInputIconField(
                       color: Theme.of(context).accentColor,
                       inputIcon: Icons.email,
@@ -86,11 +93,11 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                           context.read<UserBloc>().add(ResetPassword(
                               email: emailController.text,
                               username: nameController.text));
-//todo: REMOVE this after functionality is finished
+//TODO : REMOVE this after functionality is finished
                           Navigator.popAndPushNamed(context, newPasswordPage);
                         }
                       },
-                      text: "reset my password",
+                      text: "send security code",
                     ),
                     SizedBox(height: size.height * 0.02),
                     Row(

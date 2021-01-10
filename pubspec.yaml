@@ -93,6 +93,11 @@ flutter:
     - assets/images/polaroid_photo.svg
     - assets/images/verified.svg
     - assets/images/work_in_progress.svg
+    - assets/images/forgot_password.svg
+
+    - assets/images/authentication.svg
+    - assets/images/login.svg
+
 
 
   fonts:
