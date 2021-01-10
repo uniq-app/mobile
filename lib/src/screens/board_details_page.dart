@@ -1,6 +1,4 @@
-import 'dart:math';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -11,14 +9,11 @@ import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
-import 'package:uniq/src/shared/components/new_element_button.dart';
-import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:flutter/material.dart';
-
-import 'package:uniq/src/shared/components/reorderable_grid.dart';
-//import 'package:reorderableitemsview/reorderableitemsview.dart';
+import 'package:reorderables/reorderables.dart';
+import 'package:uniq/src/shared/constants.dart';
 
 class BoardDetailsPage extends StatefulWidget {
   final Board board;
@@ -80,9 +75,10 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
               if (snapshot.hasData) {
                 return Padding(
                   padding: EdgeInsets.all(4),
-                  // Todo: pass precached images
+                  // CASE 1
                   //child: StaggeredGrid(state.photos, snapshot.data),
-                  child: GridPageView(state.photos, snapshot.data),
+                  // CASE 2
+                  child: WrapGrid(state.photos, snapshot.data),
                 );
               } else if (snapshot.hasError) {
                 return CustomError(message: "Couldnt preload images");
@@ -99,108 +95,147 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
   }
 }
 
-class GridPageView extends StatefulWidget {
-  final List<Photo> photos;
-  final List<Image> images;
-
-  GridPageView(this.photos, this.images);
-  @override
-  _GridPageViewState createState() => _GridPageViewState(photos, images);
-}
-
-class _GridPageViewState extends State<GridPageView> {
-  final List<Photo> photos;
-  final List<Image> images;
-
-  List<StaggeredTile> _listStaggeredTileExtended;
-  List<Widget> _tiles = new List();
-
-  _GridPageViewState(this.photos, this.images) {
-    _listStaggeredTileExtended = [
-      ...images.map((e) => StaggeredTile.count(1, 1)).toList()
-    ];
-
-    for (int i = 0; i < photos.length; i++) {
-      _tiles.add(
-          ReorderableTile(Key(UniqueKey().toString()), photos[i], images[i]));
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ReorderableItemsView(
-      onReorder: (int oldIndex, int newIndex) {
-        setState(() {
-          _tiles.insert(newIndex, _tiles.removeAt(oldIndex));
-          _listStaggeredTileExtended.insert(
-              newIndex, _listStaggeredTileExtended.removeAt(oldIndex));
-        });
-      },
-      children: _tiles,
-      crossAxisCount: 4,
-      isGrid: true,
-      staggeredTiles: _listStaggeredTileExtended,
-      longPressToDrag: true,
-      crossAxisSpacing: 8.0,
-      mainAxisSpacing: 8.0,
-    );
-  }
-}
-
-class ReorderableTile extends StatelessWidget {
-  Photo photo;
-  Image image;
-  ReorderableTile(Key key, this.photo, this.image) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    String tag = '${photo.photoId}';
-    String url = "${PhotoApiProvider.apiUrl}/${photo.value}";
-    Map<String, dynamic> arguments = {'url': url, 'tag': tag, 'image': image};
-    return PhotoHero(
-        tag: tag,
-        image: image,
-        isRounded: true,
-        onTap: () {
-          Navigator.pushNamed(context, photoDetails, arguments: arguments);
-        });
-    ;
-  }
-}
-
-class StaggeredGrid extends StatelessWidget {
+class WrapGrid extends StatefulWidget {
   final List<Photo> photos;
   final List<Image> precachedImages;
-  StaggeredGrid(this.photos, this.precachedImages);
+
+  WrapGrid(this.photos, this.precachedImages);
+  @override
+  _WrapGridState createState() => _WrapGridState();
+}
+
+class _WrapGridState extends State<WrapGrid> {
+  List<Widget> _tiles = new List();
 
   @override
-  Widget build(BuildContext context) {
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: 4,
-      itemCount: photos.length,
-      itemBuilder: (BuildContext context, int index) {
-        String tag = '${photos[index].photoId}';
-        String url = "${PhotoApiProvider.apiUrl}/${photos[index].value}";
-        Image image = precachedImages[index];
+  void initState() {
+    super.initState();
+    _createTilesFromImages();
+  }
+
+  _createTilesFromImages() {
+    for (int i = 0; i < widget.precachedImages.length; i++) {
+      if (widget.photos[i] != null) {
+        String tag = '${widget.photos[i].photoId}';
+        String url = "${PhotoApiProvider.apiUrl}/${widget.photos[i].value}";
+        Image image = widget.precachedImages[i];
         Map<String, dynamic> arguments = {
           'url': url,
           'tag': tag,
           'image': image
         };
-
-        /*
-        return Draggable<Image>(
-          feedback: SizedBox(
-            height: 150,
-            width: 150,
-            child: image,
+        _tiles.add(
+          SizedBox.fromSize(
+            size: Size(100, 100),
+            child: PhotoHero(
+              tag: tag,
+              image: image,
+              isRounded: true,
+              onTap: () {
+                Navigator.pushNamed(context, photoDetails,
+                    arguments: arguments);
+              },
+            ),
           ),
-          data: image,
-          child: image,
-          childWhenDragging: image,
-          onDragStarted: () => print("Started dragging"),
         );
-        */
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    void _onReorder(int oldIndex, int newIndex) {
+      setState(() {
+        Widget row = _tiles.removeAt(oldIndex);
+        _tiles.insert(newIndex, row);
+      });
+    }
+
+    return Center(
+      child: ReorderableWrap(
+        spacing: 8.0,
+        runSpacing: 4.0,
+        padding: const EdgeInsets.all(8),
+        children: _tiles,
+        onReorder: _onReorder,
+        onNoReorder: (int index) {
+          //this callback is optional
+          debugPrint(
+              '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
+        },
+        onReorderStarted: (int index) {
+          //this callback is optional
+          debugPrint(
+              '${DateTime.now().toString().substring(5, 22)} reorder started: index:$index');
+        },
+      ),
+    );
+  }
+}
+
+/* 
+
+class StaggeredGrid extends StatefulWidget {
+  final List<Photo> photos;
+  final List<Image> precachedImages;
+  StaggeredGrid(this.photos, this.precachedImages);
+
+  @override
+  _StaggeredGridState createState() =>
+      _StaggeredGridState(this.photos, this.precachedImages);
+}
+
+class _StaggeredGridState extends State<StaggeredGrid> {
+  final List<Photo> _photos;
+  final List<Image> _precachedImages;
+  _StaggeredGridState(this._photos, this._precachedImages);
+  @override
+  Widget build(BuildContext context) {
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 4,
+      itemCount: widget.photos.length,
+      itemBuilder: (BuildContext context, int index) {
+        String tag = '${widget.photos[index].photoId}';
+        String url = "${PhotoApiProvider.apiUrl}/${widget.photos[index].value}";
+        Image image = widget.precachedImages[index];
+        Map<String, dynamic> arguments = {
+          'url': url,
+          'tag': tag,
+          'image': image
+        };
+        return DragTarget<Image>(
+          builder: (context, candidateData, rejectedData) {
+            return LongPressDraggable<Image>(
+              feedback: SizedBox(
+                height: 50,
+                width: 50,
+                child: image,
+              ),
+              data: image,
+              child: image,
+              childWhenDragging: image,
+            );
+          },
+          onAccept: (data) {
+            print("Accepted target");
+            setState(() {
+              // Update index of photos and precachedImages
+              int oldImageIndex = _precachedImages.indexOf(data);
+
+              Photo oldPhoto = _photos.removeAt(oldImageIndex);
+              Image oldImage = _precachedImages.removeAt(oldImageIndex);
+
+              _photos.insert(index, oldPhoto);
+              _precachedImages.insert(index, oldImage);
+            });
+          },
+          onLeave: (data) {
+            print("Leave data: $data");
+          },
+          onMove: (data) {
+            print("Reached target");
+          },
+        );
         return PhotoHero(
             tag: tag,
             image: image,
@@ -215,3 +250,4 @@ class StaggeredGrid extends StatelessWidget {
     );
   }
 }
+*/
