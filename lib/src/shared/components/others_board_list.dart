@@ -16,7 +16,7 @@ class OthersBoardList extends StatefulWidget {
 }
 
 class _OthersBoardListState extends State<OthersBoardList> {
-  List<Board> followedBoards;
+  List<Board> followedBoards = new List();
   @override
   void initState() {
     super.initState();
@@ -50,16 +50,11 @@ class _OthersBoardListState extends State<OthersBoardList> {
         .add(UnfollowBoard(boardId: board.id));
   }
 
-  _loadFollowedBoards() {
-    context.read<FollowedBoardsBloc>().add(GetFollowedBoards());
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FollowedBoardsBloc, FollowedBoardsState>(
+    return BlocListener<FollowedBoardsBloc, FollowedBoardsState>(
       listener: (context, FollowedBoardsState state) {
         if (state is FollowBoardSuccess) {
-          _loadFollowedBoards();
           showToast(
             "Added to followed",
             position: ToastPosition.bottom,
@@ -71,9 +66,7 @@ class _OthersBoardListState extends State<OthersBoardList> {
             position: ToastPosition.bottom,
             backgroundColor: Colors.redAccent,
           );
-        }
-        if (state is UnfollowBoardSuccess) {
-          _loadFollowedBoards();
+        } else if (state is UnfollowBoardSuccess) {
           showToast(
             "Unfollow success",
             position: ToastPosition.bottom,
@@ -87,32 +80,35 @@ class _OthersBoardListState extends State<OthersBoardList> {
           );
         }
       },
-      builder: (BuildContext context, FollowedBoardsState state) {
-        if (state is GetFollowedBoardsSuccess)
-          followedBoards = state.boardResults.results;
-        print(followedBoards);
-        return SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext _, int index) {
-              return BoardListElement(
-                icon: Icon(
-                  Icons.favorite,
-                  color: _isFollowed(widget.boards[index])
-                      ? Colors.red
-                      : Colors.white,
-                ),
-                board: widget.boards[index],
-                boardLink: () {
-                  Navigator.pushNamed(context, boardDetailsRoute,
-                      arguments: widget.boards[index]);
-                },
-                iconAction: () => _toggleFollow(context, widget.boards[index]),
-              );
-            },
-            childCount: widget.boards.length,
-          ),
-        );
-      },
+      child: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext _, int index) {
+            return BlocBuilder<FollowedBoardsBloc, FollowedBoardsState>(
+              builder: (context, state) {
+                if (state is GetFollowedBoardsSuccess) {
+                  followedBoards = state.boardResults.results;
+                }
+                return BoardListElement(
+                  icon: Icon(
+                    Icons.favorite,
+                    color: _isFollowed(widget.boards[index])
+                        ? Colors.red
+                        : Colors.white,
+                  ),
+                  board: widget.boards[index],
+                  boardLink: () {
+                    Navigator.pushNamed(context, boardDetailsRoute,
+                        arguments: widget.boards[index]);
+                  },
+                  iconAction: () =>
+                      _toggleFollow(context, widget.boards[index]),
+                );
+              },
+            );
+          },
+          childCount: widget.boards.length,
+        ),
+      ),
     );
   }
 }
