@@ -6,7 +6,8 @@ import 'package:uniq/src/shared/constants.dart';
 class BoardList extends StatelessWidget {
   final List<Board> boards;
   final Icon icon;
-  BoardList(this.boards, this.icon);
+  final double iconSize;
+  BoardList(this.boards, this.icon, this.iconSize);
   @override
   Widget build(BuildContext context) {
     return SliverList(
@@ -14,6 +15,7 @@ class BoardList extends StatelessWidget {
         (BuildContext context, int index) {
           return BoardListElement(
             icon: icon,
+            iconSize: iconSize,
             board: boards[index],
             boardLink: () {
               Navigator.pushNamed(context, boardDetailsRoute,
