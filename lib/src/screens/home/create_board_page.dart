@@ -9,26 +9,25 @@ import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/board_cover_settings.dart';
 import 'package:uniq/src/shared/components/input_form_field.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
-class EditBoardPage extends StatefulWidget {
-  final Board board;
-  const EditBoardPage({Key key, this.board}) : super(key: key);
+class CreateBoardPage extends StatefulWidget {
+  const CreateBoardPage({Key key}) : super(key: key);
+
   @override
-  _EditBoardPageState createState() => _EditBoardPageState();
+  _CreateBoardPageState createState() => _CreateBoardPageState();
 }
 
-class _EditBoardPageState extends State<EditBoardPage> {
-  bool got = false, isPrivate;
+class _CreateBoardPageState extends State<CreateBoardPage> {
+  bool isPrivate = true;
   String boardCover;
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController descriptionController =
       new TextEditingController();
 
-  Color tempColor = Colors.amberAccent;
+  Color tempColor = Colors.amber[700];
   @override
   void dispose() {
     nameController.dispose();
@@ -36,32 +35,16 @@ class _EditBoardPageState extends State<EditBoardPage> {
     super.dispose();
   }
 
-  _deleteBoard() {
-    context.read<BoardBloc>().add(DeleteBoard(boardId: widget.board.id));
-    Navigator.pop(context);
-  }
-
-  _updateBoard() {
+  _createBoard() {
     File coverImage;
     if (boardCover != null) coverImage = File(boardCover);
-
+    print("In create board");
     Map<String, dynamic> boardData = new Map<String, dynamic>();
-    boardData['boardId'] = widget.board.id;
     boardData['name'] = nameController.text;
     boardData['description'] = descriptionController.text;
     boardData['isPrivate'] = isPrivate;
-
     context.read<BoardBloc>().add(
-        UpdateBoard(board: Board.fromJson(boardData), coverImage: coverImage));
-  }
-
-  _getStatus() {
-    if (this.got != true) {
-      nameController.text = widget.board.name;
-      descriptionController.text = widget.board.description;
-      this.isPrivate = widget.board.isPrivate;
-      this.got = true;
-    }
+        CreateBoard(board: Board.fromJson(boardData), coverImage: coverImage));
   }
 
   Future _getImage() async {
@@ -121,10 +104,10 @@ class _EditBoardPageState extends State<EditBoardPage> {
     );
   }
 
-  final _EditKey = GlobalKey<FormState>();
+  final _CreateKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    _getStatus();
+    print(boardCover);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -132,30 +115,16 @@ class _EditBoardPageState extends State<EditBoardPage> {
         child: Center(
           child: BlocListener<BoardBloc, BoardState>(
             listener: (context, state) {
-              if (state is BoardDeleted) {
-                showToast(
-                  "Successfuly deleted ${widget.board.name}!",
-                  position: ToastPosition.bottom,
-                  backgroundColor: Colors.greenAccent,
-                );
-                Navigator.pop(context);
-              } else if (state is DeleteError) {
-                showToast(
-                  "Failed to delete board - ${state.error.message}",
-                  position: ToastPosition.bottom,
-                  backgroundColor: Colors.redAccent,
-                );
-              }
-              if (state is BoardUpdated) {
+              if (state is BoardCreated) {
                 Navigator.pop(context);
                 showToast(
-                  "Board successfuly updated!",
+                  "Board successfuly created!",
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.green,
                 );
-              } else if (state is UpdateError) {
+              } else if (state is BoardsError) {
                 showToast(
-                  "Failed to update board - ${state.error.message}",
+                  "Failed to create board - ${state.error.message}",
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.redAccent,
                 );
@@ -163,39 +132,28 @@ class _EditBoardPageState extends State<EditBoardPage> {
             },
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              key: _EditKey,
+              key: _CreateKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Edit board",
+                        "Create board",
                         style: Theme.of(context).textTheme.headline4,
                       ),
-                      IconButton(
-                          iconSize: 35,
-                          icon: Icon(Icons.delete_forever),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                child: DeleteAlert(
-                                    board: widget.board,
-                                    deleteAction: _deleteBoard));
-                          })
                     ],
                   ),
+
                   SizedBox(height: size.height * 0.05),
                   UniqInputField(
                     cursorColor: Theme.of(context).accentColor,
                     isObscure: false,
                     labelText: "Name",
                     controller: nameController,
-                    maxLength: 20,
                     validator: (value) {
-                      if (value.isEmpty) return 'Enter name of the board';
-                      return null;
+                      if (value.isEmpty) return "Name cannot be empty";
                     },
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -204,29 +162,17 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,
+                    maxLines: null,
                     validator: (value) {
-                      if (value.isEmpty)
-                        return 'Enter description of the board';
-                      return null;
+                      if (value.isEmpty) return "Description cannot be empty";
                     },
                   ),
                   SizedBox(height: size.height * 0.02),
-                  if (boardCover != null)
-                    BoardCoverSettings(
-                      image: boardCover,
-                      editLink: _getImage,
-                    )
-                  else if (widget.board.cover != '')
-                    BoardCoverSettings(
-                      image:
-                          "${PhotoApiProvider.apiUrl}/thumbnail/${widget.board.cover}",
-                      editLink: _getImage,
-                    )
-                  else
-                    BoardCoverSettings(
-                      editLink: _getImage,
-                    ),
-
+                  // TODO: Kolor domyślny jak nie wybrano covera
+                  BoardCoverSettings(
+                    image: boardCover,
+                    editLink: _getImage,
+                  ),
                   SizedBox(height: size.height * 0.02),
                   // todo: Change stateful to bloc
                   ClipRRect(
@@ -282,8 +228,8 @@ class _EditBoardPageState extends State<EditBoardPage> {
                         screenHeight: 0.07,
                         color: tempColor,
                         push: () {
-                          if (_EditKey.currentState.validate()) {
-                            _updateBoard();
+                          if (_CreateKey.currentState.validate()) {
+                            _createBoard();
                           }
                         },
                         text: "Save",
@@ -296,7 +242,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                           Navigator.pop(context);
                         },
                         text: "Cancel",
-                      )
+                      ),
                     ],
                   ),
                 ],

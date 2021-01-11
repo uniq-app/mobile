@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/screens/application_page.dart';
-import 'package:uniq/src/screens/welcome_page.dart';
+import 'package:uniq/src/screens/start/welcome_page.dart';
 import 'package:uniq/src/services/auth_api_provider.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:splashscreen/splashscreen.dart';

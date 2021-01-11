@@ -7,12 +7,11 @@ class UniqInputField extends StatelessWidget {
   final IconData inputIcon, suffixIcon;
   final Color cursorColor;
   final double fieldRounding;
-  final int maxLength;
+  final int maxLength, maxLines;
   final TextEditingController controller;
   final Function(String) validator;
   final Function onEditingCompleted;
   final TextInputAction textInputAction;
-
   const UniqInputField({
     Key key,
     this.onChanged,
@@ -28,12 +27,14 @@ class UniqInputField extends StatelessWidget {
     this.textInputAction,
     this.cursorColor,
     this.onEditingCompleted,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return TextFormField(
+      maxLines: maxLines,
       textInputAction: textInputAction,
       obscureText: isObscure,
       onChanged: onChanged,

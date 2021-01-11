@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
-import 'package:uniq/src/shared/utilities.dart';
 
 class UserSettingsPage extends StatefulWidget {
   @override
@@ -25,19 +24,20 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
               title: Text('Edit profile'),
               leading: Icon(Icons.person, color: Colors.white),
               trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () => print("Edit profile"),
+              onTap: () => Navigator.of(context).pushNamed(editProfileRoute),
             ),
             ListTile(
               title: Text('Change password'),
               leading: Icon(Icons.lock, color: Colors.white),
               trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () => print("Change password"),
+              onTap: () => Navigator.of(context).pushNamed(newPasswordRoute),
             ),
             ListTile(
               title: Text('Change email'),
               leading: Icon(Icons.email, color: Colors.white),
               trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () => print("Change email"),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(changeEmailCodeRoute),
             ),
             ListTile(
               title: Text('Notifications'),
@@ -52,16 +52,6 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                 },
               ),
               onTap: () => print("Notifications"),
-            ),
-            ListTile(
-              title: Text(
-                'Delete account',
-                style: TextStyle(
-                  color: Theme.of(context).errorColor,
-                ),
-              ),
-              leading: Icon(Icons.delete_forever, color: Theme.of(context).errorColor),
-              onTap: () => print("Delete account"),
             ),
             _logout(context)
           ],
