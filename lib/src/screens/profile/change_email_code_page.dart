@@ -41,9 +41,9 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
             listener: (BuildContext context, AuthState state) {
               //if (state is EmailChangeSuccess) {
               Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Changing email successful!')));
+                  SnackBar(content: Text('email with code sent')));
               Navigator.of(context).pushNamedAndRemoveUntil(
-                  loginRoute, (Route<dynamic> route) => false);
+                  changeEmailRoute, (Route<dynamic> route) => false);
               //}
             },
             builder: (BuildContext context, AuthState state) {
@@ -59,7 +59,7 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                     children: <Widget>[
                       Container(
                         height: size.height * 0.3,
-                        child: SvgPicture.asset("assets/images/form.svg"),
+                        child: SvgPicture.asset("assets/images/verified.svg"),
                       ),
                       SizedBox(height: size.height * 0.02),
                       Text(
@@ -74,35 +74,24 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                         color: Theme.of(context).accentColor,
                         inputIcon: Icons.security,
                         isObscure: false,
-                        labelText: "security code",
+                        hintText: "security code",
                         controller: codeController,
                         validator: (value) {
-                          if (value.isEmpty) return 'Please enter the name';
+                          if (!value.contains(new RegExp('[0-9]{6}')))
+                            return 'Invalid code';
                           return null;
                         },
                       ),
                       SizedBox(height: size.height * 0.02),
                       UniqInputIconField(
                         color: Theme.of(context).accentColor,
-                        isObscure: true,
-                        inputIcon: Icons.lock,
-                        labelText: "new email",
-                        controller: passwordController,
+                        inputIcon: Icons.email,
+                        isObscure: false,
+                        hintText: "new email",
+                        controller: emailController,
                         validator: (value) {
-                          if (value.isEmpty) return 'Please enter the email';
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      UniqInputIconField(
-                        color: Theme.of(context).accentColor,
-                        isObscure: true,
-                        inputIcon: Icons.lock,
-                        labelText: "password",
-                        controller: passwordController,
-                        validator: (value) {
-                          if (value.isEmpty) return 'Please enter the password';
-
+                          if (!value.contains(new RegExp('\@*\.')))
+                            return 'Invalid code';
                           return null;
                         },
                       ),
@@ -111,12 +100,10 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_NewPasswordKey.currentState.validate()) {
-                            context.read<UserBloc>().add(NewPassword(
-                                safetyCode: codeController.text,
-                                password: passwordController.text));
+                            Navigator.of(context).pushNamed(changeEmailRoute);
                           }
                         },
-                        text: "change my password",
+                        text: "change email",
                       ),
                       SizedBox(height: size.height * 0.01),
                       Row(

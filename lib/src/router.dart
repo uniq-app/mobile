@@ -5,7 +5,6 @@ import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/application_page.dart';
 import 'package:uniq/src/screens/home/board_details_page.dart';
 import 'package:uniq/src/screens/profile/change_email_code_page.dart';
-import 'package:uniq/src/screens/profile/change_email_form_page.dart';
 import 'package:uniq/src/screens/profile/edit_profile_page.dart';
 import 'package:uniq/src/screens/start/change_password_form_page.dart';
 import 'package:uniq/src/screens/home/create_board_page.dart';
@@ -56,11 +55,9 @@ class MainRouter {
       //Change email routes
       case changeEmailCodeRoute:
         return MaterialPageRoute(builder: (_) => ChangeEmailCodePage());
-      case changeEmailRoute:
-        return MaterialPageRoute(builder: (_) => ChangeEmailPage());
       //Change password route
       case newPasswordRoute:
-        return MaterialPageRoute(builder: (_) => ChangeEmailPage());
+        return MaterialPageRoute(builder: (_) => WelcomePage());
       case editProfileRoute:
         return MaterialPageRoute(builder: (_) => EditProfilePage());
       //Boards related routes
