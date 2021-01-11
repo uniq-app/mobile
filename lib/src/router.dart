@@ -57,7 +57,7 @@ class MainRouter {
         return MaterialPageRoute(builder: (_) => ChangeEmailCodePage());
       //Change password route
       case newPasswordRoute:
-        return MaterialPageRoute(builder: (_) => WelcomePage());
+        return MaterialPageRoute(builder: (_) => ChangeEmailCodePage());
       case editProfileRoute:
         return MaterialPageRoute(builder: (_) => EditProfilePage());
       //Boards related routes
