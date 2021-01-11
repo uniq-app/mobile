@@ -45,13 +45,8 @@ class CredentialsCheckPage extends StatelessWidget {
           //TODO: Splash screen here?
           precachePicture(
             ExactAssetPicture(
-                SvgPicture.svgStringDecoder, 'assets/images/imagination.svg'),
-            context,
-          );
-          precachePicture(
-            ExactAssetPicture(
                 SvgPicture.svgStringDecoder, "assets/images/create.svg"),
-            context,
+            null,
           );
           print("Snapshot waiting");
           return Scaffold(

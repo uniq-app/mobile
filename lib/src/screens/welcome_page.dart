@@ -12,18 +12,19 @@ class _WelcomePageState extends State<WelcomePage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
+  Future delay;
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
     _animation = Tween(
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
-    _controller.forward();
+    delay = Future.delayed(Duration(seconds: 1));
   }
 
   Widget build(BuildContext context) {
@@ -34,14 +35,25 @@ class _WelcomePageState extends State<WelcomePage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FadeTransition(
-              opacity: _animation,
-              child: Container(
-                height: size.height * 0.4,
-                child: SvgPicture.asset(
-                  "assets/images/imagination.svg",
-                ),
-              ),
+            FutureBuilder(
+              future: delay,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  _controller.forward();
+                  return FadeTransition(
+                    opacity: _animation,
+                    child: Container(
+                      height: size.height * 0.4,
+                      child: SvgPicture.asset(
+                        "assets/images/imagination.svg",
+                      ),
+                    ),
+                  );
+                } else
+                  return Container(
+                    height: size.height * 0.4,
+                  );
+              },
             ),
             Text(
               "welcome to UNIQ",

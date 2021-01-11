@@ -27,6 +27,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    precachePicture(
+      ExactAssetPicture(
+          SvgPicture.svgStringDecoder, "assets/images/imagination.svg"),
+      null,
+    );
   }
 
   @override
