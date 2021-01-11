@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/shared/components/input_form_field.dart';
@@ -101,19 +102,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           })
                     ],
                   ),
-                  SizedBox(height: size.height * 0.05),
+                  SizedBox(height: size.height * 0.02),
+                  Container(
+                    height: size.height * 0.3,
+                    child: SvgPicture.asset("assets/images/polaroid_photo.svg"),
+                  ),
+                  SizedBox(height: size.height * 0.03),
                   UniqInputField(
                     cursorColor: Theme.of(context).accentColor,
                     isObscure: false,
                     labelText: "name",
                     controller: nameController,
-                    maxLength: 20,
+                    maxLength: 15,
                     validator: (value) {
                       if (value.isEmpty) return 'Enter name of the board';
                       return null;
                     },
                   ),
-                  SizedBox(height: size.height * 0.02),
+                  SizedBox(height: size.height * 0.01),
                   UniqInputField(
                     cursorColor: Theme.of(context).accentColor,
                     isObscure: false,
@@ -121,8 +127,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     controller: bioController,
                     maxLines: null,
                     validator: (value) {
-                      if (value.isEmpty)
-                        return 'Enter description of the board';
+                      if (value.isEmpty) return null;
                       return null;
                     },
                   ),
