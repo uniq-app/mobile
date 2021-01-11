@@ -9,23 +9,21 @@ import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/utilities.dart';
 
-class ChangeEmailCodePage extends StatefulWidget {
+class ChangeEmailPage extends StatefulWidget {
   final String email;
 
-  const ChangeEmailCodePage({Key key, this.email}) : super(key: key);
+  const ChangeEmailPage({Key key, this.email}) : super(key: key);
   @override
-  _ChangeEmailCodePage createState() => _ChangeEmailCodePage();
+  _ChangeEmailPage createState() => _ChangeEmailPage();
 }
 
-class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
-  final codeController = new TextEditingController();
+class _ChangeEmailPage extends State<ChangeEmailPage> {
   final emailController = new TextEditingController();
-  final passwordController = new TextEditingController();
+  final emailController2 = new TextEditingController();
   @override
   void dispose() {
-    codeController.dispose();
-    passwordController.dispose();
     emailController.dispose();
+    emailController2.dispose();
     super.dispose();
   }
 
@@ -59,7 +57,7 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                     children: <Widget>[
                       Container(
                         height: size.height * 0.3,
-                        child: SvgPicture.asset("assets/images/verified.svg"),
+                        child: SvgPicture.asset("assets/images/chill.svg"),
                       ),
                       SizedBox(height: size.height * 0.02),
                       Text(
@@ -72,12 +70,25 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                       SizedBox(height: size.height * 0.03),
                       UniqInputIconField(
                         color: Theme.of(context).accentColor,
-                        inputIcon: Icons.security,
+                        inputIcon: Icons.email,
                         isObscure: false,
-                        hintText: "security code",
-                        controller: codeController,
+                        hintText: "new email",
+                        controller: emailController,
                         validator: (value) {
-                          if (!value.contains(new RegExp('[0-9]{6}')))
+                          if (!value.contains(new RegExp('\@*\.')))
+                            return 'Invalid code';
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: size.height * 0.03),
+                      UniqInputIconField(
+                        color: Theme.of(context).accentColor,
+                        inputIcon: Icons.email,
+                        isObscure: false,
+                        hintText: "repeat email",
+                        controller: emailController2,
+                        validator: (value) {
+                          if (!value.contains(new RegExp('\@*\.')))
                             return 'Invalid code';
                           return null;
                         },
@@ -87,36 +98,12 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_NewPasswordKey.currentState.validate()) {
-                            Navigator.of(context).pushNamed(changeEmailRoute);
+                            //Navigator.of(context).pushNamed(changeEmailRoute);
                           }
                         },
-                        text: "submit code",
+                        text: "change email",
                       ),
                       SizedBox(height: size.height * 0.01),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("did not receive code? -",
-                              style: TextStyle(fontSize: 14)),
-                          InkWell(
-                            onTap: () {
-                              showToast(
-                                "Not implemented yet",
-                                position: ToastPosition.bottom,
-                                backgroundColor: Colors.redAccent,
-                              );
-                            },
-                            child: new Text(
-                              " resend email",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
                     ],
                   ),
                 ),
