@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/application_page.dart';
 import 'package:uniq/src/screens/home/board_details_page.dart';
 import 'package:uniq/src/screens/profile/change_email_code_page.dart';
 import 'package:uniq/src/screens/profile/edit_profile_page.dart';
+import 'package:uniq/src/screens/profile/new_password_page.dart';
 import 'package:uniq/src/screens/start/change_password_form_page.dart';
 import 'package:uniq/src/screens/home/create_board_page.dart';
 import 'package:uniq/src/screens/home/edit_board_page.dart';
@@ -57,7 +59,7 @@ class MainRouter {
         return MaterialPageRoute(builder: (_) => ChangeEmailCodePage());
       //Change password route
       case newPasswordRoute:
-        return MaterialPageRoute(builder: (_) => ChangeEmailCodePage());
+        return MaterialPageRoute(builder: (_) => NewPasswordPage());
       case editProfileRoute:
         return MaterialPageRoute(builder: (_) => EditProfilePage());
       //Boards related routes
@@ -105,7 +107,9 @@ class MainRouter {
             body: Center(
               child: Column(
                 children: [
-                  Image.asset('assets/404.svg'),
+                  Container(
+                      height: MediaQuery.of(_).size.height,
+                      child: SvgPicture.asset('assets/404.svg')),
                   Text('404! ${settings.name} is leaking...'),
                 ],
               ),
