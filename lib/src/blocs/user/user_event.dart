@@ -32,3 +32,8 @@ class Activate extends UserEvent {
   @override
   List<Object> get props => [code];
 }
+
+class ClearState extends UserEvent {
+  @override
+  List<Object> get props => [];
+}

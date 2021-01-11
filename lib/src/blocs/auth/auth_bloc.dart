@@ -43,6 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is Logout) {
       yield LogoutLoading();
       await authRepository.logout();
+      token = "";
       yield LogoutSuccess();
     }
     if (event is Register) {

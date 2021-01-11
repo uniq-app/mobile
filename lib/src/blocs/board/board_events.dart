@@ -39,3 +39,8 @@ class DeleteBoard extends BoardEvent {
   @override
   List<Object> get props => [boardId];
 }
+
+class ClearBoardState extends BoardEvent {
+  @override
+  List<Object> get props => [];
+}

@@ -41,3 +41,8 @@ class PostCoverImage extends PhotoEvent {
   final File image;
   PostCoverImage({this.image});
 }
+
+class ClearPhotoState extends PhotoEvent {
+  @override
+  List<Object> get props => [];
+}

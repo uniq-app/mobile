@@ -81,5 +81,9 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         yield PhotosError(error: e);
       }
     }
+    if (event is ClearPhotoState) {
+      photos = null;
+      yield PhotoInitial();
+    }
   }
 }

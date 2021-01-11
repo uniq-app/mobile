@@ -34,5 +34,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         yield ActivateError(error: e);
       }
     }
+    if (event is ClearState) {
+      yield UserInitial();
+    }
   }
 }

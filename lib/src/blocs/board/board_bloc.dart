@@ -90,5 +90,9 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         yield DeleteError(error: e);
       }
     }
+    if (event is ClearBoardState) {
+      boardResults = null;
+      yield BoardInitialState();
+    }
   }
 }
