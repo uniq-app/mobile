@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
+import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
+import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
+import 'package:uniq/src/blocs/taken_images/taken_images_cubit.dart';
 import 'package:uniq/src/screens/followed_boards.dart';
 
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
@@ -34,6 +37,12 @@ class _ApplicationPageState extends State<ApplicationPage> {
         BlocProvider<FollowedBoardsBloc>(
           create: (context) =>
               FollowedBoardsBloc(boardRepository: BoardApiProvider()),
+        ),
+        BlocProvider<TakenImagesCubit>(
+          create: (context) => TakenImagesCubit(),
+        ),
+        BlocProvider<PickedImagesCubit>(
+          create: (context) => PickedImagesCubit(),
         ),
       ],
       child: Builder(

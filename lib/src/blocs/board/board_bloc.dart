@@ -21,7 +21,7 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
       yield BoardsLoading();
       try {
         boardResults = await boardRepository.getBoards();
-        await Future.delayed(Duration(milliseconds: 300));
+        //await Future.delayed(Duration(milliseconds: 300));
         yield BoardsLoaded(boardResults: boardResults, checked: new List());
       } on SocketException {
         yield BoardsError(error: NoInternetException());

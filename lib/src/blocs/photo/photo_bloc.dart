@@ -35,10 +35,8 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
     if (event is PostAllPhotos) {
       try {
         yield PhotosLoading();
-        await photoRepository.postAll(event.images, event.checked);
-        //print("IsSuccess: $isSuccess");
-        // Todo: reload photos?
-        // Todo: return new custom state?
+        var results = await photoRepository.postAll(event.images);
+        await boardRepository.putPhotos(results, event.checked.id);
         yield PhotosPostedSuccess();
         await Future.delayed(Duration(milliseconds: 300));
         yield PhotoInitial();
@@ -55,7 +53,8 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
     if (event is PostAllFromCamera) {
       try {
         yield PhotosLoading();
-        await photoRepository.postAllFromCamera(event.images, event.checked);
+        var results = await photoRepository.postAllFromCamera(event.images);
+        await boardRepository.putPhotos(results, event.checked.id);
         yield PhotosPostedSuccess();
       } on SocketException {
         yield PhotosError(error: NoInternetException());

@@ -22,7 +22,7 @@ class FetchBoardPhotos extends PhotoEvent {
 
 class PostAllPhotos extends PhotoEvent {
   final List<Asset> images;
-  final List<Board> checked;
+  final Board checked;
   const PostAllPhotos({@required this.images, @required this.checked});
 
   @override
@@ -31,7 +31,7 @@ class PostAllPhotos extends PhotoEvent {
 
 class PostAllFromCamera extends PhotoEvent {
   final List<File> images;
-  final List<Board> checked;
+  final Board checked;
   PostAllFromCamera({this.images, this.checked});
 }
 

@@ -18,7 +18,6 @@ import './shared/constants.dart';
 import './router.dart';
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -27,27 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    //_configureFirebase();
   }
-
-/**
- * TODO: Co z tym?
-  _configureFirebase() async {
-    _fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
-    );
-    Future<String> fcmToken = _fcm.getToken();
-    fcmToken.then((value) => print("FCM token: $value"));
-  }
- */
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +45,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<SelectBoardCubit>(
           create: (context) => SelectBoardCubit(),
         ),
-        BlocProvider<PickedImagesCubit>(
-          create: (context) => PickedImagesCubit(),
-        ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
             authRepository: AuthApiProvider(),
@@ -79,9 +55,6 @@ class _MyAppState extends State<MyApp> {
           create: (context) => UserBloc(
             userRepository: UserApiProvider(),
           ),
-        ),
-        BlocProvider<TakenImagesCubit>(
-          create: (context) => TakenImagesCubit(),
         ),
       ],
       child: OKToast(
