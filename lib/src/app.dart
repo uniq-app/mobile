@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';

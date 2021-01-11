@@ -3,7 +3,29 @@ import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/utilities.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
+  @override
+  _WelcomePageState createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<double> _animation;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_controller);
+    _controller.forward();
+  }
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -12,9 +34,14 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              height: size.height * 0.4,
-              child: SvgPicture.asset("assets/images/imagination.svg"),
+            FadeTransition(
+              opacity: _animation,
+              child: Container(
+                height: size.height * 0.4,
+                child: SvgPicture.asset(
+                  "assets/images/imagination.svg",
+                ),
+              ),
             ),
             Text(
               "welcome to UNIQ",
