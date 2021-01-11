@@ -7,22 +7,21 @@ abstract class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ResetPassword extends UserEvent {
-  final String username;
+class ForgotPassword extends UserEvent {
   final String email;
-  ResetPassword({@required this.email, @required this.username});
+  ForgotPassword({@required this.email});
 
   @override
-  List<Object> get props => [username, email];
+  List<Object> get props => [email];
 }
 
-class NewPassword extends UserEvent {
-  final String safetyCode;
-  final String password;
-  NewPassword({@required this.safetyCode, @required this.password});
+class UpdatePassword extends UserEvent {
+  final String oldPassword;
+  final String newPassword;
+  UpdatePassword({@required this.oldPassword, @required this.newPassword});
 
   @override
-  List<Object> get props => [safetyCode, password];
+  List<Object> get props => [oldPassword, newPassword];
 }
 
 class Activate extends UserEvent {
