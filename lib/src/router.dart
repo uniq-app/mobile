@@ -3,18 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/application_page.dart';
-import 'package:uniq/src/screens/board_details_page.dart';
-import 'package:uniq/src/screens/create_board_page.dart';
-import 'package:uniq/src/screens/edit_board_page.dart';
+import 'package:uniq/src/screens/home/board_details_page.dart';
+import 'package:uniq/src/screens/profile/change_email_form_page.dart';
+import 'package:uniq/src/screens/start/change_password_form_page.dart';
+import 'package:uniq/src/screens/home/create_board_page.dart';
+import 'package:uniq/src/screens/home/edit_board_page.dart';
 import 'package:uniq/src/screens/credentials_check_page.dart';
-import 'package:uniq/src/screens/forgot_password_page.dart';
-import 'package:uniq/src/screens/new_password_page.dart';
-import 'package:uniq/src/screens/register_page.dart';
-import 'package:uniq/src/screens/login_page.dart';
+import 'package:uniq/src/screens/start/forgot_password_page.dart';
+import 'package:uniq/src/screens/start/change_password_code_page.dart';
+import 'package:uniq/src/screens/start/register_page.dart';
+import 'package:uniq/src/screens/start/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
-import 'package:uniq/src/screens/search_page.dart';
-import 'package:uniq/src/screens/welcome_page.dart';
-import 'package:uniq/src/screens/activate_account_page.dart';
+import 'package:uniq/src/screens/followed/search_page.dart';
+import 'package:uniq/src/screens/start/welcome_page.dart';
+import 'package:uniq/src/screens/start/activate_account_page.dart';
 import './shared/constants.dart';
 
 class MainRouter {
@@ -62,14 +64,20 @@ class MainRouter {
         return MaterialPageRoute(
           builder: (_) => CredentialsCheckPage(),
         );
-      case forgotPasswordPage:
+      case forgotPasswordRoute:
         return MaterialPageRoute(
           builder: (_) => ForgotPasswordPage(),
         );
-      case newPasswordPage:
+      case changePasswordCodeRoute:
+        String email = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => NewPasswordPage(),
+          builder: (_) => ChangePasswordCodePage(email: email),
         );
+      case changePasswordRoute:
+        return MaterialPageRoute(builder: (_) => ChangePasswordPage());
+
+      case changeEmailRoute:
+        return MaterialPageRoute(builder: (_) => ChangeEmailPage());
       case applicationPage:
         return MaterialPageRoute(
           builder: (_) => ApplicationPage(),

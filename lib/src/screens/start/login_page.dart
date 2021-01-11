@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           FlatButton(
                             onPressed: () {
                               Navigator.of(context)
-                                  .pushNamed(forgotPasswordPage);
+                                  .pushNamed(forgotPasswordRoute);
                             },
                             child: Text(
                               "forgot password",

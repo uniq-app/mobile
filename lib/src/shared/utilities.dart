@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/screens/home_page.dart';
+import 'package:uniq/src/screens/home/home_page.dart';
 
 class UniqButton extends StatelessWidget {
   final String text;

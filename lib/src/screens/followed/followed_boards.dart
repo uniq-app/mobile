@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/screens/search_page.dart';
+import 'package:uniq/src/screens/followed/search_page.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/components/others_board_list.dart';
