@@ -13,11 +13,11 @@ class UserApiProvider implements UserRepository {
 
   @override
   Future activate(String code) async {
-    var headers = {"Content-Type": "application/json"};
-    final response =
-        await client.put('$_apiUrl/activation/$code', headers: headers);
-    print(response.statusCode);
-    print(response.body);
+    var credentialsMap = {
+      "codeValue": code,
+    };
+    String body = json.encode(credentialsMap);
+    final response = await client.put('$_apiUrl/activation', body: body);
     if (response.statusCode == 201 || response.statusCode == 200) {
     } else {
       throw Exception('Failed to activate account');
@@ -26,7 +26,11 @@ class UserApiProvider implements UserRepository {
 
   @override
   Future forgotPassword(String email) async {
-    final response = await client.post('$_apiUrl/forgot/$email');
+    var credentialsMap = {
+      "email": email,
+    };
+    String body = json.encode(credentialsMap);
+    final response = await client.post('$_apiUrl/forgot', body: body);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -53,7 +57,11 @@ class UserApiProvider implements UserRepository {
 
   @override
   Future resendCode(String email) async {
-    final response = await client.post('$_apiUrl/resend/$email');
+    var credentialsMap = {
+      "email": email,
+    };
+    String body = json.encode(credentialsMap);
+    final response = await client.post('$_apiUrl/resend', body: body);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -75,7 +83,11 @@ class UserApiProvider implements UserRepository {
 
   @override
   Future updateEmail(String email) async {
-    final response = await client.put('$_apiUrl/update_email/$email');
+    var credentialsMap = {
+      "email": email,
+    };
+    String body = json.encode(credentialsMap);
+    final response = await client.put('$_apiUrl/update_email', body: body);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -85,7 +97,11 @@ class UserApiProvider implements UserRepository {
 
   @override
   Future updateUsername(String username) async {
-    final response = await client.put('$_apiUrl/update/$username');
+    var credentialsMap = {
+      "username": username,
+    };
+    String body = json.encode(credentialsMap);
+    final response = await client.put('$_apiUrl/update', body: body);
     if (response.statusCode == 201 || response.statusCode == 200) {
       // TODO: Zwraca nowy jwt?
       return json.decode(response.body);
@@ -96,7 +112,11 @@ class UserApiProvider implements UserRepository {
 
   @override
   Future validCode(String code) async {
-    final response = await client.post('$_apiUrl/valid/$code');
+    var credentialsMap = {
+      "codeValue": code,
+    };
+    String body = json.encode(credentialsMap);
+    final response = await client.post('$_apiUrl/valid', body: body);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {

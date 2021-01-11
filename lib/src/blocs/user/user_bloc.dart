@@ -65,6 +65,81 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         yield UpdatePasswordError(error: e);
       }
     }
+    if (event is ResendCode) {
+      yield ResendCodeLoading();
+      try {
+        await userRepository.resendCode(event.email);
+        yield ResendCodeSuccess();
+      } on SocketException {
+        yield ResendCodeError(error: NoInternetException());
+      } on HttpException {
+        yield ResendCodeError(error: NoServiceFoundException());
+      } on FormatException {
+        yield ResendCodeError(error: InvalidFormatException());
+      } catch (e) {
+        yield ResendCodeError(error: e);
+      }
+    }
+    if (event is ResetPassword) {
+      yield ResetPasswordLoading();
+      try {
+        await userRepository.resetPassword(event.email, event.password);
+        yield ResetPasswordSuccess();
+      } on SocketException {
+        yield ResetPasswordError(error: NoInternetException());
+      } on HttpException {
+        yield ResetPasswordError(error: NoServiceFoundException());
+      } on FormatException {
+        yield ResetPasswordError(error: InvalidFormatException());
+      } catch (e) {
+        yield ResetPasswordError(error: e);
+      }
+    }
+    if (event is UpdateEmail) {
+      yield UpdateEmailLoading();
+      try {
+        await userRepository.updateEmail(event.email);
+        yield UpdateEmailSuccess();
+      } on SocketException {
+        yield UpdateEmailError(error: NoInternetException());
+      } on HttpException {
+        yield UpdateEmailError(error: NoServiceFoundException());
+      } on FormatException {
+        yield UpdateEmailError(error: InvalidFormatException());
+      } catch (e) {
+        yield UpdateEmailError(error: e);
+      }
+    }
+    if (event is UpdateUsername) {
+      yield UpdateUsernameLoading();
+      try {
+        await userRepository.updateUsername(event.username);
+        yield UpdateUsernameSuccess();
+      } on SocketException {
+        yield UpdateUsernameError(error: NoInternetException());
+      } on HttpException {
+        yield UpdateUsernameError(error: NoServiceFoundException());
+      } on FormatException {
+        yield UpdateUsernameError(error: InvalidFormatException());
+      } catch (e) {
+        yield UpdateUsernameError(error: e);
+      }
+    }
+    if (event is ValidCode) {
+      yield ValidCodeLoading();
+      try {
+        await userRepository.validCode(event.code);
+        yield ValidCodeSuccess();
+      } on SocketException {
+        yield ValidCodeError(error: NoInternetException());
+      } on HttpException {
+        yield ValidCodeError(error: NoServiceFoundException());
+      } on FormatException {
+        yield ValidCodeError(error: InvalidFormatException());
+      } catch (e) {
+        yield ValidCodeError(error: e);
+      }
+    }
 
     if (event is ClearState) {
       yield UserInitial();
