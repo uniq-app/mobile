@@ -90,9 +90,9 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                       color: Theme.of(context).buttonColor,
                       push: () {
                         if (_ForgotPasswordKey.currentState.validate()) {
-                          context.read<UserBloc>().add(ResetPassword(
-                              email: emailController.text,
-                              username: nameController.text));
+                          context
+                              .read<UserBloc>()
+                              .add(ForgotPassword(email: emailController.text));
 //TODO : REMOVE this after functionality is finished
                           Navigator.popAndPushNamed(context, newPasswordPage);
                         }

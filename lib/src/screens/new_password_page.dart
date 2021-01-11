@@ -14,6 +14,7 @@ class NewPasswordPage extends StatefulWidget {
 
 class _NewPasswordPage extends State<NewPasswordPage> {
   final codeController = new TextEditingController();
+  final oldPasswordController = new TextEditingController();
   final passwordController = new TextEditingController();
   final passwordController2 = new TextEditingController();
   @override
@@ -106,9 +107,9 @@ class _NewPasswordPage extends State<NewPasswordPage> {
                       color: Theme.of(context).buttonColor,
                       push: () {
                         if (_NewPasswordKey.currentState.validate()) {
-                          context.read<UserBloc>().add(NewPassword(
-                              safetyCode: codeController.text,
-                              password: passwordController.text));
+                          context.read<UserBloc>().add(UpdatePassword(
+                              newPassword: passwordController.text,
+                              oldPassword: oldPasswordController.text));
                         }
                       },
                       text: "CHANGE PASSWORD",
