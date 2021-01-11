@@ -56,7 +56,7 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                     children: <Widget>[
                       Container(
                         height: size.height * 0.3,
-                        child: SvgPicture.asset("assets/images/form.svg"),
+                        child: SvgPicture.asset("assets/images/password.svg"),
                       ),
                       SizedBox(height: size.height * 0.02),
                       Text(
@@ -67,18 +67,6 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                         ),
                       ),
                       SizedBox(height: size.height * 0.03),
-                      UniqInputIconField(
-                        color: Theme.of(context).accentColor,
-                        inputIcon: Icons.security,
-                        isObscure: false,
-                        labelText: "old password",
-                        controller: codeController,
-                        validator: (value) {
-                          if (value.isEmpty) return 'Please enter the password';
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.02),
                       UniqInputIconField(
                         color: Theme.of(context).accentColor,
                         isObscure: true,
@@ -113,8 +101,8 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_NewPasswordKey.currentState.validate()) {
-                            context.read<UserBloc>().add(NewPassword(
-                                safetyCode: codeController.text,
+                            context.read<UserBloc>().add(ResetPassword(
+                                email: codeController.text,
                                 password: passwordController.text));
                           }
                         },

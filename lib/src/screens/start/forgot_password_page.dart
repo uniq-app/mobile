@@ -92,7 +92,8 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                             context.read<UserBloc>().add(
                                 ForgotPassword(email: emailController.text));
 //TODO : REMOVE this after functionality is finished
-                            Navigator.popAndPushNamed(context, newPasswordPage);
+                            Navigator.popAndPushNamed(
+                                context, changePasswordCodeRoute);
                           }
                         },
                         text: "send security code",

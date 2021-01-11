@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -37,17 +36,23 @@ class _ChangePasswordCodePage extends State<ChangePasswordCodePage> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Center(
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (BuildContext context, AuthState state) {
-              if (state is RegisterSuccess) {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Changing password successful!')));
+          child: BlocConsumer<UserBloc, UserState>(
+            listener: (BuildContext context, UserState state) {
+              if (state is ValidCodeSuccess) {
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('Code is correct!')));
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute, (Route<dynamic> route) => false);
+                    changePasswordRoute, (Route<dynamic> route) => false);
+              }
+              if (state is ValidCodeError) {
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text('Code is wrong!')));
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    changePasswordRoute, (Route<dynamic> route) => false);
               }
             },
-            builder: (BuildContext context, AuthState state) {
-              if (state is RegisterLoading) {
+            builder: (BuildContext context, UserState state) {
+              if (state is ResetPasswordLoading) {
                 return Loading();
               }
               return Form(
@@ -81,44 +86,14 @@ class _ChangePasswordCodePage extends State<ChangePasswordCodePage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: size.height * 0.02),
-                      UniqInputIconField(
-                        color: Theme.of(context).accentColor,
-                        isObscure: true,
-                        inputIcon: Icons.lock,
-                        labelText: "new password",
-                        controller: passwordController,
-                        validator: (value) {
-                          if (value.isEmpty) return 'Please enter the password';
-                          if (passwordController.text !=
-                              passwordController2.text)
-                            return 'Passwords are not equal';
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      UniqInputIconField(
-                        color: Theme.of(context).accentColor,
-                        isObscure: true,
-                        inputIcon: Icons.lock,
-                        labelText: "repeat password",
-                        controller: passwordController2,
-                        validator: (value) {
-                          if (value.isEmpty) return 'Please enter the password';
-                          if (passwordController.text !=
-                              passwordController2.text)
-                            return 'Passwords are not equal';
-                          return null;
-                        },
-                      ),
                       SizedBox(height: size.height * 0.03),
                       UniqButton(
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_NewPasswordKey.currentState.validate()) {
-                            context.read<UserBloc>().add(NewPassword(
-                                safetyCode: codeController.text,
-                                password: passwordController.text));
+                            context
+                                .read<UserBloc>()
+                                .add(ValidCode(code: codeController.text));
                           }
                         },
                         text: "change my password",

@@ -22,9 +22,6 @@ const String newPasswordRoute = '/new_password_page';
 const String editProfileRoute = '/edit_profile_page';
 //Shared
 const String credentialsCheckRoute = '/check-cred';
-const String userEditRoute = '/user_edit_page';
-const String forgotPasswordPage = '/forgot_password_page';
-const String newPasswordPage = '/new_password_page';
 const String applicationPage = '/app_page';
 
 const String host = "http://vps-325dcc92.vps.ovh.net";
