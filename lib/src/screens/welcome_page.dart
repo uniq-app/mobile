@@ -3,7 +3,30 @@ import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/utilities.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
+  @override
+  _WelcomePageState createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<double> _animation;
+  Future delay;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_controller);
+    delay = Future.delayed(Duration(seconds: 1));
+  }
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -12,9 +35,25 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              height: size.height * 0.4,
-              child: SvgPicture.asset("assets/images/imagination.svg"),
+            FutureBuilder(
+              future: delay,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  _controller.forward();
+                  return FadeTransition(
+                    opacity: _animation,
+                    child: Container(
+                      height: size.height * 0.4,
+                      child: SvgPicture.asset(
+                        "assets/images/imagination.svg",
+                      ),
+                    ),
+                  );
+                } else
+                  return Container(
+                    height: size.height * 0.4,
+                  );
+              },
             ),
             Text(
               "welcome to UNIQ",

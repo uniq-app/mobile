@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/screens/application_page.dart';
 import 'package:uniq/src/screens/welcome_page.dart';
@@ -42,6 +43,11 @@ class CredentialsCheckPage extends StatelessWidget {
           //child: loadSplashScreen(context),
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           //TODO: Splash screen here?
+          precachePicture(
+            ExactAssetPicture(
+                SvgPicture.svgStringDecoder, "assets/images/create.svg"),
+            null,
+          );
           print("Snapshot waiting");
           return Scaffold(
             body: Loading(),
