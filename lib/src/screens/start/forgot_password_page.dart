@@ -89,15 +89,13 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_ForgotPasswordKey.currentState.validate()) {
-                            context.read<UserBloc>().add(ResetPassword(
-                                email: emailController.text,
-                                username: nameController.text));
+                            context.read<UserBloc>().add(
+                                ForgotPassword(email: emailController.text));
 //TODO : REMOVE this after functionality is finished
-                            Navigator.popAndPushNamed(
-                                context, changePasswordCodeRoute);
+                            Navigator.popAndPushNamed(context, newPasswordPage);
                           }
                         },
-                        text: "send me code",
+                        text: "send security code",
                       ),
                       SizedBox(height: size.height * 0.02),
                       Row(
