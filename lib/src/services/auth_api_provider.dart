@@ -66,14 +66,6 @@ class AuthApiProvider implements AuthRepository {
   @override
   Future logout() async {
     await deleteToken();
-    final response = await client.post('$_apiUrl/logout');
-
-    /* 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      await deleteToken();
-    } else {
-      throw Exception('Failed to logout');
-    }
-    */
+    await client.post('$_apiUrl/logout');
   }
 }

@@ -74,7 +74,13 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
             crossAxisCount: 3,
             crossAxisSpacing: 4.0,
             children: [
-              NewElementButton(push: imageService.loadAssets),
+              NewElementButton(
+                push: imageService.loadAssets,
+                child: Icon(
+                  Icons.add,
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
               ...List.generate(
                 images.length,
                 (index) {
@@ -108,7 +114,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     var selectedBoard = await context.read<SelectBoardCubit>().state;
     context
         .read<PhotoBloc>()
-        .add(PostAllPhotos(images: images, checked: [selectedBoard]));
+        .add(PostAllPhotos(images: images, checked: selectedBoard));
   }
 
   _loadBoards() async {

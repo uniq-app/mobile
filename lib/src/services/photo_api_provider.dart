@@ -6,10 +6,7 @@ import 'package:http/http.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
-import 'package:uniq/src/services/board_api_provider.dart';
 import 'package:uniq/src/shared/http_interceptor.dart';
 import 'package:uniq/src/shared/constants.dart';
 
@@ -19,44 +16,27 @@ class PhotoApiProvider implements PhotoRepository {
       LoggingInterceptor(),
     ],
   );
-  BoardRepository boardApiProvider = BoardApiProvider();
-  PhotoApiProvider();
 
   static final String _apiUrl = "$host:$imageServicePort/images";
 
   static String get apiUrl => _apiUrl;
 
-  Future postAll(List<Asset> assets, List<Board> checked) async {
+  Future<List<String>> postAll(List<Asset> assets) async {
     List<String> values = new List();
     for (Asset asset in assets) {
-      // Collect them here
-      values.add(await postImage(asset));
+      var result = await postImage(asset);
+      print("Result of posting single image: $result");
+      values.add(result);
     }
-    List<Future> futures = List();
-    // Post to selected boards
-    for (Board board in checked) {
-      futures.add(boardApiProvider.putPhotos(values, board.id));
-    }
-    await Future.wait(futures);
-    // Todo: xd
-    await Future.delayed(Duration(seconds: 1));
-    return true;
+    return values;
   }
 
-  Future postAllFromCamera(List<File> images, List<Board> checked) async {
+  Future<List<String>> postAllFromCamera(List<File> images) async {
     List<String> values = new List();
     for (File file in images) {
       values.add(await postImageFromFile(file));
     }
-    List<Future> futures = List();
-    // Post to selected boards
-    for (Board board in checked) {
-      futures.add(boardApiProvider.putPhotos(values, board.id));
-    }
-    await Future.wait(futures);
-    // Todo: xd
-    await Future.delayed(Duration(seconds: 1));
-    return true;
+    return values;
   }
 
   Future<File> getFileFromAsset(Asset asset) async {
@@ -78,10 +58,13 @@ class PhotoApiProvider implements PhotoRepository {
     var responseStream = await request.send();
     var response = await Response.fromStream(responseStream);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(response.body)['id'];
     } else {
-      throw Exception('Failed to load photos');
+      print("Failed to post photo");
+      print(response);
+      print(response.statusCode);
+      throw Exception('Failed to post photos');
     }
   }
 

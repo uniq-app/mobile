@@ -124,6 +124,6 @@ class TakePhotoScreenState extends State<TakePhotoScreen> {
     var selectedBoard = await context.read<SelectBoardCubit>().state;
     context
         .read<PhotoBloc>()
-        .add(PostAllFromCamera(images: images, checked: [selectedBoard]));
+        .add(PostAllFromCamera(images: images, checked: selectedBoard));
   }
 }

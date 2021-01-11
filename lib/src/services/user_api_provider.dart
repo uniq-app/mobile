@@ -18,7 +18,7 @@ class UserApiProvider implements UserRepository {
     print(response.body);
     if (response.statusCode == 201 || response.statusCode == 200) {
     } else {
-      throw Exception('Failed to activate');
+      throw Exception('Failed to activate account');
     }
   }
 }

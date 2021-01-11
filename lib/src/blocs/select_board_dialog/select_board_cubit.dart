@@ -10,4 +10,8 @@ class SelectBoardCubit extends Cubit<Board> {
   void selectBoard(Board board) {
     emit(board);
   }
+
+  void clearState() {
+    emit(null);
+  }
 }
