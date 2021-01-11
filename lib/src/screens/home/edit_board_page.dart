@@ -164,142 +164,148 @@ class _EditBoardPageState extends State<EditBoardPage> {
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _EditKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Edit board",
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                      IconButton(
-                          iconSize: 35,
-                          icon: Icon(Icons.delete_forever),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                child: DeleteAlert(
-                                    board: widget.board,
-                                    deleteAction: _deleteBoard));
-                          })
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.05),
-                  UniqInputField(
-                    cursorColor: Theme.of(context).accentColor,
-                    isObscure: false,
-                    labelText: "Name",
-                    controller: nameController,
-                    maxLength: 20,
-                    validator: (value) {
-                      if (value.isEmpty) return 'Enter name of the board';
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  UniqInputField(
-                    cursorColor: Theme.of(context).accentColor,
-                    isObscure: false,
-                    labelText: "Description",
-                    controller: descriptionController,
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return 'Enter description of the board';
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  if (boardCover != null)
-                    BoardCoverSettings(
-                      image: boardCover,
-                      editLink: _getImage,
-                    )
-                  else if (widget.board.cover != '')
-                    BoardCoverSettings(
-                      image:
-                          "${PhotoApiProvider.apiUrl}/thumbnail/${widget.board.cover}",
-                      editLink: _getImage,
-                    )
-                  else
-                    BoardCoverSettings(
-                      editLink: _getImage,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Edit board",
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        IconButton(
+                            iconSize: 35,
+                            icon: Icon(Icons.delete_forever),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  child: DeleteAlert(
+                                      deleteMessage:
+                                          "Do you want to delete board called '" +
+                                              widget.board.name +
+                                              "'?",
+                                      deleteAction: _deleteBoard));
+                            })
+                      ],
                     ),
+                    SizedBox(height: size.height * 0.05),
+                    UniqInputField(
+                      cursorColor: Theme.of(context).accentColor,
+                      isObscure: false,
+                      labelText: "Name",
+                      controller: nameController,
+                      maxLength: 20,
+                      validator: (value) {
+                        if (value.isEmpty) return 'Enter name of the board';
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    UniqInputField(
+                      cursorColor: Theme.of(context).accentColor,
+                      isObscure: false,
+                      labelText: "Description",
+                      controller: descriptionController,
+                      maxLines: null,
+                      validator: (value) {
+                        if (value.isEmpty)
+                          return 'Enter description of the board';
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    if (boardCover != null)
+                      BoardCoverSettings(
+                        image: boardCover,
+                        editLink: _getImage,
+                      )
+                    else if (widget.board.cover != '')
+                      BoardCoverSettings(
+                        image:
+                            "${PhotoApiProvider.apiUrl}/thumbnail/${widget.board.cover}",
+                        editLink: _getImage,
+                      )
+                    else
+                      BoardCoverSettings(
+                        editLink: _getImage,
+                      ),
 
-                  SizedBox(height: size.height * 0.02),
-                  // todo: Change stateful to bloc
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: InkWell(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        width: size.width * 0.9,
-                        height: size.height * 0.07,
-                        padding: EdgeInsets.only(left: 20),
-                        color: tempColor,
-                        child: Text("Change color",
+                    SizedBox(height: size.height * 0.02),
+                    // todo: Change stateful to bloc
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: InkWell(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          width: size.width * 0.9,
+                          height: size.height * 0.07,
+                          padding: EdgeInsets.only(left: 20),
+                          color: tempColor,
+                          child: Text("Change color",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w300)),
+                        ),
+                        onTap: () async {
+                          final Color colorBeforeDialog = tempColor;
+                          if (!(await colorPickerDialog(tempColor))) {
+                            setState(() {
+                              tempColor = colorBeforeDialog;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Private",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w300)),
-                      ),
-                      onTap: () async {
-                        final Color colorBeforeDialog = tempColor;
-                        if (!(await colorPickerDialog(tempColor))) {
-                          setState(() {
-                            tempColor = colorBeforeDialog;
-                          });
-                        }
-                      },
+                        Checkbox(
+                          value: isPrivate,
+                          onChanged: (value) {
+                            setState(() {
+                              isPrivate = value;
+                            });
+                          },
+                          activeColor: tempColor,
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Private",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w300)),
-                      Checkbox(
-                        value: isPrivate,
-                        onChanged: (value) {
-                          setState(() {
-                            isPrivate = value;
-                          });
-                        },
-                        activeColor: tempColor,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      UniqButton(
-                        screenWidth: 0.35,
-                        screenHeight: 0.07,
-                        color: tempColor,
-                        push: () {
-                          if (_EditKey.currentState.validate()) {
-                            _updateBoard();
-                          }
-                        },
-                        text: "Save",
-                      ),
-                      UniqButton(
-                        screenWidth: 0.35,
-                        screenHeight: 0.07,
-                        color: Theme.of(context).accentColor,
-                        push: () {
-                          Navigator.pop(context);
-                        },
-                        text: "Cancel",
-                      )
-                    ],
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        UniqButton(
+                          screenWidth: 0.35,
+                          screenHeight: 0.07,
+                          color: tempColor,
+                          push: () {
+                            if (_EditKey.currentState.validate()) {
+                              _updateBoard();
+                            }
+                          },
+                          text: "Save",
+                        ),
+                        UniqButton(
+                          screenWidth: 0.35,
+                          screenHeight: 0.07,
+                          color: Theme.of(context).accentColor,
+                          push: () {
+                            Navigator.pop(context);
+                          },
+                          text: "Cancel",
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

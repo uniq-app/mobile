@@ -43,16 +43,16 @@ class UniqButton extends StatelessWidget {
 }
 
 class DeleteAlert extends StatelessWidget {
-  final Board board;
+  final String deleteMessage;
   final Function deleteAction;
-  const DeleteAlert({Key key, this.board, this.deleteAction}) : super(key: key);
+  const DeleteAlert({Key key, this.deleteMessage, this.deleteAction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String boardID = board.id, boardName = board.name;
     return AlertDialog(
       title: Text("Confirmation"),
-      content: Text("Are you sure to delete $boardName?"),
+      content: Text(deleteMessage),
       actions: [
         FlatButton(
             color: Theme.of(context).accentColor,

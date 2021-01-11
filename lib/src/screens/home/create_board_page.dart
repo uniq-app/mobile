@@ -162,6 +162,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
                     isObscure: false,
                     labelText: "Description",
                     controller: descriptionController,
+                    maxLines: null,
                     validator: (value) {
                       if (value.isEmpty) return "Description cannot be empty";
                     },
