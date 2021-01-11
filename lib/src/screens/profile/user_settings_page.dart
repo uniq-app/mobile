@@ -53,17 +53,6 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
               ),
               onTap: () => print("Notifications"),
             ),
-            ListTile(
-              title: Text(
-                'Delete account',
-                style: TextStyle(
-                  color: Theme.of(context).errorColor,
-                ),
-              ),
-              leading: Icon(Icons.delete_forever,
-                  color: Theme.of(context).errorColor),
-              onTap: () => print("Delete account"),
-            ),
             _logout(context)
           ],
         ),

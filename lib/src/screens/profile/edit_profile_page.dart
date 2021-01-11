@@ -6,8 +6,6 @@ import 'package:uniq/src/shared/components/input_form_field.dart';
 import 'package:uniq/src/shared/utilities.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
-import 'package:uniq/src/blocs/profile/profile_event.dart';
-import 'package:uniq/src/blocs/profile/profile_state.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -57,7 +55,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Center(
-          child: BlocListener<ProfileBloc, ProfileState>(
+          child:
+              /*BlocListener<ProfileBloc, ProfileState>(
             listener: (context, state) {
               if (state is PutProfileDetailsSuccess) {
                 Navigator.pop(context);
@@ -74,60 +73,61 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 );
               }
             },
-            child: Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              key: _editProfileKey,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Edit profile",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        IconButton(
-                            iconSize: 35,
-                            icon: Icon(Icons.delete_forever),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  child: DeleteAlert(
-                                      deleteMessage:
-                                          "Are you sure to delete your profile?",
-                                      deleteAction: _deleteProfile));
-                            })
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.05),
-                    UniqInputField(
-                      cursorColor: Theme.of(context).accentColor,
-                      isObscure: false,
-                      labelText: "name",
-                      controller: nameController,
-                      maxLength: 20,
-                      validator: (value) {
-                        if (value.isEmpty) return 'Enter name of the board';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    UniqInputField(
-                      cursorColor: Theme.of(context).accentColor,
-                      isObscure: false,
-                      labelText: "bio",
-                      controller: bioController,
-                      maxLines: null,
-                      validator: (value) {
-                        if (value.isEmpty)
-                          return 'Enter description of the board';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    /*if (boardCover != null)
+            child:*/
+              Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: _editProfileKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "edit profile",
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      IconButton(
+                          iconSize: 35,
+                          icon: Icon(Icons.delete_forever),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                child: DeleteAlert(
+                                    deleteMessage:
+                                        "Are you sure to delete your profile?",
+                                    deleteAction: _deleteProfile));
+                          })
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.05),
+                  UniqInputField(
+                    cursorColor: Theme.of(context).accentColor,
+                    isObscure: false,
+                    labelText: "name",
+                    controller: nameController,
+                    maxLength: 20,
+                    validator: (value) {
+                      if (value.isEmpty) return 'Enter name of the board';
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  UniqInputField(
+                    cursorColor: Theme.of(context).accentColor,
+                    isObscure: false,
+                    labelText: "bio",
+                    controller: bioController,
+                    maxLines: null,
+                    validator: (value) {
+                      if (value.isEmpty)
+                        return 'Enter description of the board';
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  /*if (boardCover != null)
                         BoardCoverSettings(
                           image: boardCover,
                           editLink: _getImage,
@@ -142,39 +142,39 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         BoardCoverSettings(
                           editLink: _getImage,
                         ),*/
-                    SizedBox(height: size.height * 0.02),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        UniqButton(
-                          screenWidth: 0.35,
-                          screenHeight: 0.07,
-                          color: Theme.of(context).accentColor,
-                          push: () {
-                            if (_editProfileKey.currentState.validate()) {
-                              _updateProfile();
-                            }
-                          },
-                          text: "Save",
-                        ),
-                        UniqButton(
-                          screenWidth: 0.35,
-                          screenHeight: 0.07,
-                          color: Theme.of(context).accentColor,
-                          push: () {
-                            Navigator.pop(context);
-                          },
-                          text: "Cancel",
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+                  SizedBox(height: size.height * 0.02),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      UniqButton(
+                        screenWidth: 0.35,
+                        screenHeight: 0.07,
+                        color: Theme.of(context).primaryColor,
+                        push: () {
+                          if (_editProfileKey.currentState.validate()) {
+                            _updateProfile();
+                          }
+                        },
+                        text: "Save",
+                      ),
+                      UniqButton(
+                        screenWidth: 0.35,
+                        screenHeight: 0.07,
+                        color: Theme.of(context).accentColor,
+                        push: () {
+                          Navigator.pop(context);
+                        },
+                        text: "Cancel",
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
         ),
       ),
+      //),
     );
   }
 }
