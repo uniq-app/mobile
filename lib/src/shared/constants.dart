@@ -14,6 +14,7 @@ const String editBoardPage = '/edit_board_page';
 const String createBoardPage = '/create_board_page';
 //Followed
 // const String searchPageRoute = '/search_page';
+const String nonEditableDetailsRoute = '/nonEditable-details';
 //Profile
 const String userSettingsRoute = '/user_settings';
 const String changeEmailCodeRoute = '/change_email_code_page';

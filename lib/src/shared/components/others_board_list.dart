@@ -97,7 +97,7 @@ class _OthersBoardListState extends State<OthersBoardList> {
                   ),
                   board: widget.boards[index],
                   boardLink: () {
-                    Navigator.pushNamed(context, boardDetailsRoute,
+                    Navigator.pushNamed(context, nonEditableDetailsRoute,
                         arguments: widget.boards[index]);
                   },
                   iconSize: 35,

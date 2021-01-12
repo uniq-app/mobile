@@ -6,7 +6,6 @@ import 'package:uniq/src/screens/followed/search_page.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/components/others_board_list.dart';
-import 'package:uniq/src/shared/constants.dart';
 
 class FollowedBoards extends StatefulWidget {
   @override
