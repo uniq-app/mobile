@@ -69,12 +69,14 @@ class _HomePageState extends State<HomePage> {
         if (state is BoardCreated ||
             state is BoardDeleted ||
             state is BoardUpdated ||
-            state is ReorderBoardPhotosSuccess) {
+            state is ReorderBoardPhotosSuccess ||
+            state is DeleteBoardPhotoSuccess) {
           _loadBoards();
         } else if (state is DeleteError ||
             state is UpdateError ||
             state is CreateError ||
-            state is ReorderBoardPhotosError) {
+            state is ReorderBoardPhotosError ||
+            state is DeleteBoardPhotoError) {
           _loadStashedBoards();
         }
         print("State: $state");

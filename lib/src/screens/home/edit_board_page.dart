@@ -141,7 +141,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                 Navigator.pop(context);
               } else if (state is DeleteError) {
                 showToast(
-                  "Failed to delete board - ${state.error.message}",
+                  "${state.error.message}",
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.redAccent,
                 );
@@ -155,7 +155,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                 );
               } else if (state is UpdateError) {
                 showToast(
-                  "Failed to update board - ${state.error.message}",
+                  "${state.error.message}",
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.redAccent,
                 );

@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
+import 'package:uniq/src/blocs/drag_listener/drag_listener_cubit.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
@@ -13,6 +15,7 @@ import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/grid_element.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:uniq/src/shared/components/new_element_button.dart';
 
 class BoardGridPage extends StatefulWidget {
   final Board board;
@@ -23,14 +26,34 @@ class BoardGridPage extends StatefulWidget {
   _BoardGridPageState createState() => _BoardGridPageState(this.board);
 }
 
-class _BoardGridPageState extends State<BoardGridPage> {
+class _BoardGridPageState extends State<BoardGridPage>
+    with SingleTickerProviderStateMixin {
   Board board;
+  bool isDragging = true;
+  AnimationController _controller;
+  Animation<Offset> _offsetAnimation;
   _BoardGridPageState(this.board);
 
   @override
   void initState() {
     super.initState();
     _loadPhotos();
+    /* 
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    _offsetAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0.0, 100),
+    ).animate(_controller);
+    */
+  }
+
+  @override
+  void dispose() {
+    //_controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,7 +62,12 @@ class _BoardGridPageState extends State<BoardGridPage> {
       appBar: AppBar(
         title: Text(widget.board.name),
       ),
-      body: _body(),
+      body: BlocProvider<DragListenerCubit>(
+        create: (context) => DragListenerCubit(),
+        child: SingleChildScrollView(
+          child: _body(),
+        ),
+      ),
     );
   }
 
@@ -138,32 +166,69 @@ class _WrapGridState extends State<WrapGrid> {
     }
   }
 
+  _setIsDragging(bool isDragging) {
+    context.read<DragListenerCubit>().setIsDragging(isDragging);
+  }
+
+  void _onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      Widget row = _tiles.removeAt(oldIndex);
+      Photo reorderedPhoto = widget.photos.removeAt(oldIndex);
+      _tiles.insert(newIndex, row);
+      widget.photos.insert(newIndex, reorderedPhoto);
+    });
+    _reorderElements();
+    _saveReorderChanges();
+    _setIsDragging(false);
+  }
+
+  _deletePhoto(int index) {
+    context.read<BoardBloc>().add(
+          DeleteBoardPhoto(
+            photo: widget.photos[index],
+            boardId: widget.board.id,
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
-    void _onReorder(int oldIndex, int newIndex) {
-      setState(() {
-        Widget row = _tiles.removeAt(oldIndex);
-        Photo reorderedPhoto = widget.photos.removeAt(oldIndex);
-        _tiles.insert(newIndex, row);
-        widget.photos.insert(newIndex, reorderedPhoto);
-      });
-      _reorderElements();
-      _saveReorderChanges();
-    }
-
     return ReorderableWrap(
       spacing: 2.0,
       runSpacing: 2.0,
+      header: BlocBuilder<DragListenerCubit, bool>(
+        builder: (context, bool state) {
+          if (state) {
+            return DragTarget<int>(
+              builder: (context, _, x) => Column(
+                children: [
+                  Container(
+                    height: 60,
+                    child: Center(
+                      child: Icon(Icons.delete),
+                    ),
+                  ),
+                  Divider(),
+                ],
+              ),
+              onAccept: _deletePhoto,
+            );
+          } else
+            return Divider();
+        },
+      ),
       padding: const EdgeInsets.all(8),
       children: _tiles,
       onReorder: _onReorder,
       onNoReorder: (int index) {
-        //this callback is optional
+        // Set is dragging to show delete zone
+        _setIsDragging(false);
         debugPrint(
             '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
       },
       onReorderStarted: (int index) {
-        //this callback is optional
+        // Set is dragging to show delete zone
+        _setIsDragging(true);
         debugPrint(
             '${DateTime.now().toString().substring(5, 22)} reorder started: index:$index');
       },

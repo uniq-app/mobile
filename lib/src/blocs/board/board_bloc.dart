@@ -104,6 +104,20 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
         yield ReorderBoardPhotosError(error: e);
       }
     }
+    if (event is DeleteBoardPhoto) {
+      try {
+        await boardRepository.deleteBoardPhoto(event.boardId, event.photo);
+        yield DeleteBoardPhotoSuccess();
+      } on SocketException {
+        yield DeleteBoardPhotoError(error: NoInternetException());
+      } on HttpException {
+        yield DeleteBoardPhotoError(error: NoServiceFoundException());
+      } on FormatException {
+        yield DeleteBoardPhotoError(error: InvalidFormatException());
+      } catch (e) {
+        yield DeleteBoardPhotoError(error: e);
+      }
+    }
     if (event is ClearBoardState) {
       boardResults = null;
       yield BoardInitialState();

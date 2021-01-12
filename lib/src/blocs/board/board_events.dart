@@ -50,6 +50,15 @@ class ReorderBoardPhotos extends BoardEvent {
   List<Object> get props => [boardId];
 }
 
+class DeleteBoardPhoto extends BoardEvent {
+  final Photo photo;
+  final String boardId;
+
+  DeleteBoardPhoto({@required this.photo, @required this.boardId});
+  @override
+  List<Object> get props => [photo, boardId];
+}
+
 class ClearBoardState extends BoardEvent {
   @override
   List<Object> get props => [];
