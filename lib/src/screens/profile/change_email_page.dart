@@ -35,8 +35,11 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Center(
+          //                  <UserBloc, UserState>
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (BuildContext context, AuthState state) {
+              // if (state is UpdateEmailSuccess)
+              // if (state is UpdateEmailError)
               //if (state is EmailChangeSuccess) {
               Scaffold.of(context).showSnackBar(
                   SnackBar(content: Text('email with code sent')));
@@ -44,7 +47,9 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
                   changeEmailRoute, (Route<dynamic> route) => false);
               //}
             },
+            //                              UserState
             builder: (BuildContext context, AuthState state) {
+              // if (state is UpdateEmailLoading)
               if (state is RegisterLoading) {
                 return Loading();
               }

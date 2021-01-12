@@ -32,104 +32,112 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: Center(
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (BuildContext context, AuthState state) {
-              if (state is RegisterSuccess) {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Changing password successful!')));
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    editProfileRoute, (Route<dynamic> route) => false);
-              }
-            },
-            builder: (BuildContext context, AuthState state) {
-              if (state is RegisterLoading) {
-                return Loading();
-              }
-              return Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: _NewPasswordKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: size.height * 0.3,
-                        child: SvgPicture.asset(
-                            "assets/images/authentication.svg"),
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      Text(
-                        "change your password",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
+    return BlocListener<UserBloc, UserState>(
+      listener: (context, UserState state) {
+        // TODO: implement listener
+      },
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          child: Center(
+            child: BlocConsumer<AuthBloc, AuthState>(
+              listener: (BuildContext context, AuthState state) {
+                if (state is RegisterSuccess) {
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text('Changing password successful!')));
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      editProfileRoute, (Route<dynamic> route) => false);
+                }
+              },
+              builder: (BuildContext context, AuthState state) {
+                if (state is RegisterLoading) {
+                  return Loading();
+                }
+                return Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  key: _NewPasswordKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: size.height * 0.3,
+                          child: SvgPicture.asset(
+                              "assets/images/authentication.svg"),
                         ),
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      UniqInputIconField(
-                        color: Theme.of(context).accentColor,
-                        inputIcon: Icons.lock_outline,
-                        isObscure: false,
-                        labelText: "old password",
-                        controller: oldPasswordController,
-                        validator: (value) {
-                          if (value.isEmpty) return 'Please enter the password';
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      UniqInputIconField(
-                        color: Theme.of(context).accentColor,
-                        isObscure: true,
-                        inputIcon: Icons.lock,
-                        labelText: "new password",
-                        controller: passwordController,
-                        validator: (value) {
-                          if (value.isEmpty) return 'Please enter the password';
-                          if (passwordController.text !=
-                              passwordController2.text)
-                            return 'Passwords are not equal';
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      UniqInputIconField(
-                        color: Theme.of(context).accentColor,
-                        isObscure: true,
-                        inputIcon: Icons.lock,
-                        labelText: "repeat password",
-                        controller: passwordController2,
-                        validator: (value) {
-                          if (value.isEmpty) return 'Please enter the password';
-                          if (passwordController.text !=
-                              passwordController2.text)
-                            return 'Passwords are not equal';
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      UniqButton(
-                        color: Theme.of(context).buttonColor,
-                        push: () {
-                          if (_NewPasswordKey.currentState.validate()) {
-                            // TODO: BLOC implementation
-                            /*context.read<UserBloc>().add(ChangePassword(
-                                oldPassword: oldPasswordController.text,
-                                password: passwordController.text));*/
-                          }
-                        },
-                        text: "change my password",
-                      ),
-                      SizedBox(height: size.height * 0.01),
-                    ],
+                        SizedBox(height: size.height * 0.02),
+                        Text(
+                          "change your password",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        UniqInputIconField(
+                          color: Theme.of(context).accentColor,
+                          inputIcon: Icons.lock_outline,
+                          isObscure: false,
+                          labelText: "old password",
+                          controller: oldPasswordController,
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'Please enter the password';
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        UniqInputIconField(
+                          color: Theme.of(context).accentColor,
+                          isObscure: true,
+                          inputIcon: Icons.lock,
+                          labelText: "new password",
+                          controller: passwordController,
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'Please enter the password';
+                            if (passwordController.text !=
+                                passwordController2.text)
+                              return 'Passwords are not equal';
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        UniqInputIconField(
+                          color: Theme.of(context).accentColor,
+                          isObscure: true,
+                          inputIcon: Icons.lock,
+                          labelText: "repeat password",
+                          controller: passwordController2,
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'Please enter the password';
+                            if (passwordController.text !=
+                                passwordController2.text)
+                              return 'Passwords are not equal';
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        UniqButton(
+                          color: Theme.of(context).buttonColor,
+                          push: () {
+                            if (_NewPasswordKey.currentState.validate()) {
+                              // TODO: BLOC implementation
+                              /*context.read<UserBloc>().add(ChangePassword(
+                                  oldPassword: oldPasswordController.text,
+                                  password: passwordController.text));*/
+                            }
+                          },
+                          text: "change my password",
+                        ),
+                        SizedBox(height: size.height * 0.01),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

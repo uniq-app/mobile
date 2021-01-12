@@ -52,27 +52,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: Center(
-          child: BlocListener<ProfileBloc, ProfileState>(
-            listener: (context, state) {
-              if (state is PutProfileDetailsSuccess) {
-                Navigator.pop(context);
-                showToast(
-                  "Profile successfuly updated!",
-                  position: ToastPosition.bottom,
-                  backgroundColor: Colors.green,
-                );
-              } else if (state is PutProfileDetailsError) {
-                showToast(
-                  "Failed to update board - ${state.error.message}",
-                  position: ToastPosition.bottom,
-                  backgroundColor: Colors.redAccent,
-                );
-              }
-            },
+    return BlocListener<ProfileBloc, ProfileState>(
+      listener: (context, ProfileState state) {
+        if (state is PutProfileDetailsSuccess) {
+          Navigator.pop(context);
+          showToast(
+            "Profile successfuly updated!",
+            position: ToastPosition.bottom,
+            backgroundColor: Colors.green,
+          );
+        } else if (state is PutProfileDetailsError) {
+          showToast(
+            "Failed to update board - ${state.error.message}",
+            position: ToastPosition.bottom,
+            backgroundColor: Colors.redAccent,
+          );
+        }
+      },
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          child: Center(
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _editProfileKey,

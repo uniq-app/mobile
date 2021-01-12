@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
-import 'package:uniq/src/screens/profile/change_email_code_page.dart';
 import 'package:uniq/src/screens/profile/edit_profile_page.dart';
-import 'package:uniq/src/screens/profile/new_password_page.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 class UserSettingsPage extends StatefulWidget {
@@ -41,27 +39,14 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
               title: Text('Change password'),
               leading: Icon(Icons.lock, color: Colors.white),
               trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<ProfileBloc>(),
-                    child: NewPasswordPage(),
-                  ),
-                ),
-              ),
+              onTap: () => Navigator.of(context).pushNamed(newPasswordRoute),
             ),
             ListTile(
               title: Text('Change email'),
               leading: Icon(Icons.email, color: Colors.white),
               trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<ProfileBloc>(),
-                    child: ChangeEmailCodePage(),
-                  ),
-                ),
-              ),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(changeEmailCodeRoute),
             ),
             ListTile(
               title: Text('Notifications'),
