@@ -96,7 +96,7 @@ flutter:
     - assets/images/forgot_password.svg
     - assets/images/authentication.svg
     - assets/images/login.svg
-
+    - assets/images/settings.svg
 
 
   fonts:

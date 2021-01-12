@@ -73,7 +73,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                       UniqInputIconField(
                         color: Theme.of(context).accentColor,
                         inputIcon: Icons.lock_outline,
-                        isObscure: false,
+                        isObscure: true,
                         labelText: "old password",
                         controller: oldPasswordController,
                         validator: (value) {

@@ -172,7 +172,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Edit board",
+                          "edit board",
                           style: Theme.of(context).textTheme.headline4,
                         ),
                         IconButton(
