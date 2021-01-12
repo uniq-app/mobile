@@ -40,3 +40,10 @@ class BoardCreated extends BoardState {}
 class BoardUpdated extends BoardState {}
 
 class BoardDeleted extends BoardState {}
+
+class ReorderBoardPhotosSuccess extends BoardState {}
+
+class ReorderBoardPhotosError extends BoardState {
+  final error;
+  ReorderBoardPhotosError({this.error});
+}

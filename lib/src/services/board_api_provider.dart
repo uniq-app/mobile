@@ -112,6 +112,19 @@ class BoardApiProvider implements BoardRepository {
   }
 
   @override
+  Future reorderPhotos(String boardId, List<Photo> photos) async {
+    var photosMapped = photos.map((e) => e.toJson()).toList();
+    String body = json.encode(photosMapped);
+    var headers = {"Content-Type": "application/json"};
+    final response = await client.put('$_apiUrl/$boardId/photos',
+        headers: headers, body: body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+    } else {
+      throw Exception('Failed to reorder photos');
+    }
+  }
+
+  @override
   Future getFollowedBoards() async {
     final response = await client.get('$_apiUrl/followed');
     if (response.statusCode == 200) {

@@ -10,13 +10,9 @@ import 'package:uniq/src/shared/components/board_list.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
 import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/models/board_results.dart';
-import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
-import 'package:uniq/src/shared/components/board_list_element.dart';
 import 'package:uniq/src/shared/components/user_icon_button.dart';
 import 'package:uniq/src/shared/constants.dart';
-import 'package:uniq/src/shared/components/board_list_element.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
@@ -72,11 +68,13 @@ class _HomePageState extends State<HomePage> {
       listener: (BuildContext context, BoardState state) {
         if (state is BoardCreated ||
             state is BoardDeleted ||
-            state is BoardUpdated) {
+            state is BoardUpdated ||
+            state is ReorderBoardPhotosSuccess) {
           _loadBoards();
         } else if (state is DeleteError ||
             state is UpdateError ||
-            state is CreateError) {
+            state is CreateError ||
+            state is ReorderBoardPhotosError) {
           _loadStashedBoards();
         }
         print("State: $state");

@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uniq/src/blocs/board/board_bloc.dart';
+import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
@@ -75,7 +77,7 @@ class _BoardGridPageState extends State<BoardGridPage> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 Size size = MediaQuery.of(context).size;
-                return WrapGrid(state.photos, snapshot.data, size);
+                return WrapGrid(state.photos, snapshot.data, size, board);
               } else if (snapshot.hasError) {
                 return CustomError(message: "Couldnt preload images");
               }
@@ -95,8 +97,9 @@ class WrapGrid extends StatefulWidget {
   final List<Photo> photos;
   final List<Image> precachedImages;
   final Size _size;
+  final Board board;
 
-  WrapGrid(this.photos, this.precachedImages, this._size);
+  WrapGrid(this.photos, this.precachedImages, this._size, this.board);
   @override
   _WrapGridState createState() => _WrapGridState();
 }
@@ -108,6 +111,11 @@ class _WrapGridState extends State<WrapGrid> {
   void initState() {
     super.initState();
     _createTilesFromImages();
+  }
+
+  _saveReorderChanges() async {
+    context.read<BoardBloc>().add(
+        ReorderBoardPhotos(boardId: widget.board.id, newPhotos: widget.photos));
   }
 
   _createTilesFromImages() {
@@ -124,13 +132,23 @@ class _WrapGridState extends State<WrapGrid> {
     }
   }
 
+  _reorderElements() {
+    for (int i = 0; i < widget.photos.length; i++) {
+      widget.photos[i].order = i;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     void _onReorder(int oldIndex, int newIndex) {
       setState(() {
         Widget row = _tiles.removeAt(oldIndex);
+        Photo reorderedPhoto = widget.photos.removeAt(oldIndex);
         _tiles.insert(newIndex, row);
+        widget.photos.insert(newIndex, reorderedPhoto);
       });
+      _reorderElements();
+      _saveReorderChanges();
     }
 
     return ReorderableWrap(
