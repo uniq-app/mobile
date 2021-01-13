@@ -20,21 +20,24 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: size.height * 0.085,
+        title: Text(
+          'profile settings',
+          style: Theme.of(context).textTheme.headline5,
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "profile settings",
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ],
-            ),
+            // Text(
+            //   "profile settings",
+            //   style: Theme.of(context).textTheme.headline5,
+            // ),
             SizedBox(height: size.height * 0.01),
             Container(
               height: size.height * 0.3,

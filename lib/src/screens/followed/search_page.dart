@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/search_boards/search_boards_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
@@ -17,6 +18,7 @@ class _SearchPageState extends State<SearchPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
+  Color white = Colors.white;
   final queryController = new TextEditingController();
   @override
   void initState() {
@@ -53,22 +55,34 @@ class _SearchPageState extends State<SearchPage>
           body: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                title: Container(
-                  child: UniqInputField(
-                    textInputAction: TextInputAction.search,
-                    cursorColor: Colors.white,
-                    isObscure: false,
-                    labelText: "Search",
-                    controller: queryController,
-                    onEditingCompleted: () {
-                      context
-                          .read<SearchBoardsBloc>()
-                          .add(SearchForBoards(query: queryController.text));
-                    },
+                automaticallyImplyLeading: false,
+                title: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    color: Theme.of(context).primaryColorLight,
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: TextField(
+                      cursorColor: white,
+                      onEditingComplete: () {
+                        context
+                            .read<SearchBoardsBloc>()
+                            .add(SearchForBoards(query: queryController.text));
+                      },
+                      controller: queryController,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'tap to search',
+                          icon: Icon(
+                            Icons.search,
+                            color: white,
+                          ),
+                          hintStyle: TextStyle(color: white)),
+                      style: TextStyle(fontSize: 20, color: white),
+                    ),
                   ),
                 ),
                 pinned: true,
-                expandedHeight: 70.0,
+                expandedHeight: size.height * 0.08,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Column(
                     children: [],
@@ -108,14 +122,19 @@ class _SearchPageState extends State<SearchPage>
                       ),
                     );
                   } else {
-                    return SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          Center(
-                            child: Text("Search for boards"),
-                          ),
-                        ],
-                      ),
+                    return SliverFillRemaining(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: size.height * 0.2,
+                              child: SvgPicture.asset(
+                                  'assets/images/searching.svg'),
+                            ),
+                            SizedBox(height: size.height * 0.01),
+                            Text('search for inspiration',
+                                style: TextStyle(fontSize: 18))
+                          ]),
                     );
                   }
                 },
