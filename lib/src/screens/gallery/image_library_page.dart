@@ -40,10 +40,15 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: new AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Pick images'),
+        toolbarHeight: size.height * 0.085,
+        title: Text(
+          'pick images',
+          style: Theme.of(context).textTheme.headline5,
+        ),
       ),
       body: _body(),
       floatingActionButton: FloatingActionButton(

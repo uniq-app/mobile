@@ -13,7 +13,7 @@ class AppTheme {
 
     brightness: Brightness.dark,
     primaryColor: Color(0xffB65DC7),
-    primaryColorLight: Colors.deepPurple[400],
+    primaryColorLight: Color(0xff7E408A),
     accentColor: Colors.grey[700],
     iconTheme: IconThemeData(color: Colors.deepOrange),
     buttonColor: Colors.grey[900],
