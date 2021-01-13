@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
 import 'package:uniq/src/screens/profile/edit_profile_page.dart';
+import 'package:uniq/src/shared/components/settings_list_element.dart';
 import 'package:uniq/src/shared/constants.dart';
+import 'package:uniq/src/shared/utilities.dart';
 
 class UserSettingsPage extends StatefulWidget {
   @override
@@ -11,58 +14,90 @@ class UserSettingsPage extends StatefulWidget {
 }
 
 class _UserSettingsPageState extends State<UserSettingsPage> {
-  bool notificationsEnabled = false;
+  bool notificationsEnabled = false, changedNotificationSetting = false;
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-      ),
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              title: Text('Edit profile'),
-              leading: Icon(Icons.person, color: Colors.white),
-              trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<ProfileBloc>(),
-                    child: EditProfilePage(),
-                  ),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "profile settings",
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              ],
+            ),
+            SizedBox(height: size.height * 0.01),
+            Container(
+              height: size.height * 0.3,
+              child: SvgPicture.asset("assets/images/settings.svg"),
+            ),
+            SizedBox(height: size.height * 0.03),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Container(
+                child: Column(
+                  children: [
+                    UniqListElement(
+                      text: 'edit profile',
+                      color: Theme.of(context).buttonColor,
+                      prefixWidget: Icon(Icons.person, color: Colors.white),
+                      suffixWidget:
+                          Icon(Icons.navigate_next, color: Colors.white),
+                      push: () =>
+                          Navigator.of(context).pushNamed(editProfileRoute),
+                    ),
+                    UniqListElement(
+                      text: 'change password',
+                      color: Theme.of(context).buttonColor,
+                      prefixWidget: Icon(Icons.lock, color: Colors.white),
+                      suffixWidget:
+                          Icon(Icons.navigate_next, color: Colors.white),
+                      push: () =>
+                          Navigator.of(context).pushNamed(newPasswordRoute),
+                    ),
+                    UniqListElement(
+                      text: 'change email',
+                      color: Theme.of(context).buttonColor,
+                      prefixWidget: Icon(Icons.email, color: Colors.white),
+                      suffixWidget:
+                          Icon(Icons.navigate_next, color: Colors.white),
+                      push: () =>
+                          Navigator.of(context).pushNamed(changeEmailCodeRoute),
+                    ),
+                    UniqListElement(
+                      text: 'notifications',
+                      color: Theme.of(context).buttonColor,
+                      prefixWidget:
+                          Icon(Icons.notifications, color: Colors.white),
+                      suffixWidget: Switch(
+                        value: notificationsEnabled,
+                        activeColor: Theme.of(context).primaryColor,
+                        onChanged: (value) {
+                          setState(() {
+                            if (changedNotificationSetting) {
+                              changedNotificationSetting = false;
+                            } else
+                              changedNotificationSetting = true;
+                            notificationsEnabled = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            ListTile(
-              title: Text('Change password'),
-              leading: Icon(Icons.lock, color: Colors.white),
-              trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () => Navigator.of(context).pushNamed(newPasswordRoute),
-            ),
-            ListTile(
-              title: Text('Change email'),
-              leading: Icon(Icons.email, color: Colors.white),
-              trailing: Icon(Icons.navigate_next, color: Colors.white),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(changeEmailCodeRoute),
-            ),
-            ListTile(
-              title: Text('Notifications'),
-              leading: Icon(Icons.notifications, color: Colors.white),
-              trailing: Switch(
-                value: notificationsEnabled,
-                activeColor: Theme.of(context).primaryColor,
-                onChanged: (value) {
-                  setState(() {
-                    notificationsEnabled = value;
-                  });
-                },
-              ),
-              onTap: () => print("Notifications"),
-            ),
-            _logout(context)
+            SizedBox(height: size.height * 0.02),
+            _logout(context),
           ],
         ),
       ),
@@ -75,17 +110,35 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
 
   Widget _logout(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: (BuildContext context, AuthState state) {
-        if (state is LogoutSuccess) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              welcomeRoute, (Route<dynamic> route) => false);
-        }
-      },
-      child: ListTile(
-        title: Text('Logout'),
-        leading: Icon(Icons.logout, color: Colors.white),
-        onTap: _sendLogout,
-      ),
-    );
+        listener: (BuildContext context, AuthState state) {
+          if (state is LogoutSuccess) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                welcomeRoute, (Route<dynamic> route) => false);
+          }
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+            color: Theme.of(context).buttonColor,
+            child: FlatButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      child: DeleteAlert(
+                          deleteMessage: "Are you sure to log out?",
+                          deleteAction: _sendLogout));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.logout, color: Colors.redAccent),
+                    Text(
+                      " logout",
+                      style: TextStyle(color: Colors.redAccent, fontSize: 18),
+                    ),
+                  ],
+                )),
+          ),
+        ));
   }
 }

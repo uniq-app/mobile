@@ -65,19 +65,11 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                           child: SvgPicture.asset(
                               "assets/images/authentication.svg"),
                         ),
-                        SizedBox(height: size.height * 0.02),
-                        Text(
-                          "change your password",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 19,
-                          ),
-                        ),
                         SizedBox(height: size.height * 0.03),
                         UniqInputIconField(
                           color: Theme.of(context).accentColor,
                           inputIcon: Icons.lock_outline,
-                          isObscure: false,
+                          isObscure: true,
                           labelText: "old password",
                           controller: oldPasswordController,
                           validator: (value) {
@@ -125,8 +117,8 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                             if (_NewPasswordKey.currentState.validate()) {
                               // TODO: BLOC implementation
                               /*context.read<UserBloc>().add(ChangePassword(
-                                  oldPassword: oldPasswordController.text,
-                                  password: passwordController.text));*/
+                                oldPassword: oldPasswordController.text,
+                                password: passwordController.text));*/
                             }
                           },
                           text: "change my password",
