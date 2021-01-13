@@ -8,6 +8,7 @@ import 'package:uniq/src/shared/constants.dart';
 class UserApiProvider implements UserRepository {
   Client client = Client();
   final storage = new FlutterSecureStorage();
+  final headers = {"Content-Type": "application/json"};
 
   final String _apiUrl = '$host:$backendPort/user';
 
@@ -17,7 +18,8 @@ class UserApiProvider implements UserRepository {
       "codeValue": code,
     };
     String body = json.encode(credentialsMap);
-    final response = await client.put('$_apiUrl/activation', body: body);
+    final response =
+        await client.put('$_apiUrl/activation', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
     } else {
       throw Exception('Failed to activate account');
@@ -30,7 +32,8 @@ class UserApiProvider implements UserRepository {
       "email": email,
     };
     String body = json.encode(credentialsMap);
-    final response = await client.post('$_apiUrl/forgot', body: body);
+    final response =
+        await client.post('$_apiUrl/forgot', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -47,7 +50,8 @@ class UserApiProvider implements UserRepository {
       "repeatedNewPassword": repeatedNewPassword
     };
     String body = json.encode(credentialsMap);
-    final response = await client.put('$_apiUrl/password', body: body);
+    final response =
+        await client.put('$_apiUrl/password', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -61,7 +65,8 @@ class UserApiProvider implements UserRepository {
       "email": email,
     };
     String body = json.encode(credentialsMap);
-    final response = await client.post('$_apiUrl/resend', body: body);
+    final response =
+        await client.post('$_apiUrl/resend', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -73,7 +78,8 @@ class UserApiProvider implements UserRepository {
   Future resetPassword(String email, String password) async {
     var credentialsMap = {"email": email, "password": password};
     String body = json.encode(credentialsMap);
-    final response = await client.put('$_apiUrl/reset', body: body);
+    final response =
+        await client.put('$_apiUrl/reset', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -87,7 +93,8 @@ class UserApiProvider implements UserRepository {
       "email": email,
     };
     String body = json.encode(credentialsMap);
-    final response = await client.put('$_apiUrl/update_email', body: body);
+    final response =
+        await client.put('$_apiUrl/update_email', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -101,7 +108,8 @@ class UserApiProvider implements UserRepository {
       "username": username,
     };
     String body = json.encode(credentialsMap);
-    final response = await client.put('$_apiUrl/update', body: body);
+    final response =
+        await client.put('$_apiUrl/update', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       // TODO: Zwraca nowy jwt?
       return json.decode(response.body);
@@ -116,7 +124,8 @@ class UserApiProvider implements UserRepository {
       "codeValue": code,
     };
     String body = json.encode(credentialsMap);
-    final response = await client.post('$_apiUrl/valid', body: body);
+    final response =
+        await client.post('$_apiUrl/valid', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
