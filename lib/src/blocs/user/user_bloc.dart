@@ -34,6 +34,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         yield ActivateError(error: e);
       }
     }
+    if (event is GetCode) {
+      yield GetCodeLoading();
+      try {
+        await userRepository.getCode();
+        yield GetCodeSuccess();
+      } on SocketException {
+        yield GetCodeError(error: NoInternetException());
+      } on HttpException {
+        yield GetCodeError(error: NoServiceFoundException());
+      } on FormatException {
+        yield GetCodeError(error: InvalidFormatException());
+      } catch (e) {
+        yield GetCodeError(error: e);
+      }
+    }
     if (event is ForgotPassword) {
       yield ForgotPasswordLoading();
       try {
@@ -53,7 +68,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       yield UpdatePasswordLoading();
       try {
         await userRepository.updatePassword(
-            event.newPassword, event.oldPassword, event.newPassword);
+            event.oldPassword, event.newPassword, event.newPassword);
         yield UpdatePasswordSuccess();
       } on SocketException {
         yield UpdatePasswordError(error: NoInternetException());

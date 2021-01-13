@@ -36,7 +36,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   _updateProfile() {
-    print("Update profile!!!");
+    if (nameController.text != null && nameController.text != '') {
+      var data = new Map<String, dynamic>();
+      data['username'] = nameController.text;
+      print(data);
+      context.read<ProfileBloc>().add(PutProfileDetails(data: data));
+    }
   }
 
   _getData() {
@@ -76,7 +81,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
         } else if (state is PutProfileDetailsError) {
           showToast(
-            "Failed to update board - ${state.error.message}",
+            "${state.error.message}",
             position: ToastPosition.bottom,
             backgroundColor: Colors.redAccent,
           );

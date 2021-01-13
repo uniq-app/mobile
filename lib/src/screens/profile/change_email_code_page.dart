@@ -19,14 +19,15 @@ class ChangeEmailCodePage extends StatefulWidget {
 
 class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
   final codeController = new TextEditingController();
-  final emailController = new TextEditingController();
-  final passwordController = new TextEditingController();
+
   @override
   void dispose() {
     codeController.dispose();
-    passwordController.dispose();
-    emailController.dispose();
     super.dispose();
+  }
+
+  _activateCode() {
+    context.read<UserBloc>().add(ValidCode(code: codeController.text));
   }
 
   final _NewPasswordKey = GlobalKey<FormState>();
@@ -37,24 +38,22 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Center(
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (BuildContext context, AuthState state) {
-              //if (state is EmailChangeSuccess) {
-              Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('email with code sent')));
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  changeEmailRoute, (Route<dynamic> route) => false);
-              //}
+          child: BlocConsumer<UserBloc, UserState>(
+            listener: (BuildContext context, UserState state) {
+              if (state is ValidCodeSuccess) {
+                Navigator.of(context).pushNamed(changeEmailRoute);
+              } else if (state is ValidCodeError) {
+                showToast(
+                  "${state.error.message}",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.redAccent,
+                );
+              }
             },
-            builder: (BuildContext context, AuthState state) {
-              // if (state is ValidCodeLoading)
-              if (state is RegisterLoading) {
+            builder: (BuildContext context, UserState state) {
+              if (state is ValidCodeLoading) {
                 return Loading();
               }
-              // if (state is ValidCodeSuccess) {
-              // Navigator.of(context).pushNamedAndRemoveUntil(
-              // changeEmailRoute, (Route<dynamic> route) => false);
-              //}
               return Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _NewPasswordKey,
@@ -92,7 +91,7 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_NewPasswordKey.currentState.validate()) {
-                            Navigator.of(context).pushNamed(changeEmailRoute);
+                            _activateCode();
                           }
                         },
                         text: "submit code",

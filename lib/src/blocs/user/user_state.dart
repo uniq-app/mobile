@@ -21,6 +21,18 @@ class ActivateError extends UserState {
   List<Object> get props => [error];
 }
 
+class GetCodeLoading extends UserState {}
+
+class GetCodeSuccess extends UserState {}
+
+class GetCodeError extends UserState {
+  final error;
+  GetCodeError({this.error});
+
+  @override
+  List<Object> get props => [error];
+}
+
 class ForgotPasswordLoading extends UserState {}
 
 class ForgotPasswordSuccess extends UserState {}
