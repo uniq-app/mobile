@@ -104,78 +104,30 @@ class _HomePageState extends State<HomePage> {
                 builder: (BuildContext context, ProfileState state) {
                   if (state is GetProfileDetailsSuccess) {
                     return SliverAppBar(
+                      backgroundColor: Theme.of(context).primaryColor,
                       automaticallyImplyLeading: false,
-                      pinned: false,
-                      floating: true,
-                      expandedHeight: 100.0,
+                      expandedHeight: size.height * 0.085,
                       flexibleSpace: FlexibleSpaceBar(
                         titlePadding:
                             EdgeInsetsDirectional.only(start: 15, bottom: 15),
                         title: SafeArea(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Welcome ${state.profile.username}',
+                                'welcome ${state.profile.username}',
                                 style: Theme.of(context)
                                     .appBarTheme
                                     .textTheme
                                     .headline6,
                               ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: SizedBox.fromSize(
-                                  size: size * 0.2,
-                                  child: UserIconButton(
-                                    iconSize: 1.0,
-                                    radius: 30,
-                                    // TODO: Remove imageLink?
-                                    imageLink:
-                                        "https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                                    color: Colors.white,
-                                    margin: 20,
-                                    push: () {
-                                      context
-                                          .read<PageCubit>()
-                                          .setPage(PageState.profilePage);
-                                    },
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
-                        /* 
-                  background: Row(
-                    children: [
-                      Text('Welcome ${state.profile.username}'),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: UserIconButton(
-                          iconSize: 1.0,
-                          radius: 30,
-                          imageLink:
-                              "https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                          color: Colors.white,
-                          margin: 20,
-                          push: () {
-                            context
-                                .read<PageCubit>()
-                                .setPage(PageState.profilePage);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  */
                       ),
                     );
                   } else if (state is GetProfileDetailsError) {
                     return SliverAppBar(
                       automaticallyImplyLeading: false,
-                      pinned: false,
-                      floating: true,
                       title: InkWell(
                         child: Column(
                           children: [
@@ -197,8 +149,6 @@ class _HomePageState extends State<HomePage> {
                   return SliverAppBar(
                     automaticallyImplyLeading: false,
                     title: Loading(),
-                    pinned: false,
-                    floating: true,
                   );
                 },
               ),
