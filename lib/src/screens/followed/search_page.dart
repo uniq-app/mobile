@@ -90,7 +90,11 @@ class _SearchPageState extends State<SearchPage>
                     return SliverList(
                       delegate: SliverChildListDelegate(
                         [
-                          Loading(),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Loading(),
+                              ])
                         ],
                       ),
                     );
@@ -98,12 +102,19 @@ class _SearchPageState extends State<SearchPage>
                     final List<Board> boards = state.boardResults.results;
                     return OthersBoardList(boards);
                   } else if (state is SearchForBoardsNotFound) {
-                    return SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          Text('Not found boards matching query'),
-                        ],
-                      ),
+                    return SliverFillRemaining(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: size.height * 0.2,
+                              child: SvgPicture.asset(
+                                  'assets/images/not_found.svg'),
+                            ),
+                            SizedBox(height: size.height * 0.01),
+                            Text('nothing have been found',
+                                style: TextStyle(fontSize: 18))
+                          ]),
                     );
                   } else if (state is SearchForBoardsError) {
                     return SliverList(
