@@ -105,6 +105,7 @@ class BoardBloc extends Bloc<BoardEvent, BoardState> {
       }
     }
     if (event is DeleteBoardPhoto) {
+      yield DeleteBoardPhotoLoading();
       try {
         await boardRepository.deleteBoardPhoto(event.boardId, event.photo);
         yield DeleteBoardPhotoSuccess();

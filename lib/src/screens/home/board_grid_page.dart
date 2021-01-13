@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
+import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/blocs/drag_listener/drag_listener_cubit.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
@@ -134,6 +135,7 @@ class WrapGrid extends StatefulWidget {
 
 class _WrapGridState extends State<WrapGrid> {
   List<Widget> _tiles = new List();
+  bool blockAction = false;
 
   @override
   void initState() {
@@ -171,14 +173,16 @@ class _WrapGridState extends State<WrapGrid> {
   }
 
   void _onReorder(int oldIndex, int newIndex) {
-    setState(() {
-      Widget row = _tiles.removeAt(oldIndex);
-      Photo reorderedPhoto = widget.photos.removeAt(oldIndex);
-      _tiles.insert(newIndex, row);
-      widget.photos.insert(newIndex, reorderedPhoto);
-    });
-    _reorderElements();
-    _saveReorderChanges();
+    if (!blockAction) {
+      setState(() {
+        Widget row = _tiles.removeAt(oldIndex);
+        Photo reorderedPhoto = widget.photos.removeAt(oldIndex);
+        _tiles.insert(newIndex, row);
+        widget.photos.insert(newIndex, reorderedPhoto);
+      });
+      _reorderElements();
+      _saveReorderChanges();
+    }
     _setIsDragging(false);
   }
 
@@ -193,45 +197,55 @@ class _WrapGridState extends State<WrapGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return ReorderableWrap(
-      spacing: 2.0,
-      runSpacing: 2.0,
-      header: BlocBuilder<DragListenerCubit, bool>(
-        builder: (context, bool state) {
-          if (state) {
-            return DragTarget<int>(
-              builder: (context, _, x) => Column(
-                children: [
-                  Container(
-                    height: 60,
-                    child: Center(
-                      child: Icon(Icons.delete),
+    return BlocListener<BoardBloc, BoardState>(
+      listener: (context, BoardState state) {
+        if (state is DeleteBoardPhotoSuccess ||
+            state is DeleteBoardPhotoError) {
+          blockAction = false;
+        }
+      },
+      child: ReorderableWrap(
+        spacing: 2.0,
+        runSpacing: 2.0,
+        header: BlocBuilder<DragListenerCubit, bool>(
+          builder: (context, bool state) {
+            if (state) {
+              return DragTarget<int>(
+                builder: (context, _, x) => Column(
+                  children: [
+                    Container(
+                      height: 60,
+                      child: Center(
+                        child: Icon(Icons.delete),
+                      ),
                     ),
-                  ),
-                  Divider(),
-                ],
-              ),
-              onAccept: _deletePhoto,
-            );
-          } else
-            return Divider();
+                    Divider(),
+                  ],
+                ),
+                onAccept: _deletePhoto,
+                onMove: (_) => blockAction = true,
+                onLeave: (_) => blockAction = false,
+              );
+            } else
+              return Divider();
+          },
+        ),
+        padding: const EdgeInsets.all(8),
+        children: _tiles,
+        onReorder: _onReorder,
+        onNoReorder: (int index) {
+          // Set is dragging to show delete zone
+          _setIsDragging(false);
+          debugPrint(
+              '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index: $index');
+        },
+        onReorderStarted: (int index) {
+          // Set is dragging to show delete zone
+          _setIsDragging(true);
+          debugPrint(
+              '${DateTime.now().toString().substring(5, 22)} reorder started: index: $index');
         },
       ),
-      padding: const EdgeInsets.all(8),
-      children: _tiles,
-      onReorder: _onReorder,
-      onNoReorder: (int index) {
-        // Set is dragging to show delete zone
-        _setIsDragging(false);
-        debugPrint(
-            '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
-      },
-      onReorderStarted: (int index) {
-        // Set is dragging to show delete zone
-        _setIsDragging(true);
-        debugPrint(
-            '${DateTime.now().toString().substring(5, 22)} reorder started: index:$index');
-      },
     );
   }
 }
