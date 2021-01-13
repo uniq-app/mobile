@@ -71,7 +71,7 @@ class BoardListElement extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.symmetric(horizontal: 3),
                     color: Color(0x77181818),
-                    height: size.height * heightFraction * 0.37,
+                    height: size.height * heightFraction * 0.35,
                     child: Text(board.description ?? '',
                         style: TextStyle(
                             color: Colors.white,

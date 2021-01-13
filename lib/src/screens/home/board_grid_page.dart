@@ -65,9 +65,7 @@ class _BoardGridPageState extends State<BoardGridPage>
       ),
       body: BlocProvider<DragListenerCubit>(
         create: (context) => DragListenerCubit(),
-        child: SingleChildScrollView(
-          child: _body(),
-        ),
+        child: _body(),
       ),
     );
   }
