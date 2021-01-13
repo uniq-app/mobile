@@ -141,6 +141,7 @@ class _WrapGridState extends State<WrapGrid> {
   void initState() {
     super.initState();
     _createTilesFromImages();
+    print("Photos: ${widget.photos.length}");
   }
 
   _saveReorderChanges() async {
@@ -151,6 +152,7 @@ class _WrapGridState extends State<WrapGrid> {
   _createTilesFromImages() {
     for (int i = 0; i < widget.precachedImages.length; i++) {
       if (widget.photos[i] != null) {
+        print("Photo: ${widget.photos[i].toJson()}");
         _tiles.add(
           GridElement(
             width: widget._size.width * 0.3,
@@ -187,6 +189,10 @@ class _WrapGridState extends State<WrapGrid> {
   }
 
   _deletePhoto(int index) {
+    // Remove from arrays
+    _tiles.removeAt(index);
+    widget.photos.removeAt(index);
+    // Notify backend
     context.read<BoardBloc>().add(
           DeleteBoardPhoto(
             photo: widget.photos[index],

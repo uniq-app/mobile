@@ -20,6 +20,7 @@ class GridElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String tag = '${photo.photoId}';
+    print("Tag: $tag");
     String url = "${PhotoApiProvider.apiUrl}/${photo.value}";
     Map<String, dynamic> arguments = {'url': url, 'tag': tag, 'image': image};
     return Container(
