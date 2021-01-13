@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/followed/search_page.dart';
@@ -36,12 +37,26 @@ class _FollowedBoardsState extends State<FollowedBoards> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             automaticallyImplyLeading: false,
-            title: Text("Followed boards"),
+            expandedHeight: size.height * 0.085,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsetsDirectional.only(start: 15, bottom: 15),
+              title: SafeArea(
+                child: Row(
+                  children: [
+                    Text(
+                      "followed boards",
+                      style: Theme.of(context).appBarTheme.textTheme.headline6,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
           BlocConsumer<FollowedBoardsBloc, FollowedBoardsState>(
             listener: (context, state) {
@@ -55,8 +70,18 @@ class _FollowedBoardsState extends State<FollowedBoards> {
                 List<Board> results = state.boardResults.results;
                 if (results.isEmpty)
                   return SliverFillRemaining(
-                    child: Center(
-                      child: Text('Your follow list is empty!'),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: size.height * 0.2,
+                          child:
+                              SvgPicture.asset('assets/images/empty_heart.svg'),
+                        ),
+                        SizedBox(height: size.height * 0.01),
+                        Text('your follow list is empty',
+                            style: TextStyle(fontSize: 18)),
+                      ],
                     ),
                   );
                 else
