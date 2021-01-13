@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/screens/application_page.dart';
-import 'package:uniq/src/screens/home/board_details_page.dart';
+import 'package:uniq/src/screens/followed/not_editable_board_grid.dart';
+import 'package:uniq/src/screens/home/board_grid_page.dart';
 import 'package:uniq/src/screens/profile/change_email_code_page.dart';
 import 'package:uniq/src/screens/profile/change_email_page.dart';
 import 'package:uniq/src/screens/profile/edit_profile_page.dart';
@@ -28,8 +29,7 @@ class MainRouter {
     switch (settings.name) {
       case boardDetailsRoute:
         Board board = settings.arguments as Board;
-        return MaterialPageRoute(
-            builder: (_) => BoardDetailsPage(board: board));
+        return MaterialPageRoute(builder: (_) => BoardGridPage(board: board));
       //Start pages routes
       case welcomeRoute:
         return MaterialPageRoute(builder: (_) => WelcomePage());
@@ -77,6 +77,13 @@ class MainRouter {
             onTap: () {
               Navigator.pop(context);
             },
+          ),
+        );
+      case nonEditableDetailsRoute:
+        Board board = settings.arguments as Board;
+        return MaterialPageRoute(
+          builder: (_) => NotEditableBoardGridPage(
+            board: board,
           ),
         );
       case createBoardRoute:

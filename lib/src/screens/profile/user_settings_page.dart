@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
+import 'package:uniq/src/blocs/profile/profile_bloc.dart';
+import 'package:uniq/src/screens/profile/edit_profile_page.dart';
 import 'package:uniq/src/shared/components/settings_list_element.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/utilities.dart';

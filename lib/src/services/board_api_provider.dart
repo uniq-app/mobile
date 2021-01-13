@@ -7,8 +7,9 @@ import 'package:uniq/src/models/board_results.dart';
 import 'package:uniq/src/models/photo.dart';
 import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:uniq/src/shared/constants.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class BoardApiProvider implements BoardRepository {
   Client client = HttpClientWithInterceptor.build(
@@ -108,6 +109,40 @@ class BoardApiProvider implements BoardRepository {
     if (response.statusCode == 200 || response.statusCode == 201) {
     } else {
       throw Exception('Failed to post photos');
+    }
+  }
+
+  @override
+  Future reorderPhotos(String boardId, List<Photo> photos) async {
+    var photosMapped = photos.map((e) => e.toJson()).toList();
+    String body = json.encode(photosMapped);
+    var headers = {"Content-Type": "application/json"};
+    final response = await client.put('$_apiUrl/$boardId/photos',
+        headers: headers, body: body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+    } else {
+      throw Exception('Failed to reorder photos');
+    }
+  }
+
+  @override
+  Future deleteBoardPhoto(String boardId, Photo photo) async {
+    String body = json.encode([photo.toJson()]);
+    String token = await storage.read(key: "token");
+
+    var headers = {
+      "Content-Type": "application/json",
+      'Authorization': "Bearer $token"
+    };
+    final request =
+        http.Request("DELETE", Uri.parse('$_apiUrl/$boardId/photos'));
+    request.headers.addAll(headers);
+    request.body = body;
+    final response = await request.send();
+    if (response.statusCode == 200 || response.statusCode == 201) {
+    } else {
+      response.stream.bytesToString().then((value) => print(value));
+      throw Exception('Failed to delete photo');
     }
   }
 

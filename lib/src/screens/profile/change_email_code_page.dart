@@ -47,9 +47,14 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
               //}
             },
             builder: (BuildContext context, AuthState state) {
+              // if (state is ValidCodeLoading)
               if (state is RegisterLoading) {
                 return Loading();
               }
+              // if (state is ValidCodeSuccess) {
+              // Navigator.of(context).pushNamedAndRemoveUntil(
+              // changeEmailRoute, (Route<dynamic> route) => false);
+              //}
               return Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 key: _NewPasswordKey,

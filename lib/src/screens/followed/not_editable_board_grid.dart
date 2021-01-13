@@ -1,32 +1,29 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/photo/photo_states.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/models/photo.dart';
-import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
+import 'package:uniq/src/shared/components/grid_element.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:flutter/material.dart';
-import 'package:reorderables/reorderables.dart';
-import 'package:uniq/src/shared/constants.dart';
 
-class BoardDetailsPage extends StatefulWidget {
+class NotEditableBoardGridPage extends StatefulWidget {
   final Board board;
 
-  BoardDetailsPage({Key key, this.board}) : super(key: key);
+  NotEditableBoardGridPage({Key key, @required this.board}) : super(key: key);
 
   @override
-  _BoardDetailsPageState createState() => _BoardDetailsPageState(this.board);
+  _NotEditableBoardGridPageState createState() =>
+      _NotEditableBoardGridPageState(this.board);
 }
 
-class _BoardDetailsPageState extends State<BoardDetailsPage> {
+class _NotEditableBoardGridPageState extends State<NotEditableBoardGridPage> {
   Board board;
-  _BoardDetailsPageState(this.board);
+  _NotEditableBoardGridPageState(this.board);
 
   @override
   void initState() {
@@ -50,8 +47,12 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
 
   Future<List<Image>> _precacheImages(List<Photo> photos) async {
     String src = "${PhotoApiProvider.apiUrl}/thumbnail";
-    List<Image> images =
-        photos.map((e) => Image.network("$src/${e.value}")).toList();
+    List<Image> images = photos
+        .map((e) => Image.network(
+              "$src/${e.value}",
+              fit: BoxFit.contain,
+            ))
+        .toList();
     var futures =
         images.map((element) => precacheImage(element.image, context));
     await Future.wait(futures);
@@ -73,13 +74,9 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
             future: _precacheImages(state.photos),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                return Padding(
-                  padding: EdgeInsets.all(4),
-                  // CASE 1
-                  //child: StaggeredGrid(state.photos, snapshot.data),
-                  // CASE 2
-                  child: WrapGrid(state.photos, snapshot.data),
-                );
+                //return StaggeredGrid(state.photos, snapshot.data);
+                Size size = MediaQuery.of(context).size;
+                return Grid(state.photos, snapshot.data, size);
               } else if (snapshot.hasError) {
                 return CustomError(message: "Couldnt preload images");
               }
@@ -95,16 +92,17 @@ class _BoardDetailsPageState extends State<BoardDetailsPage> {
   }
 }
 
-class WrapGrid extends StatefulWidget {
+class Grid extends StatefulWidget {
   final List<Photo> photos;
   final List<Image> precachedImages;
+  final Size _size;
 
-  WrapGrid(this.photos, this.precachedImages);
+  Grid(this.photos, this.precachedImages, this._size);
   @override
-  _WrapGridState createState() => _WrapGridState();
+  _GridState createState() => _GridState();
 }
 
-class _WrapGridState extends State<WrapGrid> {
+class _GridState extends State<Grid> {
   List<Widget> _tiles = new List();
 
   @override
@@ -116,26 +114,11 @@ class _WrapGridState extends State<WrapGrid> {
   _createTilesFromImages() {
     for (int i = 0; i < widget.precachedImages.length; i++) {
       if (widget.photos[i] != null) {
-        String tag = '${widget.photos[i].photoId}';
-        String url = "${PhotoApiProvider.apiUrl}/${widget.photos[i].value}";
-        Image image = widget.precachedImages[i];
-        Map<String, dynamic> arguments = {
-          'url': url,
-          'tag': tag,
-          'image': image
-        };
         _tiles.add(
-          SizedBox.fromSize(
-            size: Size(100, 100),
-            child: PhotoHero(
-              tag: tag,
-              image: image,
-              isRounded: true,
-              onTap: () {
-                Navigator.pushNamed(context, photoDetails,
-                    arguments: arguments);
-              },
-            ),
+          GridElement(
+            width: widget._size.width * 0.3,
+            photo: widget.photos[i],
+            image: widget.precachedImages[i],
           ),
         );
       }
@@ -151,30 +134,13 @@ class _WrapGridState extends State<WrapGrid> {
       });
     }
 
-    return Center(
-      child: ReorderableWrap(
-        spacing: 8.0,
-        runSpacing: 4.0,
-        padding: const EdgeInsets.all(8),
-        children: _tiles,
-        onReorder: _onReorder,
-        onNoReorder: (int index) {
-          //this callback is optional
-          debugPrint(
-              '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
-        },
-        onReorderStarted: (int index) {
-          //this callback is optional
-          debugPrint(
-              '${DateTime.now().toString().substring(5, 22)} reorder started: index:$index');
-        },
-      ),
+    return Wrap(
+      children: _tiles,
     );
   }
 }
 
 /* 
-
 class StaggeredGrid extends StatefulWidget {
   final List<Photo> photos;
   final List<Image> precachedImages;
@@ -203,39 +169,6 @@ class _StaggeredGridState extends State<StaggeredGrid> {
           'tag': tag,
           'image': image
         };
-        return DragTarget<Image>(
-          builder: (context, candidateData, rejectedData) {
-            return LongPressDraggable<Image>(
-              feedback: SizedBox(
-                height: 50,
-                width: 50,
-                child: image,
-              ),
-              data: image,
-              child: image,
-              childWhenDragging: image,
-            );
-          },
-          onAccept: (data) {
-            print("Accepted target");
-            setState(() {
-              // Update index of photos and precachedImages
-              int oldImageIndex = _precachedImages.indexOf(data);
-
-              Photo oldPhoto = _photos.removeAt(oldImageIndex);
-              Image oldImage = _precachedImages.removeAt(oldImageIndex);
-
-              _photos.insert(index, oldPhoto);
-              _precachedImages.insert(index, oldImage);
-            });
-          },
-          onLeave: (data) {
-            print("Leave data: $data");
-          },
-          onMove: (data) {
-            print("Reached target");
-          },
-        );
         return PhotoHero(
             tag: tag,
             image: image,

@@ -25,9 +25,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is Login) {
       yield LoginLoading();
       try {
-        String fcmToken = await fcm.getToken();
-        token = await authRepository.login(
-            event.username, event.password, fcmToken);
+        token = await fcm.getToken();
+        await authRepository.login(event.username, event.password, token);
         yield LoginSuccess(token: token);
       } on SocketException {
         yield LoginError(error: NoInternetException());
