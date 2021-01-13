@@ -97,6 +97,12 @@ flutter:
     - assets/images/authentication.svg
     - assets/images/login.svg
     - assets/images/settings.svg
+    - assets/images/searching.svg
+    - assets/images/not_found.svg
+    - assets/images/empty_heart.svg
+    - assets/images/upload_photos.svg
+
+
 
 
   fonts:

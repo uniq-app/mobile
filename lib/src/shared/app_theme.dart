@@ -29,7 +29,7 @@ class AppTheme {
     ),
     //bottomAppBarTheme: BottomAppBarTheme(color: Colors.black, elevation: 0),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.amber[200],
+      backgroundColor: Color(0xff7E408A),
     ),
     // Define the default font family.
     fontFamily: 'Nunito',
