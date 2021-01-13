@@ -9,6 +9,11 @@ import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
 
 class EditProfilePage extends StatefulWidget {
+  //TODO: Add profile data
+  const EditProfilePage({
+    Key key,
+    /*this.profile*/
+  }) : super(key: key);
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -17,7 +22,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String profileCover;
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController bioController = new TextEditingController();
-
+  bool got = false;
   @override
   void dispose() {
     nameController.dispose();
@@ -32,6 +37,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   _updateProfile() {
     print("Update profile!!!");
+  }
+
+  _getData() {
+    if (this.got != true) {
+      nameController.text = "Placeholder name"; //widget.profile.name;
+      bioController.text = "Placeholder bio"; //widget.profile.bio;
+      this.got = true;
+    }
   }
 
   Future _getImage() async {
