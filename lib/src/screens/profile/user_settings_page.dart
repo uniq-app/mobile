@@ -44,6 +44,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
               child: SvgPicture.asset("assets/images/settings.svg"),
             ),
             SizedBox(height: size.height * 0.03),
+
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Container(

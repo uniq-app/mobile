@@ -83,11 +83,6 @@ class _SearchPageState extends State<SearchPage>
                 ),
                 pinned: true,
                 expandedHeight: size.height * 0.08,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Column(
-                    children: [],
-                  ),
-                ),
               ),
               BlocBuilder<SearchBoardsBloc, SearchBoardsState>(
                 builder: (BuildContext context, SearchBoardsState state) {
