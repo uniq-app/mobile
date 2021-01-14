@@ -41,7 +41,8 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
           child: BlocConsumer<UserBloc, UserState>(
             listener: (BuildContext context, UserState state) {
               if (state is ValidCodeSuccess) {
-                Navigator.of(context).pushNamed(changeEmailRoute);
+                Navigator.of(context).pushNamed(changeEmailRoute,
+                    arguments: codeController.text);
               } else if (state is ValidCodeError) {
                 showToast(
                   "${state.error.message}",

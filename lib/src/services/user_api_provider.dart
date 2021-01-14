@@ -108,11 +108,12 @@ class UserApiProvider implements UserRepository {
   @override
   Future updateEmail(String email) async {
     var credentialsMap = {
-      "email": email,
+      "newEmail": email,
     };
     String body = json.encode(credentialsMap);
     final response =
         await client.put('$_apiUrl/update_email', body: body, headers: headers);
+
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
