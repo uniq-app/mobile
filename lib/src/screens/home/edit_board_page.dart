@@ -194,7 +194,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     UniqInputField(
                       cursorColor: Theme.of(context).accentColor,
                       isObscure: false,
-                      labelText: "Name",
+                      labelText: "name",
                       controller: nameController,
                       maxLength: 20,
                       validator: (value) {
@@ -206,7 +206,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                     UniqInputField(
                       cursorColor: Theme.of(context).accentColor,
                       isObscure: false,
-                      labelText: "Description",
+                      labelText: "description",
                       controller: descriptionController,
                       maxLines: null,
                       validator: (value) {

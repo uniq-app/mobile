@@ -57,10 +57,15 @@ class TakePhotoScreenState extends State<TakePhotoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Take a photo.'),
+        toolbarHeight: size.height * 0.085,
+        title: Text(
+          'take a photo',
+          style: Theme.of(context).textTheme.headline5,
+        ),
       ),
       body: _body(),
       floatingActionButton: FloatingActionButton(

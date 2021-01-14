@@ -88,6 +88,24 @@ class _BoardGridPageState extends State<BoardGridPage>
     return images;
   }
 
+  //TODO: To display when board is empty:
+  /*
+  Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: size.height * 0.25,
+          child: SvgPicture.asset('assets/images/blank_canvas.svg'),
+        ),
+        SizedBox(height: size.height * 0.02),
+        Text(
+          'add some photos to fill this space up',
+          style: TextStyle(fontSize: 18),
+        ),
+      ],
+    ),
+  */
+
   Widget _body() {
     return BlocBuilder<PhotoBloc, PhotoState>(
       builder: (BuildContext context, PhotoState state) {

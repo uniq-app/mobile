@@ -99,6 +99,33 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                             Icon(Icons.navigate_next, color: Colors.white),
                         push: () =>
                             Navigator.of(context).pushNamed(newPasswordRoute),
+                    ),
+                    UniqListElement(
+                      text: 'change email',
+                      color: Theme.of(context).buttonColor,
+                      prefixWidget: Icon(Icons.email, color: Colors.white),
+                      suffixWidget:
+                          Icon(Icons.navigate_next, color: Colors.white),
+                      push: () =>
+                          Navigator.of(context).pushNamed(changeEmailCodeRoute),
+                    ),
+                    UniqListElement(
+                      text: 'notifications',
+                      color: Theme.of(context).buttonColor,
+                      prefixWidget:
+                          Icon(Icons.notifications, color: Colors.white),
+                      suffixWidget: Switch(
+                        value: notificationsEnabled,
+                        activeColor: Theme.of(context).primaryColor,
+                        onChanged: (value) {
+                          setState(() {
+                            if (changedNotificationSetting) {
+                              changedNotificationSetting = false;
+                            } else
+                              changedNotificationSetting = true;
+                            notificationsEnabled = value;
+                          });
+                        },
                       ),
                       UniqListElement(
                         text: 'change email',
