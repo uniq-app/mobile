@@ -39,6 +39,7 @@ class UniqInputField extends StatelessWidget {
       obscureText: isObscure,
       onChanged: onChanged,
       controller: controller,
+      style: Theme.of(context).textTheme.bodyText2,
       cursorColor: cursorColor,
       validator: validator,
       maxLength: maxLength,

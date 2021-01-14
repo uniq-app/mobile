@@ -6,7 +6,7 @@ import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class ChangeEmailPage extends StatefulWidget {
   final String email;
@@ -68,10 +68,7 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
                       SizedBox(height: size.height * 0.02),
                       Text(
                         "change your email",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                        ),
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                       SizedBox(height: size.height * 0.03),
                       UniqInputIconField(

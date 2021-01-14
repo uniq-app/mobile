@@ -106,13 +106,15 @@ flutter:
 
 
   fonts:
-    - family: Nunito
+    - family: Lato
       fonts:
-        - asset: fonts/Nunito-Black.ttf
-        - asset: fonts/Nunito-Bold.ttf
-        - asset: fonts/Nunito-Light.ttf
-        - asset: fonts/Nunito-Regular.ttf
-        - asset: fonts/Nunito-ExtraLight.ttf
+        - asset: fonts/Lato-Black.ttf
+        - asset: fonts/Lato-Bold.ttf
+        - asset: fonts/Lato-Light.ttf
+        - asset: fonts/Lato-Regular.ttf
+        - asset: fonts/Lato-Thin.ttf
+
+
 
   #   - images/a_dot_ham.jpeg
 

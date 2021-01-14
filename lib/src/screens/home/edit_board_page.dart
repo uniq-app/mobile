@@ -12,7 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/board_cover_settings.dart';
 import 'package:uniq/src/shared/components/input_form_field.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_alert.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class EditBoardPage extends StatefulWidget {
   final Board board;
@@ -28,7 +29,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
   final TextEditingController descriptionController =
       new TextEditingController();
 
-  Color tempColor = Colors.amberAccent;
+  Color tempColor = Color(0xffB65DC7);
   @override
   void dispose() {
     nameController.dispose();
@@ -86,25 +87,20 @@ class _EditBoardPageState extends State<EditBoardPage> {
       borderRadius: 15,
       spacing: 5,
       runSpacing: 5,
-      wheelDiameter: 220,
+      wheelDiameter: 210,
       heading: Text(
-        'Select color',
+        'select color',
         style: Theme.of(context).textTheme.subtitle1,
       ),
       subheading: Text(
-        'Select color shade',
-        style: Theme.of(context).textTheme.subtitle1,
+        'select color shade',
+        style: Theme.of(context).textTheme.subtitle2,
       ),
       wheelSubheading: Text(
-        'Selected color and its shades',
-        style: Theme.of(context).textTheme.subtitle1,
+        'selected color and its shades',
+        style: Theme.of(context).textTheme.subtitle2,
       ),
-      showMaterialName: false,
-      showColorName: false,
-      showColorCode: false,
-      materialNameTextStyle: Theme.of(context).textTheme.caption,
-      colorNameTextStyle: Theme.of(context).textTheme.caption,
-      colorCodeTextStyle: Theme.of(context).textTheme.caption,
+
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,
         ColorPickerType.primary: true,
@@ -117,7 +113,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
     ).showPickerDialog(
       context,
       constraints: const BoxConstraints(
-          minHeight: 455, minWidth: 320, maxWidth: 320, maxHeight: 455),
+          minHeight: 460, minWidth: 320, maxWidth: 320, maxHeight: 460),
     );
   }
 
@@ -173,7 +169,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                       children: [
                         Text(
                           "edit board",
-                          style: Theme.of(context).textTheme.headline4,
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                         IconButton(
                             iconSize: 35,
@@ -181,12 +177,12 @@ class _EditBoardPageState extends State<EditBoardPage> {
                             onPressed: () {
                               showDialog(
                                   context: context,
-                                  child: DeleteAlert(
-                                      deleteMessage:
+                                  child: UniqAlert(
+                                      message:
                                           "Do you want to delete board called '" +
                                               widget.board.name +
                                               "'?",
-                                      deleteAction: _deleteBoard));
+                                      action: _deleteBoard));
                             })
                       ],
                     ),
@@ -198,7 +194,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                       controller: nameController,
                       maxLength: 20,
                       validator: (value) {
-                        if (value.isEmpty) return 'Enter name of the board';
+                        if (value.isEmpty) return 'enter name of the board';
                         return null;
                       },
                     ),
@@ -211,7 +207,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                       maxLines: null,
                       validator: (value) {
                         if (value.isEmpty)
-                          return 'Enter description of the board';
+                          return 'enter description of the board';
                         return null;
                       },
                     ),
@@ -229,6 +225,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                       )
                     else
                       BoardCoverSettings(
+                        filterColor: tempColor,
                         editLink: _getImage,
                       ),
 
@@ -243,11 +240,10 @@ class _EditBoardPageState extends State<EditBoardPage> {
                           height: size.height * 0.07,
                           padding: EdgeInsets.only(left: 20),
                           color: tempColor,
-                          child: Text("Change color",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w300)),
+                          child: Text(
+                            "change color",
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
                         ),
                         onTap: () async {
                           final Color colorBeforeDialog = tempColor;
@@ -259,15 +255,15 @@ class _EditBoardPageState extends State<EditBoardPage> {
                         },
                       ),
                     ),
-                    SizedBox(height: size.height * 0.02),
+
+                    SizedBox(height: size.height * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Private",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300)),
+                        Text(
+                          "private",
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
                         Checkbox(
                           value: isPrivate,
                           onChanged: (value) {
@@ -279,6 +275,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                         ),
                       ],
                     ),
+                    SizedBox(height: size.height * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -291,7 +288,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                               _updateBoard();
                             }
                           },
-                          text: "Save",
+                          text: "save",
                         ),
                         UniqButton(
                           screenWidth: 0.35,
@@ -300,7 +297,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
                           push: () {
                             Navigator.pop(context);
                           },
-                          text: "Cancel",
+                          text: "cancel",
                         )
                       ],
                     ),

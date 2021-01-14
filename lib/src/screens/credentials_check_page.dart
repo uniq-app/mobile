@@ -23,7 +23,7 @@ class CredentialsCheckPage extends StatelessWidget {
         navigateAfterFuture: loadFromFuture(),
         title: new Text(
           'Welcome In SplashScreen',
-          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          style: Theme.of(context).textTheme.subtitle1,
         ),
         image: new Image.network('https://i.imgur.com/TyCSG9A.png'),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

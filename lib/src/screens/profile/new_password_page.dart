@@ -7,7 +7,7 @@ import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/constants.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class NewPasswordPage extends StatefulWidget {
   NewPasswordPage({Key key}) : super(key: key);
@@ -83,6 +83,11 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                           height: size.height * 0.3,
                           child: SvgPicture.asset(
                               "assets/images/authentication.svg"),
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        Text(
+                          "change password",
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                         SizedBox(height: size.height * 0.03),
                         UniqInputIconField(

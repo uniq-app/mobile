@@ -61,7 +61,10 @@ class _BoardGridPageState extends State<BoardGridPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.board.name),
+        title: Text(
+          widget.board.name,
+          style: Theme.of(context).textTheme.headline1,
+        ),
       ),
       body: BlocProvider<DragListenerCubit>(
         create: (context) => DragListenerCubit(),
@@ -100,7 +103,7 @@ class _BoardGridPageState extends State<BoardGridPage>
         SizedBox(height: size.height * 0.02),
         Text(
           'add some photos to fill this space up',
-          style: TextStyle(fontSize: 18),
+          style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
     ),
@@ -172,7 +175,7 @@ class _WrapGridState extends State<WrapGrid> {
         print("Photo: ${widget.photos[i].toJson()}");
         _tiles.add(
           GridElement(
-            width: widget._size.width * 0.3,
+            width: widget._size.width * 0.31,
             photo: widget.photos[i],
             image: widget.precachedImages[i],
           ),

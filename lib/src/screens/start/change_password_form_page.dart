@@ -7,7 +7,7 @@ import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   @override
@@ -124,11 +124,7 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                             },
                             child: new Text(
                               " resend email",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
+                              style: Theme.of(context).textTheme.button,
                             ),
                           )
                         ],

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uniq/src/models/board.dart';
-import 'package:uniq/src/screens/home/home_page.dart';
 
 class UniqButton extends StatelessWidget {
   final String text;
@@ -38,35 +36,6 @@ class UniqButton extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class DeleteAlert extends StatelessWidget {
-  final String deleteMessage;
-  final Function deleteAction;
-  const DeleteAlert({Key key, this.deleteMessage, this.deleteAction})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Confirmation"),
-      content: Text(deleteMessage),
-      actions: [
-        FlatButton(
-            color: Theme.of(context).accentColor,
-            onPressed: deleteAction,
-            child: Text("Yes")),
-        FlatButton(
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("No")),
-      ],
-      shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0)),
     );
   }
 }

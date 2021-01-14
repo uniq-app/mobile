@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                                 style: Theme.of(context)
                                     .appBarTheme
                                     .textTheme
-                                    .headline6,
+                                    .headline1,
                               ),
                             ],
                           ),

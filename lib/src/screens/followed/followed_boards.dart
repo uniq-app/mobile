@@ -51,7 +51,7 @@ class _FollowedBoardsState extends State<FollowedBoards> {
                   children: [
                     Text(
                       "followed boards",
-                      style: Theme.of(context).appBarTheme.textTheme.headline6,
+                      style: Theme.of(context).appBarTheme.textTheme.headline1,
                     ),
                   ],
                 ),
@@ -79,8 +79,10 @@ class _FollowedBoardsState extends State<FollowedBoards> {
                               SvgPicture.asset('assets/images/empty_heart.svg'),
                         ),
                         SizedBox(height: size.height * 0.01),
-                        Text('your follow list is empty',
-                            style: TextStyle(fontSize: 18)),
+                        Text(
+                          'your follow list is empty',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                       ],
                     ),
                   );
