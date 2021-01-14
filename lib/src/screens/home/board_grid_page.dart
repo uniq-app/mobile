@@ -175,7 +175,7 @@ class _WrapGridState extends State<WrapGrid> {
         print("Photo: ${widget.photos[i].toJson()}");
         _tiles.add(
           GridElement(
-            width: widget._size.width * 0.3155,
+            width: widget._size.width * 0.31,
             photo: widget.photos[i],
             image: widget.precachedImages[i],
           ),

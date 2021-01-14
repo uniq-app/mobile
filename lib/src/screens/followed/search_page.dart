@@ -82,8 +82,9 @@ class _SearchPageState extends State<SearchPage>
                   ),
                 ),
                 pinned: true,
-                expandedHeight: size.height * 0.08,
-                collapsedHeight: size.height * 0.08,
+                toolbarHeight: size.height * 0.081,
+                expandedHeight: size.height * 0.081,
+                collapsedHeight: size.height * 0.083,
               ),
               BlocBuilder<SearchBoardsBloc, SearchBoardsState>(
                 builder: (BuildContext context, SearchBoardsState state) {
