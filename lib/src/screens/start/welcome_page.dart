@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniq/src/shared/constants.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomePage extends StatefulWidget {

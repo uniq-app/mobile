@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class RegisterPage extends StatefulWidget {
   @override

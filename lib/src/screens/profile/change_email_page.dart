@@ -6,7 +6,7 @@ import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class ChangeEmailPage extends StatefulWidget {
   final String email;

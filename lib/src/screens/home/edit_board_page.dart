@@ -12,7 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/shared/components/board_cover_settings.dart';
 import 'package:uniq/src/shared/components/input_form_field.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_alert.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class EditBoardPage extends StatefulWidget {
   final Board board;
@@ -181,12 +182,12 @@ class _EditBoardPageState extends State<EditBoardPage> {
                             onPressed: () {
                               showDialog(
                                   context: context,
-                                  child: DeleteAlert(
-                                      deleteMessage:
+                                  child: UniqAlert(
+                                      message:
                                           "Do you want to delete board called '" +
                                               widget.board.name +
                                               "'?",
-                                      deleteAction: _deleteBoard));
+                                      action: _deleteBoard));
                             })
                       ],
                     ),

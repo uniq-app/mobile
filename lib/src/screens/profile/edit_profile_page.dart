@@ -4,9 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/shared/components/input_form_field.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_alert.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class EditProfilePage extends StatefulWidget {
   //TODO: Add profile data
@@ -111,10 +112,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             onPressed: () {
                               showDialog(
                                   context: context,
-                                  child: DeleteAlert(
-                                      deleteMessage:
+                                  child: UniqAlert(
+                                      message:
                                           "Are you sure to delete your profile?",
-                                      deleteAction: _deleteProfile));
+                                      action: _deleteProfile));
                             })
                       ],
                     ),

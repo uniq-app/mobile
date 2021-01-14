@@ -8,7 +8,7 @@ import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/screens/profile/edit_profile_page.dart';
 import 'package:uniq/src/shared/components/settings_list_element.dart';
 import 'package:uniq/src/shared/constants.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_alert.dart';
 
 class UserSettingsPage extends StatefulWidget {
   @override
@@ -154,9 +154,9 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
             onPressed: () {
               showDialog(
                   context: context,
-                  child: DeleteAlert(
-                      deleteMessage: "Are you sure to log out?",
-                      deleteAction: _sendLogout));
+                  child: UniqAlert(
+                      message: "Are you sure to log out?",
+                      action: _sendLogout));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
