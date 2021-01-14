@@ -31,7 +31,7 @@ class AppTheme {
       backgroundColor: Color(0xff7E408A),
     ),
     // Define the default font family.
-    fontFamily: 'Nunito',
+    fontFamily: 'Lato',
     // Define the default TextTheme. Use this to specify the default
     // text styling for headlines, titles, bodies of text, and more.
     textTheme: TextTheme(
@@ -57,7 +57,7 @@ class AppTheme {
       ),
       subtitle1: TextStyle(
         fontSize: 20,
-        fontWeight: FontWeight.w200,
+        fontWeight: FontWeight.w300,
         color: Colors.white,
       ),
     ),
