@@ -28,10 +28,34 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    precachePicture(
-      ExactAssetPicture(
-          SvgPicture.svgStringDecoder, "assets/images/imagination.svg"),
-      null,
+    _precacheImages();
+  }
+
+  _precacheImages() {
+    List<String> images = List.from([
+      "imagination",
+      "create",
+      "forgot_password",
+      "verified",
+      "empty_heart",
+      "not_found",
+      "searching",
+      "blank_canvas",
+      "verified",
+      "chill",
+      "polaroid_photo",
+      "authentication",
+      "settings",
+      "verified",
+      "form",
+      "password",
+    ]);
+    images.forEach(
+      (fileName) => precachePicture(
+        ExactAssetPicture(
+            SvgPicture.svgStringDecoder, "assets/images/$fileName.svg"),
+        null,
+      ),
     );
   }
 

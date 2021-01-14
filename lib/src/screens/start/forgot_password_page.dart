@@ -106,7 +106,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                               style: TextStyle(fontSize: 14)),
                           InkWell(
                             onTap: () {
-                              Navigator.popAndPushNamed(context, loginRoute);
+                              Navigator.pop(context);
                             },
                             child: new Text(
                               " login",
