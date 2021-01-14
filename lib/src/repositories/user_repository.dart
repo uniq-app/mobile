@@ -1,5 +1,6 @@
 abstract class UserRepository {
   Future activate(String code);
+  Future getCode();
   Future forgotPassword(String email);
   Future updatePassword(String newPassword, oldPassword, repeatedNewPassword);
   Future resendCode(String email);

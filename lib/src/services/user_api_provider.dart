@@ -1,12 +1,20 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:uniq/src/repositories/user_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:uniq/src/shared/constants.dart';
+import 'package:uniq/src/shared/logging_interceptor.dart';
+import 'package:uniq/src/shared/token_interceptor.dart';
 
 class UserApiProvider implements UserRepository {
-  Client client = Client();
+  Client client = HttpClientWithInterceptor.build(
+    interceptors: [
+      TokenInterceptor(),
+      LoggingInterceptor(),
+    ],
+  );
   final storage = new FlutterSecureStorage();
   final headers = {"Content-Type": "application/json"};
 
@@ -27,6 +35,15 @@ class UserApiProvider implements UserRepository {
   }
 
   @override
+  Future getCode() async {
+    final response = await client.post('$_apiUrl/code_email', headers: headers);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+    } else {
+      throw Exception('Something went wrong');
+    }
+  }
+
+  @override
   Future forgotPassword(String email) async {
     var credentialsMap = {
       "email": email,
@@ -43,7 +60,7 @@ class UserApiProvider implements UserRepository {
 
   @override
   Future updatePassword(
-      String newPassword, oldPassword, repeatedNewPassword) async {
+      String oldPassword, newPassword, repeatedNewPassword) async {
     var credentialsMap = {
       "newPassword": newPassword,
       "oldPassword": oldPassword,
@@ -54,9 +71,10 @@ class UserApiProvider implements UserRepository {
         await client.put('$_apiUrl/password', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
-    } else {
-      throw Exception('Something went wrong');
-    }
+    } else if (response.statusCode == 409) {
+      throw Exception('Wrong password');
+    } else
+      throw Exception('Failed to update password');
   }
 
   @override
@@ -90,11 +108,12 @@ class UserApiProvider implements UserRepository {
   @override
   Future updateEmail(String email) async {
     var credentialsMap = {
-      "email": email,
+      "newEmail": email,
     };
     String body = json.encode(credentialsMap);
     final response =
         await client.put('$_apiUrl/update_email', body: body, headers: headers);
+
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -129,7 +148,7 @@ class UserApiProvider implements UserRepository {
     if (response.statusCode == 201 || response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      throw Exception('Something went wrong');
+      throw Exception('Invalid code');
     }
   }
 }

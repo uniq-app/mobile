@@ -15,6 +15,8 @@ class Activate extends UserEvent {
   List<Object> get props => [code];
 }
 
+class GetCode extends UserEvent {}
+
 class ForgotPassword extends UserEvent {
   final String email;
   ForgotPassword({@required this.email});

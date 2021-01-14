@@ -7,12 +7,14 @@ import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uniq/src/repositories/photo_repository.dart';
-import 'package:uniq/src/shared/http_interceptor.dart';
+import 'package:uniq/src/shared/token_interceptor.dart';
+import 'package:uniq/src/shared/logging_interceptor.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 class PhotoApiProvider implements PhotoRepository {
   Client client = HttpClientWithInterceptor.build(
     interceptors: [
+      TokenInterceptor(),
       LoggingInterceptor(),
     ],
   );

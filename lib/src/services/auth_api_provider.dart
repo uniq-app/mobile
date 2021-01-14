@@ -1,11 +1,17 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:uniq/src/repositories/auth_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:uniq/src/shared/constants.dart';
+import 'package:uniq/src/shared/logging_interceptor.dart';
 
 class AuthApiProvider implements AuthRepository {
-  Client client = Client();
+  Client client = HttpClientWithInterceptor.build(
+    interceptors: [
+      LoggingInterceptor(),
+    ],
+  );
   final storage = new FlutterSecureStorage();
 
   final String _apiUrl = '$host:$backendPort/auth';

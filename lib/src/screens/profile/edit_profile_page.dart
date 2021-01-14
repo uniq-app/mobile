@@ -9,6 +9,11 @@ import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
 
 class EditProfilePage extends StatefulWidget {
+  //TODO: Add profile data
+  const EditProfilePage({
+    Key key,
+    /*this.profile*/
+  }) : super(key: key);
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -17,7 +22,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String profileCover;
   final TextEditingController nameController = new TextEditingController();
   final TextEditingController bioController = new TextEditingController();
-
+  bool got = false;
   @override
   void dispose() {
     nameController.dispose();
@@ -31,7 +36,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   _updateProfile() {
-    print("Update profile!!!");
+    if (nameController.text != null && nameController.text != '') {
+      var data = new Map<String, dynamic>();
+      data['username'] = nameController.text;
+      print(data);
+      context.read<ProfileBloc>().add(PutProfileDetails(data: data));
+    }
+  }
+
+  _getData() {
+    if (this.got != true) {
+      nameController.text = "Placeholder name"; //widget.profile.name;
+      bioController.text = "Placeholder bio"; //widget.profile.bio;
+      this.got = true;
+    }
   }
 
   Future _getImage() async {
@@ -63,7 +81,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
         } else if (state is PutProfileDetailsError) {
           showToast(
-            "Failed to update board - ${state.error.message}",
+            "${state.error.message}",
             position: ToastPosition.bottom,
             backgroundColor: Colors.redAccent,
           );

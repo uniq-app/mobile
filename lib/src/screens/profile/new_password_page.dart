@@ -28,13 +28,32 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
     super.dispose();
   }
 
+  _updatePassword() {
+    context.read<UserBloc>().add(UpdatePassword(
+        oldPassword: oldPasswordController.text,
+        newPassword: passwordController.text));
+  }
+
   final _NewPasswordKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
     return BlocListener<UserBloc, UserState>(
       listener: (context, UserState state) {
-        // TODO: implement listener
+        if (state is UpdatePasswordSuccess) {
+          Navigator.pop(context);
+          showToast(
+            "Successfuly updated password!",
+            position: ToastPosition.bottom,
+            backgroundColor: Colors.green,
+          );
+        } else if (state is UpdatePasswordError) {
+          showToast(
+            "${state.error.message}",
+            position: ToastPosition.bottom,
+            backgroundColor: Colors.redAccent,
+          );
+        }
       },
       child: Scaffold(
         body: Container(
@@ -115,10 +134,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                           color: Theme.of(context).buttonColor,
                           push: () {
                             if (_NewPasswordKey.currentState.validate()) {
-                              // TODO: BLOC implementation
-                              /*context.read<UserBloc>().add(ChangePassword(
-                                oldPassword: oldPasswordController.text,
-                                password: passwordController.text));*/
+                              _updatePassword();
                             }
                           },
                           text: "change my password",

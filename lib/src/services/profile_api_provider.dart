@@ -4,11 +4,13 @@ import 'package:uniq/src/models/profile_details.dart';
 import 'package:uniq/src/repositories/profile_repository.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
-import 'package:uniq/src/shared/http_interceptor.dart';
+import 'package:uniq/src/shared/logging_interceptor.dart';
+import 'package:uniq/src/shared/token_interceptor.dart';
 
 class ProfileApiProvider implements ProfileRepository {
   Client client = HttpClientWithInterceptor.build(
     interceptors: [
+      TokenInterceptor(),
       LoggingInterceptor(),
     ],
   );
@@ -28,6 +30,7 @@ class ProfileApiProvider implements ProfileRepository {
   @override
   Future putProfileDetails(Map<String, dynamic> data) async {
     var body = json.encode(data);
+    print(body);
     final response = await client.put('$_apiUrl', body: body);
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ProfileDetails.fromJson(json.decode(response.body));

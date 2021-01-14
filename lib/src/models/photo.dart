@@ -3,20 +3,23 @@ class Photo {
   String _boardId;
   String _value;
   int _order;
+  String _extraData;
 
   Photo.fromJson(Map<String, dynamic> parsedJson) {
-    _photoId = parsedJson['photo_id'] ?? "";
-    _boardId = parsedJson['board'] ?? "";
+    _photoId = parsedJson['photoId'] ?? "";
+    _boardId = parsedJson['boardId'] ?? "";
     _value = parsedJson['value'] ?? "";
     _order = parsedJson['order'] ?? 0;
+    _extraData = parsedJson['extraData'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = new Map<String, dynamic>();
-    data['photo_id'] = _photoId;
-    data['board_id'] = _boardId;
+    data['photoId'] = _photoId;
+    data['boardId'] = _boardId;
     data['value'] = _value;
     data['order'] = _order;
+    data['extraData'] = _extraData;
     return data;
   }
 
