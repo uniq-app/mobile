@@ -6,12 +6,14 @@ class BoardCoverSettings extends StatelessWidget {
   final String image;
   final VoidCallback editLink;
   final double widthFraction, heightFraction;
+  final Color filterColor;
   const BoardCoverSettings(
       {Key key,
       this.image,
       this.editLink,
-      this.widthFraction = 0.8,
-      this.heightFraction = 0.15})
+      this.widthFraction = 1,
+      this.heightFraction = 0.17,
+      this.filterColor = Colors.grey})
       : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class BoardCoverSettings extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   colorFilter:
-                      ColorFilter.mode(Colors.grey, BlendMode.multiply),
+                      ColorFilter.mode(filterColor, BlendMode.multiply),
                   image: (image == null)
                       ? AssetImage('assets/defaultCover.jpg')
                       : (image.contains('http'))
@@ -42,7 +44,7 @@ class BoardCoverSettings extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Change Cover",
+                    Text("change cover",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,

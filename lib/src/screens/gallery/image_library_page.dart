@@ -47,7 +47,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
         toolbarHeight: size.height * 0.085,
         title: Text(
           'pick images',
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headline1,
         ),
       ),
       body: _body(),

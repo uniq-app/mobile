@@ -31,6 +31,7 @@ class UniqInputIconField extends StatelessWidget {
       onChanged: onChanged,
       controller: controller,
       cursorColor: Theme.of(context).primaryColor,
+      style: Theme.of(context).textTheme.bodyText2,
       validator: validator,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),

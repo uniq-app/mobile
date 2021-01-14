@@ -5,7 +5,7 @@ import 'package:uniq/src/blocs/user/user_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 import 'package:oktoast/oktoast.dart';
 
 class ActivateAccountPage extends StatefulWidget {
@@ -68,10 +68,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                     SizedBox(height: size.height * 0.03),
                     Text(
                       "activate UNIQ account",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
-                      ),
+                      style: Theme.of(context).textTheme.headline3,
                     ),
                     SizedBox(height: size.height * 0.03),
                     UniqInputIconField(
@@ -120,11 +117,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                           },
                           child: new Text(
                             " resend email",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
+                            style: Theme.of(context).textTheme.button,
                           ),
                         )
                       ],

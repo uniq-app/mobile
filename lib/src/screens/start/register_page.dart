@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/input_field.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:uniq/src/shared/utilities.dart';
+import 'package:uniq/src/shared/components/uniq_button.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -70,10 +70,7 @@ class _RegisterPage extends State<RegisterPage> {
                       children: <Widget>[
                         Text(
                           "create UNIQ account",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 19,
-                          ),
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                         SizedBox(height: size.height * 0.05),
                         UniqInputIconField(
@@ -160,10 +157,7 @@ class _RegisterPage extends State<RegisterPage> {
                               },
                               child: new Text(
                                 " login",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                                style: Theme.of(context).textTheme.button,
                               ),
                             )
                           ],
