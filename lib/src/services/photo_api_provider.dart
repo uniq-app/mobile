@@ -24,21 +24,23 @@ class PhotoApiProvider implements PhotoRepository {
   static String get apiUrl => _apiUrl;
 
   Future<List<String>> postAll(List<Asset> assets) async {
-    List<String> values = new List();
+    List<Future> futures = new List();
     for (Asset asset in assets) {
-      var result = await postImage(asset);
-      print("Result of posting single image: $result");
-      values.add(result);
+      futures.add(postImage(asset));
     }
-    return values;
+    var results = await Future.wait(futures);
+    print(results);
+    return new List.from(results);
   }
 
   Future<List<String>> postAllFromCamera(List<File> images) async {
-    List<String> values = new List();
+    List<Future> futures = new List();
     for (File file in images) {
-      values.add(await postImageFromFile(file));
+      futures.add(postImageFromFile(file));
     }
-    return values;
+    var results = await Future.wait(futures);
+    print(results);
+    return new List.from(results);
   }
 
   Future<File> getFileFromAsset(Asset asset) async {
