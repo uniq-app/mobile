@@ -45,6 +45,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.green[400],
                 );
+                // TODO: Switch to welcomeRoute or popUntil login
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     loginRoute, (Route<dynamic> route) => false);
               } else if (state is ActivateError) {
@@ -115,7 +116,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                           onTap: () {
                             _resendEmail();
                           },
-                          child: new Text(
+                          child: Text(
                             " resend email",
                             style: Theme.of(context).textTheme.button,
                           ),

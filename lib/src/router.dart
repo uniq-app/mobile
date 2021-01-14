@@ -14,6 +14,7 @@ import 'package:uniq/src/screens/start/change_password_form_page.dart';
 import 'package:uniq/src/screens/home/create_board_page.dart';
 import 'package:uniq/src/screens/home/edit_board_page.dart';
 import 'package:uniq/src/screens/credentials_check_page.dart';
+import 'package:uniq/src/screens/start/forgot_password_code_page.dart';
 import 'package:uniq/src/screens/start/forgot_password_page.dart';
 import 'package:uniq/src/screens/start/change_password_code_page.dart';
 import 'package:uniq/src/screens/start/register_page.dart';
@@ -52,13 +53,24 @@ class MainRouter {
         return MaterialPageRoute(
           builder: (_) => ForgotPasswordPage(),
         );
+      case forgotPasswordCodePage:
+        String email = settings.arguments;
+        return MaterialPageRoute(
+          builder: (_) => ForgotPasswordCodePage(
+            email: email,
+          ),
+        );
       case changePasswordCodeRoute:
         String email = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => ChangePasswordCodePage(email: email),
         );
       case changePasswordRoute:
-        return MaterialPageRoute(builder: (_) => ChangePasswordPage());
+        String email = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => ChangePasswordPage(
+                  email: email,
+                ));
 
       //Change email routes
       case changeEmailCodeRoute:
