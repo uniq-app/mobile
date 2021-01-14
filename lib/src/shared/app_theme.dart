@@ -10,7 +10,6 @@ class AppTheme {
 
   static final ThemeData mainTheme = ThemeData(
     // Define the default brightness and colors.
-
     brightness: Brightness.dark,
     primaryColor: Color(0xffB65DC7),
     primaryColorLight: Color(0xff7E408A),
@@ -35,6 +34,32 @@ class AppTheme {
     fontFamily: 'Nunito',
     // Define the default TextTheme. Use this to specify the default
     // text styling for headlines, titles, bodies of text, and more.
-    textTheme: TextTheme(),
+    textTheme: TextTheme(
+      headline1: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+      ),
+      headline2: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w300,
+        color: Colors.white,
+      ),
+      headline3: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w200,
+        color: Colors.white,
+      ),
+      bodyText1: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w300,
+        color: Colors.white,
+      ),
+      subtitle1: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w200,
+        color: Colors.white,
+      ),
+    ),
   );
 }

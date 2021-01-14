@@ -12,8 +12,8 @@ class BoardListElement extends StatelessWidget {
       this.board,
       this.boardLink,
       this.iconAction,
-      this.widthFraction = 0.8,
-      this.heightFraction = 0.16,
+      this.widthFraction = 1.0,
+      this.heightFraction = 0.2,
       this.icon,
       this.iconSize = 26})
       : super(key: key);
@@ -31,14 +31,15 @@ class BoardListElement extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                colorFilter: ColorFilter.mode(Colors.grey, BlendMode.multiply),
+                colorFilter:
+                    ColorFilter.mode(Colors.grey[400], BlendMode.multiply),
                 image: board.cover != ''
                     ? NetworkImage(url)
                     : AssetImage('assets/defaultCover.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
-            padding: EdgeInsets.all(12),
+            padding: EdgeInsets.all(8),
             width: size.width * widthFraction,
             alignment: Alignment.topCenter,
             height: size.height * heightFraction,
@@ -48,16 +49,15 @@ class BoardListElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(bottom: 3),
-                      child: Text(board.name,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w300)),
+                      width: size.width * 0.75,
+                      child: Text(
+                        board.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
                     ),
                     IconButton(
                       alignment: Alignment.topRight,
-                      padding: EdgeInsets.only(top: 0),
                       icon: icon,
                       color: Colors.white,
                       iconSize: iconSize,
@@ -71,12 +71,14 @@ class BoardListElement extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.symmetric(horizontal: 3),
                     color: Color(0x77181818),
-                    height: size.height * heightFraction * 0.35,
-                    child: Text(board.description ?? '',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w200)),
+                    height: size.height * heightFraction * 0.50,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        board.description ?? '',
+                        style: Theme.of(context).textTheme.bodyText1,
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
                   ),
                 ),
               ],
