@@ -18,6 +18,7 @@ class SelectBoardDialogService {
 
   showCustomDialog() => showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return BlocBuilder<BoardBloc, BoardState>(
             builder: (BuildContext context, BoardState state) {
@@ -58,8 +59,9 @@ class SelectBoardDialogService {
               );
               Navigator.pop(context, true);
             } else if (state is PhotosError) {
+              print("State error instance: ${state.error}");
               showToast(
-                "Failed to add photos - ${state.error.message}",
+                "Failed to add photos - ${state.error?.message}",
                 position: ToastPosition.bottom,
                 backgroundColor: Colors.redAccent,
               );

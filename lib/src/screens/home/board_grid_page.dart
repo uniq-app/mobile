@@ -109,10 +109,11 @@ class _BoardGridPageState extends State<BoardGridPage>
   Widget _body() {
     return BlocBuilder<PhotoBloc, PhotoState>(
       builder: (BuildContext context, PhotoState state) {
+        print("State: $state");
         if (state is PhotosError) {
           final error = state.error;
           return CustomError(
-            message: '${error.message}.\nTap to retry.',
+            message: '${error?.message}.\nTap to retry.',
             onTap: _loadPhotos,
           );
         } else if (state is PhotosLoaded) {
