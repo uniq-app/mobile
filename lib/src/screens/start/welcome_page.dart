@@ -57,9 +57,7 @@ class _WelcomePageState extends State<WelcomePage>
             ),
             Text(
               "welcome to UNIQ",
-              style: TextStyle(
-                fontSize: 24,
-              ),
+              style: Theme.of(context).textTheme.headline3,
             ),
             SizedBox(height: size.height * 0.04),
             UniqButton(

@@ -69,10 +69,7 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                       SizedBox(height: size.height * 0.02),
                       Text(
                         "change your email",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                        ),
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                       SizedBox(height: size.height * 0.03),
                       UniqInputIconField(
@@ -102,7 +99,7 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("did not receive code? -",
-                              style: TextStyle(fontSize: 14)),
+                              style: Theme.of(context).textTheme.subtitle2),
                           InkWell(
                             onTap: () {
                               showToast(
@@ -113,11 +110,7 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                             },
                             child: new Text(
                               " resend email",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
+                              style: Theme.of(context).textTheme.button,
                             ),
                           )
                         ],

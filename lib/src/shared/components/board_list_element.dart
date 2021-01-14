@@ -7,6 +7,7 @@ class BoardListElement extends StatelessWidget {
   final VoidCallback boardLink, iconAction;
   final double widthFraction, heightFraction, iconSize;
   final Icon icon;
+  final Color filterColor;
   BoardListElement(
       {Key key,
       this.board,
@@ -15,7 +16,8 @@ class BoardListElement extends StatelessWidget {
       this.widthFraction = 1.0,
       this.heightFraction = 0.2,
       this.icon,
-      this.iconSize = 26})
+      this.iconSize = 26,
+      this.filterColor = Colors.grey})
       : super(key: key);
 
   @override
@@ -49,11 +51,12 @@ class BoardListElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
+                      height: size.height * heightFraction * 0.30,
                       width: size.width * 0.75,
                       child: Text(
                         board.name,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
                     IconButton(

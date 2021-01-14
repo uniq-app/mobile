@@ -27,7 +27,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
   final TextEditingController descriptionController =
       new TextEditingController();
 
-  Color tempColor = Colors.amber[700];
+  Color tempColor = Colors.deepPurple[200];
   @override
   void dispose() {
     nameController.dispose();
@@ -69,25 +69,20 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
       borderRadius: 15,
       spacing: 5,
       runSpacing: 5,
-      wheelDiameter: 220,
+      wheelDiameter: 210,
       heading: Text(
-        'Select color',
+        'select color',
         style: Theme.of(context).textTheme.subtitle1,
       ),
       subheading: Text(
-        'Select color shade',
-        style: Theme.of(context).textTheme.subtitle1,
+        'select color shade',
+        style: Theme.of(context).textTheme.subtitle2,
       ),
       wheelSubheading: Text(
-        'Selected color and its shades',
-        style: Theme.of(context).textTheme.subtitle1,
+        'selected color and its shades',
+        style: Theme.of(context).textTheme.subtitle2,
       ),
-      showMaterialName: false,
-      showColorName: false,
-      showColorCode: false,
-      materialNameTextStyle: Theme.of(context).textTheme.caption,
-      colorNameTextStyle: Theme.of(context).textTheme.caption,
-      colorCodeTextStyle: Theme.of(context).textTheme.caption,
+
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.both: false,
         ColorPickerType.primary: true,
@@ -100,14 +95,13 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     ).showPickerDialog(
       context,
       constraints: const BoxConstraints(
-          minHeight: 455, minWidth: 320, maxWidth: 320, maxHeight: 455),
+          minHeight: 460, minWidth: 320, maxWidth: 320, maxHeight: 460),
     );
   }
 
   final _CreateKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    print(boardCover);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -133,119 +127,125 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
             child: Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _CreateKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Create board",
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ],
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "create board",
+                          style: Theme.of(context).textTheme.headline1,
+                        ),
+                      ],
+                    ),
 
-                  SizedBox(height: size.height * 0.05),
-                  UniqInputField(
-                    cursorColor: Theme.of(context).accentColor,
-                    isObscure: false,
-                    labelText: "Name",
-                    controller: nameController,
-                    validator: (value) {
-                      if (value.isEmpty) return "Name cannot be empty";
-                    },
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  UniqInputField(
-                    cursorColor: Theme.of(context).accentColor,
-                    isObscure: false,
-                    labelText: "Description",
-                    controller: descriptionController,
-                    maxLines: null,
-                    validator: (value) {
-                      if (value.isEmpty) return "Description cannot be empty";
-                    },
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  // TODO: Kolor domyślny jak nie wybrano covera
-                  BoardCoverSettings(
-                    image: boardCover,
-                    editLink: _getImage,
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  // todo: Change stateful to bloc
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: InkWell(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        width: size.width * 0.9,
-                        height: size.height * 0.07,
-                        padding: EdgeInsets.only(left: 20),
-                        color: tempColor,
-                        child: Text("Change color",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300)),
-                      ),
-                      onTap: () async {
-                        final Color colorBeforeDialog = tempColor;
-                        if (!(await colorPickerDialog(tempColor))) {
-                          setState(() {
-                            tempColor = colorBeforeDialog;
-                          });
-                        }
+                    SizedBox(height: size.height * 0.05),
+                    UniqInputField(
+                      cursorColor: Theme.of(context).accentColor,
+                      isObscure: false,
+                      labelText: "name",
+                      maxLength: 20,
+                      controller: nameController,
+                      validator: (value) {
+                        if (value.isEmpty) return "Name cannot be empty";
                       },
                     ),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Private",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w300)),
-                      Checkbox(
-                        value: isPrivate,
-                        onChanged: (value) {
-                          setState(() {
-                            isPrivate = value;
-                          });
-                        },
-                        activeColor: tempColor,
+                    SizedBox(height: size.height * 0.02),
+                    UniqInputField(
+                      cursorColor: Theme.of(context).accentColor,
+                      isObscure: false,
+                      labelText: "description",
+                      controller: descriptionController,
+                      maxLines: null,
+                      validator: (value) {
+                        if (value.isEmpty) return "Description cannot be empty";
+                      },
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    // TODO: Kolor wybrany jak nie wybrano covera
+                    if (boardCover != null)
+                      BoardCoverSettings(
+                        image: boardCover,
+                        editLink: _getImage,
+                      )
+                    else
+                      BoardCoverSettings(
+                        filterColor: tempColor,
+                        editLink: _getImage,
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      UniqButton(
-                        screenWidth: 0.35,
-                        screenHeight: 0.07,
-                        color: tempColor,
-                        push: () {
-                          if (_CreateKey.currentState.validate()) {
-                            _createBoard();
+                    SizedBox(height: size.height * 0.02),
+                    // todo: Change stateful to bloc
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: InkWell(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          width: size.width * 0.9,
+                          height: size.height * 0.07,
+                          padding: EdgeInsets.only(left: 20),
+                          color: tempColor,
+                          child: Text(
+                            "change color",
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ),
+                        onTap: () async {
+                          final Color colorBeforeDialog = tempColor;
+                          if (!(await colorPickerDialog(tempColor))) {
+                            setState(() {
+                              tempColor = colorBeforeDialog;
+                            });
                           }
                         },
-                        text: "Save",
                       ),
-                      UniqButton(
-                        screenWidth: 0.35,
-                        screenHeight: 0.07,
-                        color: Theme.of(context).accentColor,
-                        push: () {
-                          Navigator.pop(context);
-                        },
-                        text: "Cancel",
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(height: size.height * 0.01),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("private",
+                            style: Theme.of(context).textTheme.subtitle1),
+                        Checkbox(
+                          value: isPrivate,
+                          onChanged: (value) {
+                            setState(() {
+                              isPrivate = value;
+                            });
+                          },
+                          activeColor: tempColor,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.01),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        UniqButton(
+                          screenWidth: 0.35,
+                          screenHeight: 0.07,
+                          color: tempColor,
+                          push: () {
+                            if (_CreateKey.currentState.validate()) {
+                              _createBoard();
+                            }
+                          },
+                          text: "save",
+                        ),
+                        UniqButton(
+                          screenWidth: 0.35,
+                          screenHeight: 0.07,
+                          color: Theme.of(context).accentColor,
+                          push: () {
+                            Navigator.pop(context);
+                          },
+                          text: "cancel",
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

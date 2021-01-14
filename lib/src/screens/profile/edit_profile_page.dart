@@ -22,12 +22,10 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   String profileCover;
   final TextEditingController nameController = new TextEditingController();
-  final TextEditingController bioController = new TextEditingController();
   bool got = false;
   @override
   void dispose() {
     nameController.dispose();
-    bioController.dispose();
     super.dispose();
   }
 
@@ -47,29 +45,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   _getData() {
     if (this.got != true) {
-      nameController.text = "Placeholder name"; //widget.profile.name;
-      bioController.text = "Placeholder bio"; //widget.profile.bio;
+      nameController.text = "Placeholdername"; //widget.profile.name;
       this.got = true;
     }
-  }
-
-  Future _getImage() async {
-    final image = await ImagePicker().getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (image != null) {
-        profileCover = image.path;
-        print(image.path);
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   final _editProfileKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    _getData();
     Size size = MediaQuery.of(context).size;
     return BlocListener<ProfileBloc, ProfileState>(
       listener: (context, ProfileState state) {
@@ -99,31 +84,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "edit profile",
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        IconButton(
-                            iconSize: 35,
-                            icon: Icon(Icons.delete_forever),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  child: UniqAlert(
-                                      message:
-                                          "Are you sure to delete your profile?",
-                                      action: _deleteProfile));
-                            })
-                      ],
-                    ),
                     SizedBox(height: size.height * 0.02),
                     Container(
                       height: size.height * 0.3,
                       child:
                           SvgPicture.asset("assets/images/polaroid_photo.svg"),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    Text(
+                      "edit name",
+                      style: Theme.of(context).textTheme.headline3,
                     ),
                     SizedBox(height: size.height * 0.03),
                     UniqInputField(
@@ -133,61 +103,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       controller: nameController,
                       maxLength: 15,
                       validator: (value) {
-                        if (value.isEmpty) return 'Enter name of the board';
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: size.height * 0.01),
-                    UniqInputField(
-                      cursorColor: Theme.of(context).accentColor,
-                      isObscure: false,
-                      labelText: "bio",
-                      controller: bioController,
-                      maxLines: null,
-                      validator: (value) {
-                        if (value.isEmpty) return null;
+                        if (value.isEmpty) return 'enter your name';
                         return null;
                       },
                     ),
                     SizedBox(height: size.height * 0.02),
-                    /*if (boardCover != null)
-                        BoardCoverSettings(
-                          image: boardCover,
-                          editLink: _getImage,
-                        )
-                      else if (widget.board.cover != '')
-                        BoardCoverSettings(
-                          image:
-                              "${PhotoApiProvider.apiUrl}/thumbnail/${widget.board.cover}",
-                          editLink: _getImage,
-                        )
-                      else
-                        BoardCoverSettings(
-                          editLink: _getImage,
-                        ),*/
+                    UniqButton(
+                      color: Theme.of(context).buttonColor,
+                      push: () {
+                        if (_editProfileKey.currentState.validate()) {
+                          _updateProfile();
+                        }
+                      },
+                      text: "change",
+                    ),
                     SizedBox(height: size.height * 0.02),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        UniqButton(
-                          screenWidth: 0.35,
-                          screenHeight: 0.07,
-                          color: Theme.of(context).primaryColor,
-                          push: () {
-                            if (_editProfileKey.currentState.validate()) {
-                              _updateProfile();
-                            }
+                        FlatButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                child: UniqAlert(
+                                    message:
+                                        "are you sure to delete your profile?",
+                                    action: _deleteProfile));
                           },
-                          text: "Save",
-                        ),
-                        UniqButton(
-                          screenWidth: 0.35,
-                          screenHeight: 0.07,
-                          color: Theme.of(context).accentColor,
-                          push: () {
-                            Navigator.pop(context);
-                          },
-                          text: "Cancel",
+                          child: Text(
+                            "delete profile",
+                            style: TextStyle(color: Colors.redAccent),
+                          ),
                         )
                       ],
                     ),

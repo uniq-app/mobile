@@ -84,6 +84,11 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                           child: SvgPicture.asset(
                               "assets/images/authentication.svg"),
                         ),
+                        SizedBox(height: size.height * 0.02),
+                        Text(
+                          "change password",
+                          style: Theme.of(context).textTheme.headline3,
+                        ),
                         SizedBox(height: size.height * 0.03),
                         UniqInputIconField(
                           color: Theme.of(context).accentColor,

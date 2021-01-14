@@ -64,7 +64,7 @@ class TakePhotoScreenState extends State<TakePhotoScreen> {
         toolbarHeight: size.height * 0.085,
         title: Text(
           'take a photo',
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.headline1,
         ),
       ),
       body: _body(),

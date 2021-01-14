@@ -68,10 +68,7 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
                       SizedBox(height: size.height * 0.02),
                       Text(
                         "change your email",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                        ),
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                       SizedBox(height: size.height * 0.03),
                       UniqInputIconField(

@@ -76,13 +76,14 @@ class _SearchPageState extends State<SearchPage>
                             Icons.search,
                             color: white,
                           ),
-                          hintStyle: TextStyle(color: white)),
-                      style: TextStyle(fontSize: 20, color: white),
+                          hintStyle: Theme.of(context).textTheme.subtitle1),
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ),
                 ),
                 pinned: true,
                 expandedHeight: size.height * 0.08,
+                collapsedHeight: size.height * 0.08,
               ),
               BlocBuilder<SearchBoardsBloc, SearchBoardsState>(
                 builder: (BuildContext context, SearchBoardsState state) {
@@ -112,8 +113,10 @@ class _SearchPageState extends State<SearchPage>
                                   'assets/images/not_found.svg'),
                             ),
                             SizedBox(height: size.height * 0.01),
-                            Text('nothing have been found',
-                                style: TextStyle(fontSize: 18))
+                            Text(
+                              'nothing have been found',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            )
                           ]),
                     );
                   } else if (state is SearchForBoardsError) {
@@ -138,8 +141,10 @@ class _SearchPageState extends State<SearchPage>
                                   'assets/images/searching.svg'),
                             ),
                             SizedBox(height: size.height * 0.01),
-                            Text('search for inspiration',
-                                style: TextStyle(fontSize: 18))
+                            Text(
+                              'search for inspiration',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            )
                           ]),
                     );
                   }

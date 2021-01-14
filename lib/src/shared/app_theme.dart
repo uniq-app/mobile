@@ -18,7 +18,11 @@ class AppTheme {
     buttonColor: Colors.grey[900],
     appBarTheme: AppBarTheme(
       textTheme: TextTheme(
-        headline6: TextStyle(fontSize: 16),
+        headline1: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w300,
+          color: Colors.white,
+        ),
       ),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -32,33 +36,51 @@ class AppTheme {
     ),
     // Define the default font family.
     fontFamily: 'Lato',
-    // Define the default TextTheme. Use this to specify the default
-    // text styling for headlines, titles, bodies of text, and more.
+    //Appbar text
     textTheme: TextTheme(
       headline1: TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.w300,
+        color: Colors.white,
+      ),
+      //Board element title
+      headline2: TextStyle(
         fontSize: 28,
         fontWeight: FontWeight.w400,
         color: Colors.white,
       ),
-      headline2: TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.w300,
-        color: Colors.white,
-      ),
+      //Main text on the screen - like 'change your email' or 'login to uniq'
       headline3: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w200,
+        fontSize: 24,
+        fontWeight: FontWeight.w400,
         color: Colors.white,
       ),
+      //Board description
       bodyText1: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w300,
         color: Colors.white,
       ),
-      subtitle1: TextStyle(
+      //Subtext on the screen - like 'search for inspiration'
+      bodyText2: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w300,
         color: Colors.white,
+      ),
+      subtitle1: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+      ),
+      subtitle2: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w300,
+        color: Colors.white,
+      ),
+      button: TextStyle(
+        color: Color(0xffB65DC7),
+        fontWeight: FontWeight.w400,
+        fontSize: 15,
       ),
     ),
   );

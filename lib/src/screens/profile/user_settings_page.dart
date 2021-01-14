@@ -61,11 +61,11 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                 children: [
                   Text(
                     "profile settings",
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ],
               ),
-              SizedBox(height: size.height * 0.01),
+              SizedBox(height: size.height * 0.02),
               Container(
                 height: size.height * 0.3,
                 child: SvgPicture.asset("assets/images/settings.svg"),
@@ -77,7 +77,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                   child: Column(
                     children: [
                       UniqListElement(
-                        text: 'edit profile',
+                        text: 'edit name',
                         color: Theme.of(context).buttonColor,
                         prefixWidget: Icon(Icons.person, color: Colors.white),
                         suffixWidget:

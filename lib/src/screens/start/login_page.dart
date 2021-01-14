@@ -64,10 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: size.height * 0.02),
                       Text(
                         "login to UNIQ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                        ),
+                        style: Theme.of(context).textTheme.headline3,
                       ),
                       SizedBox(height: size.height * 0.02),
                       UniqInputIconField(
@@ -146,11 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             child: new Text(
                               " - register",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
+                              style: Theme.of(context).textTheme.button,
                             ),
                           )
                         ],

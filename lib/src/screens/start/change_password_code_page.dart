@@ -114,11 +114,7 @@ class _ChangePasswordCodePage extends State<ChangePasswordCodePage> {
                             },
                             child: new Text(
                               " resend email",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
+                              style: Theme.of(context).textTheme.button,
                             ),
                           )
                         ],

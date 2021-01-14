@@ -70,10 +70,7 @@ class _RegisterPage extends State<RegisterPage> {
                       children: <Widget>[
                         Text(
                           "create UNIQ account",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 19,
-                          ),
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                         SizedBox(height: size.height * 0.05),
                         UniqInputIconField(
@@ -160,10 +157,7 @@ class _RegisterPage extends State<RegisterPage> {
                               },
                               child: new Text(
                                 " login",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                                style: Theme.of(context).textTheme.button,
                               ),
                             )
                           ],
