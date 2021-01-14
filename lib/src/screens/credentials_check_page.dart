@@ -43,15 +43,9 @@ class CredentialsCheckPage extends StatelessWidget {
           //child: loadSplashScreen(context),
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           //TODO: Splash screen here?
-          precachePicture(
-            ExactAssetPicture(
-                SvgPicture.svgStringDecoder, "assets/images/create.svg"),
-            null,
-          );
+
           print("Snapshot waiting");
-          return Scaffold(
-            body: Loading(),
-          );
+          return Scaffold();
         }
         return WelcomePage();
       },

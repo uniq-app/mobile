@@ -1,5 +1,5 @@
 //Start
-const String welcomeRoute = '/';
+const String welcomeRoute = '/welcome-route';
 const String loginRoute = '/login_page';
 const String signupRoute = '/signup_page';
 const String activateRoute = '/activate_account_page';
@@ -22,7 +22,7 @@ const String changeEmailRoute = '/change_email_page';
 const String newPasswordRoute = '/new_password_page';
 const String editProfileRoute = '/edit_profile_page';
 //Shared
-const String credentialsCheckRoute = '/check-cred';
+const String credentialsCheckRoute = '/';
 const String applicationPage = '/app_page';
 
 const String host = "http://vps-325dcc92.vps.ovh.net";

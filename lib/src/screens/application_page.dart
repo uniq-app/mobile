@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
-import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
 import 'package:uniq/src/blocs/taken_images/taken_images_cubit.dart';
 import 'package:uniq/src/screens/followed/followed_boards.dart';
 
@@ -23,6 +23,11 @@ class ApplicationPage extends StatefulWidget {
 }
 
 class _ApplicationPageState extends State<ApplicationPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext _) {
     return MultiBlocProvider(
