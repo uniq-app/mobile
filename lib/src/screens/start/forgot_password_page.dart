@@ -23,6 +23,11 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
     super.dispose();
   }
 
+  _forgotPassword() {
+    context.read<UserBloc>().add(ForgotPassword(email: emailController.text));
+    //Navigator.popAndPushNamed(context, changePasswordCodeRoute);
+  }
+
   final _ForgotPasswordKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -89,11 +94,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                         color: Theme.of(context).buttonColor,
                         push: () {
                           if (_ForgotPasswordKey.currentState.validate()) {
-                            context.read<UserBloc>().add(
-                                ForgotPassword(email: emailController.text));
-//TODO : REMOVE this after functionality is finished
-                            Navigator.popAndPushNamed(
-                                context, changePasswordCodeRoute);
+                            _forgotPassword();
                           }
                         },
                         text: "send security code",

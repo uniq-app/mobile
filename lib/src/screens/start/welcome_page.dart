@@ -27,6 +27,12 @@ class _WelcomePageState extends State<WelcomePage>
     delay = Future.delayed(Duration(seconds: 1));
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(

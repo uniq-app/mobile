@@ -20,6 +20,7 @@ import 'package:uniq/src/screens/start/register_page.dart';
 import 'package:uniq/src/screens/start/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/screens/followed/search_page.dart';
+import 'package:uniq/src/screens/start/send_new_token_page.dart';
 import 'package:uniq/src/screens/start/welcome_page.dart';
 import 'package:uniq/src/screens/start/activate_account_page.dart';
 import './shared/constants.dart';
@@ -41,7 +42,11 @@ class MainRouter {
         return MaterialPageRoute(
           builder: (_) => ActivateAccountPage(),
         );
-
+      // Resend code routes
+      case sendNewTokenPage:
+        return MaterialPageRoute(
+          builder: (_) => SendNewTokenPage(),
+        );
       //Forgot password routes
       case forgotPasswordRoute:
         return MaterialPageRoute(

@@ -22,6 +22,10 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
     super.dispose();
   }
 
+  _resendEmail() {
+    Navigator.of(context).pushNamed(sendNewTokenPage);
+  }
+
   final _ActivateKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -112,11 +116,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                             style: TextStyle(fontSize: 14)),
                         InkWell(
                           onTap: () {
-                            showToast(
-                              "Not implemented yet",
-                              position: ToastPosition.bottom,
-                              backgroundColor: Colors.redAccent,
-                            );
+                            _resendEmail();
                           },
                           child: new Text(
                             " resend email",

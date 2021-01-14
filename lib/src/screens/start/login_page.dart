@@ -97,8 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           FlatButton(
                             onPressed: () {
-                              Navigator.of(context)
-                                  .popAndPushNamed(activateRoute);
+                              Navigator.of(context).pushNamed(activateRoute);
                             },
                             child: Text(
                               "activate account",
