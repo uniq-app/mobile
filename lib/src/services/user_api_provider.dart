@@ -108,7 +108,7 @@ class UserApiProvider implements UserRepository {
   @override
   Future updateEmail(String email) async {
     var credentialsMap = {
-      "newEmail": email,
+      "email": email,
     };
     String body = json.encode(credentialsMap);
     final response =

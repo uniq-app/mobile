@@ -14,12 +14,13 @@ import 'package:uniq/src/screens/start/change_password_form_page.dart';
 import 'package:uniq/src/screens/home/create_board_page.dart';
 import 'package:uniq/src/screens/home/edit_board_page.dart';
 import 'package:uniq/src/screens/credentials_check_page.dart';
+import 'package:uniq/src/screens/start/forgot_password_code_page.dart';
 import 'package:uniq/src/screens/start/forgot_password_page.dart';
-import 'package:uniq/src/screens/start/change_password_code_page.dart';
 import 'package:uniq/src/screens/start/register_page.dart';
 import 'package:uniq/src/screens/start/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
 import 'package:uniq/src/screens/followed/search_page.dart';
+import 'package:uniq/src/screens/start/send_new_token_page.dart';
 import 'package:uniq/src/screens/start/welcome_page.dart';
 import 'package:uniq/src/screens/start/activate_account_page.dart';
 import './shared/constants.dart';
@@ -41,19 +42,29 @@ class MainRouter {
         return MaterialPageRoute(
           builder: (_) => ActivateAccountPage(),
         );
-
+      // Resend code routes
+      case sendNewTokenPage:
+        return MaterialPageRoute(
+          builder: (_) => SendNewTokenPage(),
+        );
       //Forgot password routes
       case forgotPasswordRoute:
         return MaterialPageRoute(
           builder: (_) => ForgotPasswordPage(),
         );
-      case changePasswordCodeRoute:
-        String email = settings.arguments as String;
+      case forgotPasswordCodePage:
+        String email = settings.arguments;
         return MaterialPageRoute(
-          builder: (_) => ChangePasswordCodePage(email: email),
+          builder: (_) => ForgotPasswordCodePage(
+            email: email,
+          ),
         );
       case changePasswordRoute:
-        return MaterialPageRoute(builder: (_) => ChangePasswordPage());
+        String email = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => ChangePasswordPage(
+                  email: email,
+                ));
 
       //Change email routes
       case changeEmailCodeRoute:

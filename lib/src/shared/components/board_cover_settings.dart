@@ -31,8 +31,9 @@ class BoardCoverSettings extends StatelessWidget {
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  colorFilter:
-                      ColorFilter.mode(filterColor, BlendMode.multiply),
+                  colorFilter: (image == null)
+                      ? ColorFilter.mode(filterColor, BlendMode.multiply)
+                      : ColorFilter.mode(Colors.grey[300], BlendMode.multiply),
                   image: (image == null)
                       ? AssetImage('assets/defaultCover.jpg')
                       : (image.contains('http'))

@@ -40,8 +40,8 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
           child: BlocConsumer<UserBloc, UserState>(
             listener: (BuildContext context, UserState state) {
               if (state is UpdateEmailSuccess) {
-                Navigator.of(context)
-                    .popUntil(ModalRoute.withName(applicationPage));
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
               } else if (state is UpdateEmailError) {
                 showToast(
                   "${state.error.message}",
@@ -79,7 +79,7 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
                         controller: emailController,
                         validator: (value) {
                           if (!value.contains(new RegExp('\@*\.')))
-                            return 'Invalid code';
+                            return 'Invalid email';
                           return null;
                         },
                       ),

@@ -30,6 +30,10 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
     context.read<UserBloc>().add(ValidCode(code: codeController.text));
   }
 
+  _resendEmail() {
+    Navigator.of(context).pushNamed(sendNewTokenPage);
+  }
+
   final _NewPasswordKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -99,16 +103,12 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("did not receive code? -",
-                              style: Theme.of(context).textTheme.subtitle2),
+                              style: Theme.of(context).textTheme.caption),
                           InkWell(
                             onTap: () {
-                              showToast(
-                                "Not implemented yet",
-                                position: ToastPosition.bottom,
-                                backgroundColor: Colors.redAccent,
-                              );
+                              _resendEmail();
                             },
-                            child: new Text(
+                            child: Text(
                               " resend email",
                               style: Theme.of(context).textTheme.button,
                             ),

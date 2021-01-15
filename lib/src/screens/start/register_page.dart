@@ -149,8 +149,10 @@ class _RegisterPage extends State<RegisterPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("already have an account? -",
-                                style: TextStyle(fontSize: 14)),
+                            Text(
+                              "already have an account? -",
+                              style: Theme.of(context).textTheme.caption,
+                            ),
                             InkWell(
                               onTap: () {
                                 Navigator.popAndPushNamed(context, loginRoute);

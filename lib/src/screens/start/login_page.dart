@@ -94,8 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           FlatButton(
                             onPressed: () {
-                              Navigator.of(context)
-                                  .popAndPushNamed(activateRoute);
+                              Navigator.of(context).pushNamed(activateRoute);
                             },
                             child: Text(
                               "activate account",
@@ -135,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Text(
                             "don't have an account?",
-                            style: TextStyle(fontSize: 14),
+                            style: Theme.of(context).textTheme.caption,
                           ),
                           InkWell(
                             onTap: () {

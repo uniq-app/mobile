@@ -67,7 +67,9 @@ class AuthApiProvider implements AuthRepository {
 
   @override
   Future logout() async {
+    String token = await getToken();
+    var headers = {"Authorization": "Bearer $token"};
+    await client.post('$_apiUrl/logout', headers: headers);
     await deleteToken();
-    await client.post('$_apiUrl/logout');
   }
 }

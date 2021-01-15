@@ -34,7 +34,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
         newPassword: passwordController.text));
   }
 
-  final _NewPasswordKey = GlobalKey<FormState>();
+  final _newPasswordKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //Width and length of the screen
@@ -74,7 +74,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 }
                 return Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: _NewPasswordKey,
+                  key: _newPasswordKey,
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +138,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                         UniqButton(
                           color: Theme.of(context).buttonColor,
                           push: () {
-                            if (_NewPasswordKey.currentState.validate()) {
+                            if (_newPasswordKey.currentState.validate()) {
                               _updatePassword();
                             }
                           },

@@ -82,6 +82,10 @@ class AppTheme {
         fontWeight: FontWeight.w400,
         fontSize: 15,
       ),
+      caption: TextStyle(
+        color: Colors.grey[400],
+        fontSize: 14,
+      ),
     ),
   );
 }

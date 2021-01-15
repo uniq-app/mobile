@@ -22,6 +22,10 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
     super.dispose();
   }
 
+  _resendEmail() {
+    Navigator.of(context).pushNamed(sendNewTokenPage);
+  }
+
   final _ActivateKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -41,8 +45,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.green[400],
                 );
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute, (Route<dynamic> route) => false);
+                Navigator.of(context).pop();
               } else if (state is ActivateError) {
                 showToast(
                   "Error during activation process",
@@ -87,7 +90,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                     SizedBox(height: size.height * 0.01),
                     Text(
                       "enter the security code that we sent you to your e-mail",
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      style: Theme.of(context).textTheme.caption,
                     ),
                     SizedBox(height: size.height * 0.02),
                     UniqButton(
@@ -106,16 +109,12 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("did not receive code? -",
-                            style: TextStyle(fontSize: 14)),
+                            style: Theme.of(context).textTheme.caption),
                         InkWell(
                           onTap: () {
-                            showToast(
-                              "Not implemented yet",
-                              position: ToastPosition.bottom,
-                              backgroundColor: Colors.redAccent,
-                            );
+                            _resendEmail();
                           },
-                          child: new Text(
+                          child: Text(
                             " resend email",
                             style: Theme.of(context).textTheme.button,
                           ),
