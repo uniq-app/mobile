@@ -14,9 +14,8 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
   String token;
-  final FirebaseMessaging fcm;
 
-  AuthBloc({this.authRepository, this.fcm}) : super(AuthInitial());
+  AuthBloc({this.authRepository}) : super(AuthInitial());
 
   @override
   Stream<AuthState> mapEventToState(
@@ -25,9 +24,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is Login) {
       yield LoginLoading();
       try {
-        token = await fcm.getToken();
-        await authRepository.login(event.username, event.password, token);
-        yield LoginSuccess(token: token);
+        await authRepository.login(event.username, event.password);
+        yield LoginSuccess();
       } on SocketException {
         yield LoginError(error: NoInternetException());
       } on HttpException {

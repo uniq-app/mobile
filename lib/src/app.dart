@@ -79,7 +79,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
             authRepository: AuthApiProvider(),
-            fcm: FirebaseMessaging(),
           ),
         ),
         BlocProvider<UserBloc>(
