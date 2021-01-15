@@ -109,7 +109,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("did not receive code? -",
-                            style: TextStyle(fontSize: 14)),
+                            style: Theme.of(context).textTheme.caption),
                         InkWell(
                           onTap: () {
                             _resendEmail();
