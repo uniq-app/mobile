@@ -127,15 +127,16 @@ class _GridState extends State<Grid> {
 
   @override
   Widget build(BuildContext context) {
-    void _onReorder(int oldIndex, int newIndex) {
-      setState(() {
-        Widget row = _tiles.removeAt(oldIndex);
-        _tiles.insert(newIndex, row);
-      });
-    }
-
-    return Wrap(
-      children: _tiles,
+    return Padding(
+      padding: EdgeInsets.all(4),
+      child: GridView.builder(
+        itemCount: _tiles.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 4, mainAxisSpacing: 4, crossAxisCount: 3),
+        itemBuilder: (context, index) {
+          return GridTile(child: _tiles[index]);
+        },
+      ),
     );
   }
 }
