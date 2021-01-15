@@ -89,6 +89,9 @@ class _OthersBoardListState extends State<OthersBoardList> {
                   followedBoards = state.boardResults.results;
                 }
                 return BoardListElement(
+                  filterColor: widget.boards[index].extraData == ''
+                      ? Colors.grey
+                      : HexColor.fromHex(widget.boards[index].extraData),
                   icon: Icon(
                     Icons.favorite,
                     color: _isFollowed(widget.boards[index])
@@ -111,5 +114,14 @@ class _OthersBoardListState extends State<OthersBoardList> {
         ),
       ),
     );
+  }
+}
+
+extension HexColor on Color {
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
   }
 }

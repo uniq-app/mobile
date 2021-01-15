@@ -31,10 +31,22 @@ class _NotEditableBoardGridPageState extends State<NotEditableBoardGridPage> {
     _loadPhotos();
   }
 
+  Color darken(Color color, percent) {
+    var f = 1 - percent / 100;
+    return Color.fromARGB(color.alpha, (color.red * f).round(),
+        (color.green * f).round(), (color.blue * f).round());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: (board.extraData != '')
+          ? HexColor.fromHex(board.extraData)
+          : Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: (board.extraData != '')
+            ? darken(HexColor.fromHex(board.extraData), 15)
+            : Theme.of(context).scaffoldBackgroundColor,
         title: Text(widget.board.name),
       ),
       body: _body(),
@@ -184,3 +196,12 @@ class _StaggeredGridState extends State<StaggeredGrid> {
   }
 }
 */
+extension HexColor on Color {
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+}
