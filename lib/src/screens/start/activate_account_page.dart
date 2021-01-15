@@ -90,7 +90,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                     SizedBox(height: size.height * 0.01),
                     Text(
                       "enter the security code that we sent you to your e-mail",
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      style: Theme.of(context).textTheme.caption,
                     ),
                     SizedBox(height: size.height * 0.02),
                     UniqButton(

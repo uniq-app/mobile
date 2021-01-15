@@ -16,7 +16,6 @@ import 'package:uniq/src/screens/home/edit_board_page.dart';
 import 'package:uniq/src/screens/credentials_check_page.dart';
 import 'package:uniq/src/screens/start/forgot_password_code_page.dart';
 import 'package:uniq/src/screens/start/forgot_password_page.dart';
-import 'package:uniq/src/screens/start/change_password_code_page.dart';
 import 'package:uniq/src/screens/start/register_page.dart';
 import 'package:uniq/src/screens/start/login_page.dart';
 import 'package:uniq/src/screens/photo_hero.dart';
@@ -59,11 +58,6 @@ class MainRouter {
           builder: (_) => ForgotPasswordCodePage(
             email: email,
           ),
-        );
-      case changePasswordCodeRoute:
-        String email = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => ChangePasswordCodePage(email: email),
         );
       case changePasswordRoute:
         String email = settings.arguments as String;

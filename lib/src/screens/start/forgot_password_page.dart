@@ -75,7 +75,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                   SizedBox(height: size.height * 0.01),
                   Text(
                     "we will send you security code for authorization",
-                    style: TextStyle(color: Theme.of(context).primaryColor),
+                    style: Theme.of(context).textTheme.caption,
                   ),
                   SizedBox(height: size.height * 0.03),
                   BlocBuilder<UserBloc, UserState>(
@@ -98,8 +98,10 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("did you change your mind? -",
-                          style: TextStyle(fontSize: 14)),
+                      Text(
+                        "did you change your mind? -",
+                        style: Theme.of(context).textTheme.caption,
+                      ),
                       InkWell(
                         onTap: () {
                           Navigator.pop(context);

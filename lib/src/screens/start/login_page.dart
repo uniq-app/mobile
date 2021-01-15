@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Text(
                             "don't have an account?",
-                            style: TextStyle(fontSize: 14),
+                            style: Theme.of(context).textTheme.caption,
                           ),
                           InkWell(
                             onTap: () {

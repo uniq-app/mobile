@@ -4,7 +4,6 @@ const String loginRoute = '/login_page';
 const String signupRoute = '/signup_page';
 const String activateRoute = '/activate_account_page';
 const String forgotPasswordRoute = '/forgot_password_page';
-const String changePasswordCodeRoute = '/change_password_code_page';
 const String changePasswordRoute = '/change_password_page';
 const String sendNewTokenPage = '/send_new_token_page';
 const String forgotPasswordCodePage = '/forgot_password_code_page';
