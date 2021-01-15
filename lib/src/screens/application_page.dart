@@ -1,7 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/followed_boards/followed_boards_bloc.dart';
+import 'package:uniq/src/blocs/notification/notification_bloc.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/blocs/picked_images/picked_images_cubit.dart';
 import 'package:uniq/src/blocs/taken_images/taken_images_cubit.dart';
@@ -13,6 +15,7 @@ import 'package:uniq/src/screens/gallery/image_library_page.dart';
 import 'package:uniq/src/screens/camera/take_photo_screen.dart';
 import 'package:uniq/src/screens/profile/user_settings_page.dart';
 import 'package:uniq/src/services/board_api_provider.dart';
+import 'package:uniq/src/services/notification_api_provider.dart';
 import 'package:uniq/src/services/profile_api_provider.dart';
 import 'package:uniq/src/shared/components/bottom_navbar.dart';
 import 'package:move_to_background/move_to_background.dart';
@@ -48,6 +51,12 @@ class _ApplicationPageState extends State<ApplicationPage> {
         ),
         BlocProvider<PickedImagesCubit>(
           create: (context) => PickedImagesCubit(),
+        ),
+        BlocProvider<NotificationBloc>(
+          create: (context) => NotificationBloc(
+            notificationRepository: NotificationApiProvider(),
+            fcm: FirebaseMessaging(),
+          ),
         ),
       ],
       child: Builder(

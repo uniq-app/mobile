@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
+import 'package:uniq/src/blocs/notification/notification_bloc.dart';
 import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/shared/components/board_list.dart';
@@ -34,6 +35,17 @@ class _HomePageState extends State<HomePage> {
     if (_getInitUserInfo() is ProfileInitial) {
       _loadUserInfo();
     }
+    if (_getInitFcmTokenState() is NotificationInitial) {
+      _updateFcm();
+    }
+  }
+
+  _getInitFcmTokenState() {
+    return context.read<NotificationBloc>().state;
+  }
+
+  _updateFcm() {
+    context.read<NotificationBloc>().add(UpdateFcm());
   }
 
   _getInitUserInfo() {

@@ -12,11 +12,8 @@ class AuthInitial extends AuthState {}
 class LoginLoading extends AuthState {}
 
 class LoginSuccess extends AuthState {
-  final String token;
-  LoginSuccess({@required this.token});
-
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [];
 }
 
 class LoginError extends AuthState {

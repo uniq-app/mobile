@@ -30,12 +30,8 @@ class AuthApiProvider implements AuthRepository {
   }
 
   @override
-  Future login(String email, String password, String fcmToken) async {
-    var credentialsMap = {
-      "email": email,
-      "password": password,
-      "fcmtoken": fcmToken
-    };
+  Future login(String email, String password) async {
+    var credentialsMap = {"email": email, "password": password};
     String body = json.encode(credentialsMap);
     var headers = {"Content-Type": "application/json"};
     final response =
