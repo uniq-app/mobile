@@ -26,6 +26,11 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
     _getUserProfileDetails();
   }
 
+  _getCode() {
+    context.read<UserBloc>().add(GetCode());
+    Navigator.of(context).pushNamed(changeEmailCodeRoute);
+  }
+
   _getUserProfileDetails() {
     profileDetails = context.read<ProfileBloc>().profileDetails;
     notificationsEnabled = profileDetails.notificationsEnabled;
