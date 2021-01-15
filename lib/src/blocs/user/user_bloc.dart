@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:uniq/src/blocs/notification/notification_bloc.dart';
 import 'package:uniq/src/repositories/user_repository.dart';
+import 'package:uniq/src/services/auth_api_provider.dart';
 import 'package:uniq/src/shared/exceptions.dart';
 
 part 'user_event.dart';
@@ -128,7 +130,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is UpdateUsername) {
       yield UpdateUsernameLoading();
       try {
-        await userRepository.updateUsername(event.username);
+        var body = await userRepository.updateUsername(event.username);
+        String newJwt = body['jwt'];
+        AuthApiProvider.storeToken(newJwt);
         yield UpdateUsernameSuccess();
       } on SocketException {
         yield UpdateUsernameError(error: NoInternetException());

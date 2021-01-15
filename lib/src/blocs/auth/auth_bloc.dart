@@ -33,7 +33,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } on FormatException {
         yield LoginError(error: InvalidFormatException());
       } catch (e) {
-        print(e);
         yield LoginError(error: e);
       }
     }

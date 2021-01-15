@@ -11,7 +11,6 @@ class LoggingInterceptor implements InterceptorContract {
   Future<ResponseData> interceptResponse({ResponseData data}) async {
     print("${data.method}");
     print("${data.url}: ${data.statusCode}");
-    print("${data.headers}");
     return data;
   }
 }

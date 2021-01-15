@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   _updateFcm() {
     if (context.read<ProfileBloc>().profileDetails.notificationsEnabled) {
-      print("Pushing token update");
       context.read<NotificationBloc>().add(UpdateFcm(isEnabled: true));
     }
   }
@@ -98,7 +97,6 @@ class _HomePageState extends State<HomePage> {
               state is DeleteBoardPhotoError) {
             _loadStashedBoards();
           }
-          print("State: $state");
         },
         builder: (BuildContext context, BoardState state) {
           if (state is BoardsError) {

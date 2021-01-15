@@ -72,7 +72,6 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     return BlocBuilder<PickedImagesCubit, List<Asset>>(
       builder: (BuildContext context, List<Asset> state) {
         List<Asset> images = state;
-        print("Rebuilding grid view with: $state");
         return Padding(
           padding: EdgeInsets.all(4),
           child: GridView.count(
@@ -108,9 +107,7 @@ class _ImageLibraryPageState extends State<ImageLibraryPage> {
     List<Asset> images = imageService.images;
     if (images.length > 0) {
       dialogService.showCustomDialog();
-    } else {
-      print(images.length);
-    }
+    } else {}
   }
 
   _postAllPhotos() async {

@@ -127,10 +127,11 @@ class UserApiProvider implements UserRepository {
       "username": username,
     };
     String body = json.encode(credentialsMap);
+    print("BEFOR RESPONSE !");
     final response =
         await client.put('$_apiUrl/update', body: body, headers: headers);
     if (response.statusCode == 201 || response.statusCode == 200) {
-      // TODO: Zwraca nowy jwt?
+      print("GOT RESPONSE AFTER CHANGING NAME");
       return json.decode(response.body);
     } else {
       throw Exception('Something went wrong');

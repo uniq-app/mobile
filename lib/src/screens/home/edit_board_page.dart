@@ -73,10 +73,7 @@ class _EditBoardPageState extends State<EditBoardPage> {
     setState(() {
       if (image != null) {
         boardCover = image.path;
-        print(image.path);
-      } else {
-        print('No image selected.');
-      }
+      } else {}
     });
   }
 

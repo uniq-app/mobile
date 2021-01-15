@@ -10,7 +10,6 @@ import 'package:uniq/src/repositories/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:uniq/src/shared/constants.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class BoardApiProvider implements BoardRepository {
   Client client = HttpClientWithInterceptor.build(
@@ -51,7 +50,6 @@ class BoardApiProvider implements BoardRepository {
       body = json.encode(board.toJson());
     else
       body = json.encode(board.toJsonWithoutCover());
-    print(body);
 
     var headers = {"Content-Type": "application/json"};
     final response =
