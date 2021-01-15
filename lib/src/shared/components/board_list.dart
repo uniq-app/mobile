@@ -17,6 +17,9 @@ class BoardList extends StatelessWidget {
             icon: icon,
             iconSize: iconSize,
             board: boards[index],
+            filterColor: boards[index].extraData == ''
+                ? Colors.grey
+                : HexColor.fromHex(boards[index].extraData),
             boardLink: () {
               Navigator.pushNamed(context, boardDetailsRoute,
                   arguments: boards[index]);
@@ -30,5 +33,14 @@ class BoardList extends StatelessWidget {
         childCount: boards.length,
       ),
     );
+  }
+}
+
+extension HexColor on Color {
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
   }
 }

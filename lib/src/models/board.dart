@@ -9,7 +9,7 @@ class Board extends Equatable {
   bool _isPrivate;
   DateTime _createdAt;
   String _cover;
-  dynamic _extraData;
+  String _extraData;
 
   Board.fromJson(Map<String, dynamic> parsedJson) {
     _id = parsedJson['boardId'] ?? '';
@@ -21,7 +21,7 @@ class Board extends Equatable {
         ? DateTime.parse(parsedJson['timestamp'])
         : DateTime.now();
     _cover = parsedJson['cover'] ?? '';
-    _extraData = parsedJson['extraData'];
+    _extraData = parsedJson['extraData'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +32,7 @@ class Board extends Equatable {
     data['creatorId'] = _creatorId;
     data['isPrivate'] = _isPrivate;
     data['cover'] = _cover;
+    data['extraData'] = _extraData;
     return data;
   }
 
@@ -42,6 +43,7 @@ class Board extends Equatable {
     data['description'] = _description;
     data['creatorId'] = _creatorId;
     data['isPrivate'] = _isPrivate;
+    data['extraData'] = _extraData;
     return data;
   }
 
@@ -54,8 +56,17 @@ class Board extends Equatable {
   bool get isPrivate => _isPrivate;
   DateTime get createdAt => _createdAt;
   String get cover => _cover;
+  String get extraData => _extraData;
 
   @override
-  List<Object> get props =>
-      [_id, _name, _description, _creatorId, _isPrivate, _createdAt, _cover];
+  List<Object> get props => [
+        _id,
+        _name,
+        _description,
+        _creatorId,
+        _isPrivate,
+        _createdAt,
+        _cover,
+        _extraData
+      ];
 }

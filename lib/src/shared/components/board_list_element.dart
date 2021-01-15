@@ -33,8 +33,9 @@ class BoardListElement extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                colorFilter:
-                    ColorFilter.mode(Colors.grey[400], BlendMode.multiply),
+                colorFilter: board.cover == ''
+                    ? ColorFilter.mode(filterColor, BlendMode.multiply)
+                    : ColorFilter.mode(Colors.grey[300], BlendMode.multiply),
                 image: board.cover != ''
                     ? NetworkImage(url)
                     : AssetImage('assets/defaultCover.jpg'),

@@ -106,8 +106,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                         prefixWidget: Icon(Icons.email, color: Colors.white),
                         suffixWidget:
                             Icon(Icons.navigate_next, color: Colors.white),
-                        push: () => Navigator.of(context)
-                            .pushNamed(changeEmailCodeRoute),
+                        push: _getCode,
                       ),
                       UniqListElement(
                         text: 'notifications',

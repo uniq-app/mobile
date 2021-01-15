@@ -43,6 +43,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     boardData['name'] = nameController.text;
     boardData['description'] = descriptionController.text;
     boardData['isPrivate'] = isPrivate;
+    boardData['extraData'] = tempColor.toHexTriplet();
     context.read<BoardBloc>().add(
         CreateBoard(board: Board.fromJson(boardData), coverImage: coverImage));
   }
@@ -253,4 +254,9 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
       ),
     );
   }
+}
+
+extension ColorX on Color {
+  String toHexTriplet() =>
+      '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
 }
