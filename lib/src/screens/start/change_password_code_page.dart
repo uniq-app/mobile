@@ -41,8 +41,7 @@ class _ChangePasswordCodePage extends State<ChangePasswordCodePage> {
               if (state is ValidCodeSuccess) {
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text('Code is correct!')));
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    changePasswordRoute, (Route<dynamic> route) => false);
+                Navigator.of(context).pushNamed(changePasswordRoute);
               }
               if (state is ValidCodeError) {
                 Scaffold.of(context)

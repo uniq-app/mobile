@@ -45,9 +45,7 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.green[400],
                 );
-                // TODO: Switch to welcomeRoute or popUntil login
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute, (Route<dynamic> route) => false);
+                Navigator.of(context).pop();
               } else if (state is ActivateError) {
                 showToast(
                   "Error during activation process",

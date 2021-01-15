@@ -43,9 +43,8 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
             position: ToastPosition.bottom,
             backgroundColor: Colors.green,
           );
-          // TODO: Some issue here
           Navigator.of(context).pushNamedAndRemoveUntil(
-              loginRoute, (Route<dynamic> route) => false);
+              welcomeRoute, (Route<dynamic> route) => false);
         } else if (state is ResetPasswordError) {
           showToast(
             "${state.error.message}",
