@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
+import 'package:uniq/src/blocs/notification/notification_bloc.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
 import 'package:uniq/src/blocs/user/user_bloc.dart';
+import 'package:uniq/src/models/profile_details.dart';
 import 'package:uniq/src/screens/profile/edit_profile_page.dart';
 import 'package:uniq/src/shared/components/settings_list_element.dart';
 import 'package:uniq/src/shared/constants.dart';
@@ -16,11 +18,28 @@ class UserSettingsPage extends StatefulWidget {
 }
 
 class _UserSettingsPageState extends State<UserSettingsPage> {
-  bool notificationsEnabled = false, changedNotificationSetting = false;
+  bool notificationsEnabled;
+  ProfileDetails profileDetails;
+  @override
+  void initState() {
+    super.initState();
+    _getUserProfileDetails();
+  }
 
-  _getCode() {
-    context.read<UserBloc>().add(GetCode());
-    Navigator.of(context).pushNamed(changeEmailCodeRoute);
+  _getUserProfileDetails() {
+    profileDetails = context.read<ProfileBloc>().profileDetails;
+    notificationsEnabled = profileDetails.notificationsEnabled;
+  }
+
+  _toggleNotifications() {
+    print("Notifications: $notificationsEnabled");
+    context
+        .read<NotificationBloc>()
+        .add(UpdateFcm(isEnabled: notificationsEnabled));
+  }
+
+  _reloadDetails() {
+    context.read<ProfileBloc>().add(GetProfileDetails());
   }
 
   @override
@@ -40,6 +59,19 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
           listener: (context, UserState state) {
             if (state is GetCodeSuccess) {
             } else if (state is GetCodeError) {
+              showToast(
+                "${state.error.message}",
+                position: ToastPosition.bottom,
+                backgroundColor: Colors.redAccent,
+              );
+            }
+          },
+        ),
+        BlocListener<NotificationBloc, NotificationState>(
+          listener: (context, NotificationState state) {
+            if (state is UpdateFcmSuccess) {
+              _reloadDetails();
+            } else if (state is UpdateFcmError) {
               showToast(
                 "${state.error.message}",
                 position: ToastPosition.bottom,
@@ -86,7 +118,9 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                           MaterialPageRoute(
                             builder: (_) => BlocProvider.value(
                               value: context.read<ProfileBloc>(),
-                              child: EditProfilePage(),
+                              child: EditProfilePage(
+                                username: profileDetails.username,
+                              ),
                             ),
                           ),
                         ),
@@ -114,17 +148,20 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                         color: Theme.of(context).buttonColor,
                         prefixWidget:
                             Icon(Icons.notifications, color: Colors.white),
-                        suffixWidget: Switch(
-                          value: notificationsEnabled,
-                          activeColor: Theme.of(context).primaryColor,
-                          onChanged: (value) {
-                            setState(() {
-                              if (changedNotificationSetting) {
-                                changedNotificationSetting = false;
-                              } else
-                                changedNotificationSetting = true;
-                              notificationsEnabled = value;
-                            });
+                        suffixWidget: BlocBuilder<ProfileBloc, ProfileState>(
+                          builder: (context, ProfileState state) {
+                            if (state is GetProfileDetailsSuccess) {
+                              notificationsEnabled =
+                                  state.profile.notificationsEnabled;
+                            }
+                            return Switch(
+                              value: notificationsEnabled,
+                              activeColor: Theme.of(context).primaryColor,
+                              onChanged: (value) {
+                                notificationsEnabled = !notificationsEnabled;
+                                _toggleNotifications();
+                              },
+                            );
                           },
                         ),
                       ),
