@@ -131,7 +131,6 @@ class BoardApiProvider implements BoardRepository {
   Future deleteBoardPhoto(String boardId, Photo photo) async {
     String body = json.encode([photo.toJson()]);
     String token = await storage.read(key: "token");
-
     var headers = {
       "Content-Type": "application/json",
       'Authorization': "Bearer $token"
