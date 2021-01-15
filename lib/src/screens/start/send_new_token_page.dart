@@ -61,7 +61,7 @@ class _SendNewTokenPageState extends State<SendNewTokenPage> {
                       height: size.height * 0.35,
                       child: SvgPicture.asset("assets/images/completed.svg"),
                     ),
-                    SizedBox(height: size.height * 0.02),
+                    SizedBox(height: size.height * 0.03),
                     Text(
                       "resend security code",
                       style: Theme.of(context).textTheme.headline3,
