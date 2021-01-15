@@ -108,7 +108,7 @@ class _ChangeEmailCodePage extends State<ChangeEmailCodePage> {
                             onTap: () {
                               _resendEmail();
                             },
-                            child: new Text(
+                            child: Text(
                               " resend email",
                               style: Theme.of(context).textTheme.button,
                             ),
