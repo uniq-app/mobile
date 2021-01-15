@@ -4,9 +4,11 @@ import 'package:uniq/src/services/auth_api_provider.dart';
 
 class TokenInterceptor implements InterceptorContract {
   final authApiProvider = AuthApiProvider();
+
   @override
   Future<RequestData> interceptRequest({RequestData data}) async {
     String token = await authApiProvider.getToken();
+    print("Current token: $token");
     data.headers['Authorization'] = "Bearer $token";
     data.headers["Content-Type"] = "application/json";
     return data;
@@ -14,6 +16,9 @@ class TokenInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({ResponseData data}) async {
+    if (data.statusCode == 401) {
+      authApiProvider.deleteToken();
+    }
     return data;
   }
 }

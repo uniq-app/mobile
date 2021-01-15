@@ -50,9 +50,7 @@ class TakePhotoScreenState extends State<TakePhotoScreen> {
   onFabPressed() async {
     if (images.length > 0) {
       dialogService.showCustomDialog();
-    } else {
-      print(images.length);
-    }
+    } else {}
   }
 
   @override
@@ -90,7 +88,6 @@ class TakePhotoScreenState extends State<TakePhotoScreen> {
     return BlocBuilder<TakenImagesCubit, List<File>>(
       builder: (BuildContext context, List<File> state) {
         List<File> images = state;
-        print("Rebuilding grid view with: $state");
         return Padding(
           padding: EdgeInsets.all(4),
           child: GridView.count(

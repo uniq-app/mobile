@@ -38,7 +38,6 @@ class _SearchPageState extends State<SearchPage>
 
   @override
   void dispose() {
-    print("Search page destroy");
     _controller.dispose();
     super.dispose();
   }

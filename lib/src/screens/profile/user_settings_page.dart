@@ -37,7 +37,6 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
   }
 
   _toggleNotifications() {
-    print("Notifications: $notificationsEnabled");
     context
         .read<NotificationBloc>()
         .add(UpdateFcm(isEnabled: notificationsEnabled));

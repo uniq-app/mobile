@@ -38,7 +38,6 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
   _createBoard() {
     File coverImage;
     if (boardCover != null) coverImage = File(boardCover);
-    print("In create board");
     Map<String, dynamic> boardData = new Map<String, dynamic>();
     boardData['name'] = nameController.text;
     boardData['description'] = descriptionController.text;
@@ -54,10 +53,7 @@ class _CreateBoardPageState extends State<CreateBoardPage> {
     setState(() {
       if (image != null) {
         boardCover = image.path;
-        print(image.path);
-      } else {
-        print('No image selected.');
-      }
+      } else {}
     });
   }
 

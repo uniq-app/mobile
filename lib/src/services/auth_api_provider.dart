@@ -12,11 +12,11 @@ class AuthApiProvider implements AuthRepository {
       LoggingInterceptor(),
     ],
   );
-  final storage = new FlutterSecureStorage();
+  static final storage = new FlutterSecureStorage();
 
   final String _apiUrl = '$host:$backendPort/auth';
 
-  Future storeToken(String token) async {
+  static Future storeToken(String token) async {
     await storage.write(key: "token", value: token);
   }
 
