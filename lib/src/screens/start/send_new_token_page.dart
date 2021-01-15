@@ -95,7 +95,7 @@ class _SendNewTokenPageState extends State<SendNewTokenPage> {
                           color: Theme.of(context).buttonColor,
                           push: () {
                             if (_emailKey.currentState.validate()) {
-                              _sendNewCode;
+                              _sendNewCode();
                             }
                           },
                           text: "send security code",
