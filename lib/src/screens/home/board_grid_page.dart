@@ -161,7 +161,6 @@ class _WrapGridState extends State<WrapGrid> {
   void initState() {
     super.initState();
     _createTilesFromImages();
-    print("Photos: ${widget.photos.length}");
   }
 
   _saveReorderChanges() async {
@@ -172,7 +171,6 @@ class _WrapGridState extends State<WrapGrid> {
   _createTilesFromImages() {
     for (int i = 0; i < widget.precachedImages.length; i++) {
       if (widget.photos[i] != null) {
-        print("Photo: ${widget.photos[i].toJson()}");
         _tiles.add(
           GridElement(
             width: widget._size.width * 0.31,
@@ -211,11 +209,11 @@ class _WrapGridState extends State<WrapGrid> {
   _deletePhoto(int index) {
     // Remove from arrays
     _tiles.removeAt(index);
-    widget.photos.removeAt(index);
+    var removed = widget.photos.removeAt(index);
     // Notify backend
     context.read<BoardBloc>().add(
           DeleteBoardPhoto(
-            photo: widget.photos[index],
+            photo: removed,
             boardId: widget.board.id,
           ),
         );
@@ -260,16 +258,10 @@ class _WrapGridState extends State<WrapGrid> {
         children: _tiles,
         onReorder: _onReorder,
         onNoReorder: (int index) {
-          // Set is dragging to show delete zone
           _setIsDragging(false);
-          debugPrint(
-              '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index: $index');
         },
         onReorderStarted: (int index) {
-          // Set is dragging to show delete zone
           _setIsDragging(true);
-          debugPrint(
-              '${DateTime.now().toString().substring(5, 22)} reorder started: index: $index');
         },
       ),
     );
