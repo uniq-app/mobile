@@ -40,6 +40,11 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
           child: BlocConsumer<UserBloc, UserState>(
             listener: (BuildContext context, UserState state) {
               if (state is UpdateEmailSuccess) {
+                showToast(
+                  "Successfuly changed email!",
+                  position: ToastPosition.bottom,
+                  backgroundColor: Colors.green,
+                );
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               } else if (state is UpdateEmailError) {
