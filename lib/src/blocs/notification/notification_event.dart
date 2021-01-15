@@ -7,4 +7,7 @@ abstract class NotificationEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UpdateFcm extends NotificationEvent {}
+class UpdateFcm extends NotificationEvent {
+  final bool isEnabled;
+  UpdateFcm({@required this.isEnabled});
+}

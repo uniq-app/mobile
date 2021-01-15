@@ -26,7 +26,10 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     if (event is UpdateFcm) {
       yield UpdateFcmLoading();
       try {
-        token = await fcm.getToken();
+        if (event.isEnabled) {
+          token = await fcm.getToken();
+        } else
+          token = null;
         await notificationRepository.updateFCM(token);
         yield UpdateFcmSuccess();
       } on SocketException {

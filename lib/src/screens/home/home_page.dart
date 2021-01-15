@@ -5,19 +5,15 @@ import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
 import 'package:uniq/src/blocs/board/board_states.dart';
 import 'package:uniq/src/blocs/notification/notification_bloc.dart';
-import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/shared/components/board_list.dart';
-import 'package:uniq/src/blocs/page/page_cubit.dart';
 import 'package:uniq/src/blocs/profile/profile_bloc.dart';
 import 'package:uniq/src/models/board.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
-import 'package:uniq/src/shared/components/user_icon_button.dart';
 import 'package:uniq/src/shared/constants.dart';
 import 'package:uniq/src/shared/components/custom_error.dart';
 import 'package:uniq/src/shared/components/loading.dart';
 import 'package:uniq/src/shared/components/new_element_button.dart';
-import 'package:uniq/src/shared/components/user_icon_button.dart';
 import 'package:uniq/src/shared/constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,9 +31,6 @@ class _HomePageState extends State<HomePage> {
     if (_getInitUserInfo() is ProfileInitial) {
       _loadUserInfo();
     }
-    if (_getInitFcmTokenState() is NotificationInitial) {
-      _updateFcm();
-    }
   }
 
   _getInitFcmTokenState() {
@@ -45,7 +38,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   _updateFcm() {
-    context.read<NotificationBloc>().add(UpdateFcm());
+    if (context.read<ProfileBloc>().profileDetails.notificationsEnabled) {
+      print("Pushing token update");
+      context.read<NotificationBloc>().add(UpdateFcm(isEnabled: true));
+    }
   }
 
   _getInitUserInfo() {
@@ -76,113 +72,120 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocConsumer<BoardBloc, BoardState>(
-      listener: (BuildContext context, BoardState state) {
-        if (state is BoardCreated ||
-            state is BoardDeleted ||
-            state is BoardUpdated ||
-            state is ReorderBoardPhotosSuccess ||
-            state is DeleteBoardPhotoSuccess) {
-          _loadBoards();
-        } else if (state is DeleteError ||
-            state is UpdateError ||
-            state is CreateError ||
-            state is ReorderBoardPhotosError ||
-            state is DeleteBoardPhotoError) {
-          _loadStashedBoards();
+    return BlocListener<ProfileBloc, ProfileState>(
+      listener: (context, ProfileState state) {
+        if (state is PutProfileDetailsSuccess) {
+          _loadUserInfo();
         }
-        print("State: $state");
+        if (state is GetProfileDetailsSuccess) {
+          if (_getInitFcmTokenState() is NotificationInitial) {
+            _updateFcm();
+          }
+        }
       },
-      builder: (BuildContext context, BoardState state) {
-        if (state is BoardsError) {
-          final error = state.error;
-          return CustomError(
-            message: '${error.message}.\nTap to retry.',
-            onTap: () => {
-              _loadBoards(),
-              _loadUserInfo(),
-            },
-          );
-        } else if (state is BoardsLoaded) {
-          final List<Board> boards = state.boardResults.results;
-          return CustomScrollView(
-            slivers: <Widget>[
-              BlocConsumer<ProfileBloc, ProfileState>(
-                listener: (context, ProfileState state) {
-                  if (state is PutProfileDetailsSuccess) {
-                    _loadUserInfo();
-                  }
-                },
-                builder: (BuildContext context, ProfileState state) {
-                  if (state is GetProfileDetailsSuccess) {
-                    return SliverAppBar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      automaticallyImplyLeading: false,
-                      expandedHeight: size.height * 0.085,
-                      flexibleSpace: FlexibleSpaceBar(
-                        titlePadding:
-                            EdgeInsetsDirectional.only(start: 15, bottom: 15),
-                        title: SafeArea(
-                          child: Row(
+      child: BlocConsumer<BoardBloc, BoardState>(
+        listener: (BuildContext context, BoardState state) {
+          if (state is BoardCreated ||
+              state is BoardDeleted ||
+              state is BoardUpdated ||
+              state is ReorderBoardPhotosSuccess ||
+              state is DeleteBoardPhotoSuccess) {
+            _loadBoards();
+          } else if (state is DeleteError ||
+              state is UpdateError ||
+              state is CreateError ||
+              state is ReorderBoardPhotosError ||
+              state is DeleteBoardPhotoError) {
+            _loadStashedBoards();
+          }
+          print("State: $state");
+        },
+        builder: (BuildContext context, BoardState state) {
+          if (state is BoardsError) {
+            final error = state.error;
+            return CustomError(
+              message: '${error.message}.\nTap to retry.',
+              onTap: () => {
+                _loadBoards(),
+                _loadUserInfo(),
+              },
+            );
+          } else if (state is BoardsLoaded) {
+            final List<Board> boards = state.boardResults.results;
+            return CustomScrollView(
+              slivers: <Widget>[
+                BlocBuilder<ProfileBloc, ProfileState>(
+                  builder: (BuildContext context, ProfileState state) {
+                    if (state is GetProfileDetailsSuccess) {
+                      return SliverAppBar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        automaticallyImplyLeading: false,
+                        expandedHeight: size.height * 0.085,
+                        flexibleSpace: FlexibleSpaceBar(
+                          titlePadding:
+                              EdgeInsetsDirectional.only(start: 15, bottom: 15),
+                          title: SafeArea(
+                            child: Row(
+                              children: [
+                                Text(
+                                  'welcome ${state.profile.username}',
+                                  style: Theme.of(context)
+                                      .appBarTheme
+                                      .textTheme
+                                      .headline1,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    } else if (state is GetProfileDetailsError) {
+                      return SliverAppBar(
+                        automaticallyImplyLeading: false,
+                        title: InkWell(
+                          child: Column(
                             children: [
-                              Text(
-                                'welcome ${state.profile.username}',
-                                style: Theme.of(context)
-                                    .appBarTheme
-                                    .textTheme
-                                    .headline1,
+                              CustomError(
+                                message: "Couldn't load user details",
+                              ),
+                              Center(
+                                child: Icon(
+                                  Icons.replay_outlined,
+                                  size: 28,
+                                ),
                               ),
                             ],
                           ),
+                          onTap: _loadUserInfo,
                         ),
-                      ),
-                    );
-                  } else if (state is GetProfileDetailsError) {
+                      );
+                    }
                     return SliverAppBar(
                       automaticallyImplyLeading: false,
-                      title: InkWell(
-                        child: Column(
-                          children: [
-                            CustomError(
-                              message: "Couldn't load user details",
-                            ),
-                            Center(
-                              child: Icon(
-                                Icons.replay_outlined,
-                                size: 28,
-                              ),
-                            ),
-                          ],
-                        ),
-                        onTap: _loadUserInfo,
-                      ),
+                      title: Loading(),
                     );
-                  }
-                  return SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    title: Loading(),
-                  );
-                },
-              ),
-              BoardList(boards, Icon(Icons.settings), 26),
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  NewElementButton(
-                    heightFraction: 0.15,
-                    widthFraction: 0.8,
-                    push: () {
-                      Navigator.pushNamed(context, createBoardPage);
-                    },
-                  ),
-                ]),
-              ),
-            ],
+                  },
+                ),
+                BoardList(boards, Icon(Icons.settings), 26),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    NewElementButton(
+                      heightFraction: 0.15,
+                      widthFraction: 0.8,
+                      push: () {
+                        Navigator.pushNamed(context, createBoardPage);
+                      },
+                    ),
+                  ]),
+                ),
+              ],
+            );
+          }
+          return Center(
+            child: Loading(),
           );
-        }
-        return Center(
-          child: Loading(),
-        );
-      },
+        },
+      ),
     );
   }
 }
