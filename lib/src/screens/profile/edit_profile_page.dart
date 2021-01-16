@@ -57,15 +57,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     nameController.text = widget.username;
   }
 
-/*
-  _getData() {
-    if (this.got != true) {
-      nameController.text = "Placeholdername"; //widget.profile.name;
-      this.got = true;
-    }
-  }
- */
-
   final _editProfileKey = GlobalKey<FormState>();
 
   @override
