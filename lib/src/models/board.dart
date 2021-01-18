@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
-import 'package:uniq/src/models/cover.dart';
 
 class Board extends Equatable {
   String _id;
   String _name;
   String _description;
   String _creatorId;
+  String _creatorName;
   bool _isPrivate;
   DateTime _createdAt;
   String _cover;
@@ -16,6 +16,7 @@ class Board extends Equatable {
     _name = parsedJson['name'] ?? '';
     _description = parsedJson['description'] ?? '';
     _creatorId = parsedJson['userId'] ?? '';
+    _creatorName = parsedJson['creatorName'] ?? '';
     _isPrivate = parsedJson['isPrivate'] ?? false;
     _createdAt = (parsedJson['timestamp'] != null)
         ? DateTime.parse(parsedJson['timestamp'])
@@ -53,6 +54,7 @@ class Board extends Equatable {
   String get name => _name;
   String get description => _description;
   String get creatorId => _creatorId;
+  String get creatorName => _creatorName;
   bool get isPrivate => _isPrivate;
   DateTime get createdAt => _createdAt;
   String get cover => _cover;
