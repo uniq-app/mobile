@@ -47,7 +47,7 @@ class _NotEditableBoardGridPageState extends State<NotEditableBoardGridPage> {
         backgroundColor: (board.extraData != '')
             ? darken(HexColor.fromHex(board.extraData), 15)
             : Theme.of(context).scaffoldBackgroundColor,
-        title: Text(widget.board.name),
+        title: Text("${widget.board.name} by ${widget.board.creatorName}"),
       ),
       body: _body(),
     );
