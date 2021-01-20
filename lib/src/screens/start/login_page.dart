@@ -74,7 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: "email",
                         controller: loginController,
                         validator: (value) {
-                          if (value.isEmpty) return "Name cannot be empty";
+                          if (value.isEmpty) {
+                            return "Email cannot be empty";
+                          } else if (!value.contains(new RegExp(
+                              r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")))
+                            return 'Invalid email';
+                          return null;
                         },
                       ),
                       SizedBox(height: size.height * 0.02),
