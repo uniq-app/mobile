@@ -74,9 +74,11 @@ class _SendNewTokenPageState extends State<SendNewTokenPage> {
                       labelText: "email",
                       controller: emailController,
                       validator: (value) {
-                        if (value.isEmpty) return 'Please enter the email';
-                        if (!value.contains("@") || !value.contains("."))
-                          return 'Please enter correct email';
+                        if (value.isEmpty) {
+                          return "Email cannot be empty";
+                        } else if (!value.contains(new RegExp(
+                            r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")))
+                          return 'Invalid email';
                         return null;
                       },
                     ),

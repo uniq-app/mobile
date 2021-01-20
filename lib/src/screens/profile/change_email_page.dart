@@ -83,7 +83,10 @@ class _ChangeEmailPage extends State<ChangeEmailPage> {
                         hintText: "new email",
                         controller: emailController,
                         validator: (value) {
-                          if (!value.contains(new RegExp('\@*\.')))
+                          if (value.isEmpty) {
+                            return "Email cannot be empty";
+                          } else if (!value.contains(new RegExp(
+                              '[a-zA-Z0-9]*\.*[a-zA-Z0-9]+\@[a-zA-Z0-9]+\.[a-zA-Z]+')))
                             return 'Invalid email';
                           return null;
                         },

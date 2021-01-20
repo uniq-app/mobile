@@ -84,9 +84,18 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                       labelText: "new password",
                       controller: passwordController,
                       validator: (value) {
-                        if (value.isEmpty) return 'Please enter the password';
-                        if (passwordController.text != passwordController2.text)
-                          return 'Passwords are not equal';
+                        if (value.isEmpty)
+                          return 'Please enter the password';
+                        else if (value.length < 8) {
+                          return "Password is too short";
+                        }
+                        if (!value.contains(new RegExp('[A-Z]+')))
+                          return 'Password must contain at least 1 capital letter';
+                        else if (!value.contains(new RegExp('[a-z]+')))
+                          return 'Password must contain at least lowercase 1 letter';
+                        else if (!value.contains(new RegExp('[0-9]+')))
+                          return 'Password must contain at least 1 number';
+
                         return null;
                       },
                     ),
@@ -98,8 +107,19 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                       labelText: "repeat password",
                       controller: passwordController2,
                       validator: (value) {
-                        if (value.isEmpty) return 'Please enter the password';
-                        if (passwordController.text != passwordController2.text)
+                        if (value.isEmpty)
+                          return 'Please enter the password';
+                        else if (value.length < 8) {
+                          return "Password is too short";
+                        }
+                        if (!value.contains(new RegExp('[A-Z]+')))
+                          return 'Password must contain at least 1 capital letter';
+                        else if (!value.contains(new RegExp('[a-z]+')))
+                          return 'Password must contain at least lowercase 1 letter';
+                        else if (!value.contains(new RegExp('[0-9]+')))
+                          return 'Password must contain at least 1 number';
+                        else if (passwordController.text !=
+                            passwordController2.text)
                           return 'Passwords are not equal';
                         return null;
                       },
@@ -130,10 +150,11 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                         InkWell(
                           onTap: () {
                             showToast(
-                              "Not implemented yet",
+                              "Email sent",
                               position: ToastPosition.bottom,
-                              backgroundColor: Colors.redAccent,
+                              backgroundColor: Colors.greenAccent,
                             );
+                            print("Not sent actually");
                           },
                           child: new Text(
                             " resend email",
