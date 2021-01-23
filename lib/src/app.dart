@@ -5,7 +5,6 @@ import 'package:oktoast/oktoast.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
-import 'package:uniq/src/blocs/drag_listener/drag_listener_cubit.dart';
 import 'package:uniq/src/blocs/photo/photo_bloc.dart';
 import 'package:uniq/src/blocs/photo/photo_events.dart';
 import 'package:uniq/src/blocs/select_board_dialog/select_board_cubit.dart';
@@ -15,7 +14,6 @@ import 'package:uniq/src/services/board_api_provider.dart';
 import 'package:uniq/src/services/photo_api_provider.dart';
 import 'package:uniq/src/services/user_api_provider.dart';
 import 'package:uniq/src/shared/app_theme.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import './shared/constants.dart';
 import './router.dart';
 

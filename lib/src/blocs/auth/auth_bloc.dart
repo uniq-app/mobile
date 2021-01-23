@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uniq/src/repositories/auth_repository.dart';
 import 'package:uniq/src/shared/exceptions.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

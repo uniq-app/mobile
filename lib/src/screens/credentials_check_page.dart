@@ -6,7 +6,6 @@ import 'package:uniq/src/screens/application_page.dart';
 import 'package:uniq/src/screens/start/welcome_page.dart';
 import 'package:uniq/src/services/auth_api_provider.dart';
 import 'package:uniq/src/shared/components/loading.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 class CredentialsCheckPage extends StatelessWidget {
   final authApiProvider = AuthApiProvider();

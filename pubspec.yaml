@@ -35,7 +35,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
-  logger: ^0.9.4
   firebase_core: ^0.5.3
   firebase_messaging: ^7.0.3
   flutter_secure_storage: ^3.3.5
@@ -43,11 +42,7 @@ dependencies:
   oktoast: ^2.1.8
   move_to_background: ^1.0.1
   flutter_launcher_icons: ^0.8.1
-  splashscreen:
-  #TODO: Delete unused later
   reorderables:
-  flutter_staggered_grid_view:
-  reorderableitemsview: ^1.0.0
   
 dev_dependencies:
   flutter_test:

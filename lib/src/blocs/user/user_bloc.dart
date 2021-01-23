@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:uniq/src/blocs/notification/notification_bloc.dart';
 import 'package:uniq/src/repositories/user_repository.dart';
 import 'package:uniq/src/services/auth_api_provider.dart';
 import 'package:uniq/src/shared/exceptions.dart';
