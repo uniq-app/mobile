@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uniq/src/blocs/auth/auth_bloc.dart';
 import 'package:uniq/src/blocs/board/board_bloc.dart';
 import 'package:uniq/src/blocs/board/board_events.dart';
@@ -103,9 +104,8 @@ class _BoardGridPageState extends State<BoardGridPage>
     return images;
   }
 
-  //TODO: To display when board is empty:
-  /*
-  Column(
+  Widget _noElementsInfo(Size size) {
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
@@ -118,8 +118,8 @@ class _BoardGridPageState extends State<BoardGridPage>
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
-    ),
-  */
+    );
+  }
 
   Widget _body() {
     return BlocBuilder<PhotoBloc, PhotoState>(
@@ -134,9 +134,13 @@ class _BoardGridPageState extends State<BoardGridPage>
           // Future Builder
           return FutureBuilder(
             future: _precacheImages(state.photos),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Image>> snapshot) {
               if (snapshot.hasData) {
                 Size size = MediaQuery.of(context).size;
+                if (snapshot.data.isEmpty) {
+                  return _noElementsInfo(size);
+                }
                 return WrapGrid(state.photos, snapshot.data, size, board);
               } else if (snapshot.hasError) {
                 return CustomError(message: "Couldnt preload images");

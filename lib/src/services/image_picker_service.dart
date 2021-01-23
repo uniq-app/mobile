@@ -44,7 +44,6 @@ class ImagePickerService {
   List<Asset> get images => _images;
 }
 
-// Todo: move extension somewhere else?
 extension ColorX on Color {
   String toHexTriplet() =>
       '#${(value & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
