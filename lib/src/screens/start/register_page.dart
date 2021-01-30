@@ -44,8 +44,7 @@ class _RegisterPage extends State<RegisterPage> {
                   position: ToastPosition.bottom,
                   backgroundColor: Colors.green[400],
                 );
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    activateRoute, (Route<dynamic> route) => false);
+                Navigator.of(context).pushNamed(activateRoute);
               } else if (state is RegisterError) {
                 showToast(
                   "${state.error.message}",
